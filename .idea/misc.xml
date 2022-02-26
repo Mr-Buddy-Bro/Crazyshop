@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/select_file_bg.xml" value="0.18585526315789475" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/side_nav_bar.xml" value="0.18585526315789475" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_buyer_registration.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_choose_audience.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_graphics.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_login.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_seller_home.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_seller_registration.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_user_type.xml" value="0.2" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/add_product_pop_up.xml" value="0.18" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/app_bar_seller_home.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/content_seller_home.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_dashboard.xml" value="0.2" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_gallery.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_home.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_products.xml" value="0.18" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_settings.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_slideshow.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/nav_header_seller_home.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/product_item_layout.xml" value="0.25" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/varify_identity_lay.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/varify_popup.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/menu/activity_main_drawer.xml" value="0.1756578947368421" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "470014187924",
+    "project_id": "open-shop-96e8a",
+    "storage_bucket": "open-shop-96e8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:470014187924:android:4ad645dbb9e92aab095781",
+        "android_client_info": {
+          "package_name": "com.tech2develop.crazyshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "470014187924-kdqakb49mj5f8t88ch599g7o60b6i19a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMSnAmYdefvGzjwSgVFknD3li2rYJ1iAA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "470014187924-kdqakb49mj5f8t88ch599g7o60b6i19a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
