@@ -20,6 +20,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.scottyab.aescrypt.AESCrypt
 import com.tech2develop.crazyshop.databinding.ActivitySellerHomeBinding
 import com.tech2develop.crazyshop.ui.categories.CategoriesFragment
 import com.tech2develop.crazyshop.ui.dashboard.DashboardFragment
@@ -31,10 +32,17 @@ import java.io.File
 class SellerHome : AppCompatActivity() {
 
     lateinit var binding : ActivitySellerHomeBinding
-    lateinit var firestore : FirebaseFirestore
-    lateinit var storage : FirebaseStorage
-    lateinit var auth: FirebaseAuth
-    lateinit var shopId : String
+
+    companion object{
+        lateinit var firestore : FirebaseFirestore
+        lateinit var storage : FirebaseStorage
+        lateinit var auth: FirebaseAuth
+        lateinit var shopId : String
+        val eSellerDataKey = "sellerDataKey1332"
+        val eSellerCatKey = "sellerCategoryKey1332"
+        val eSellerProductKey = "sellerProductsKey1332"
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,9 +90,11 @@ class SellerHome : AppCompatActivity() {
                         shopId = doc.data.getValue("sellerKey").toString()
                         val shopName = doc.data.getValue("companyName").toString()
                         val email = doc.data.getValue("email").toString()
-                        supportActionBar?.setTitle(Html.fromHtml("<font color='#000000'>${shopName}</font>"))
-                        binding.navView.getHeaderView(0).findViewById<TextView>(R.id.navName).text = shopName
-                        binding.navView.getHeaderView(0).findViewById<TextView>(R.id.textView).text = email
+                        val decShopName = AESCrypt.decrypt(eSellerDataKey, shopName)
+                        val decEmail = AESCrypt.decrypt(eSellerDataKey, email)
+                        supportActionBar?.setTitle(Html.fromHtml("<font color='#000000'>${decShopName}</font>"))
+                        binding.navView.getHeaderView(0).findViewById<TextView>(R.id.navName).text = decShopName
+                        binding.navView.getHeaderView(0).findViewById<TextView>(R.id.textView).text = decEmail
                         setHeaderGraphics()
                         break
                     }

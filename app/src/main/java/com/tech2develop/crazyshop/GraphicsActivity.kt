@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.scottyab.aescrypt.AESCrypt
 import com.tech2develop.crazyshop.Models.SellerModel
 import com.tech2develop.crazyshop.Models.ShopGrphics
 import com.tech2develop.crazyshop.databinding.ActivityGraphicsBinding
@@ -30,6 +31,7 @@ class GraphicsActivity : AppCompatActivity() {
     companion object{
         lateinit var seller : SellerModel
     }
+
     lateinit var shopGraphics : ShopGrphics
 
     lateinit var firestore : FirebaseFirestore
@@ -62,7 +64,7 @@ class GraphicsActivity : AppCompatActivity() {
                 // upload data and register
 
                 seller = SellerModel(mySeller.companyName,mySeller.companyDescription,mySeller.fullName,mySeller.email,mySeller.phoneNo,
-                    mySeller.password,mySeller.audienceSize,mySeller.isVerified, mySeller.companyName+mySeller.phoneNo.substring(1,8))
+                    mySeller.password,mySeller.audienceSize,mySeller.isVerified, mySeller.companyName+mySeller.phoneNo.substring(1,5))
                 shopGraphics = ShopGrphics(iconUri,bannerUri)
 
                 uploadData()
@@ -74,7 +76,9 @@ class GraphicsActivity : AppCompatActivity() {
     }
 
     private fun regUser() {
-        auth.createUserWithEmailAndPassword(seller.email, seller.password)
+        val email = AESCrypt.decrypt(SellerRegistration.eSellerDataKey,seller.email)
+        val pass = AESCrypt.decrypt(SellerRegistration.eSellerDataKey,seller.password)
+        auth.createUserWithEmailAndPassword(email, pass)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     progressDialog.dismiss()
@@ -97,7 +101,8 @@ class GraphicsActivity : AppCompatActivity() {
     private fun uploadData() {
         progressDialog.show()
         try {
-            firestore.collection("Seller").document(seller.email).set(seller).addOnCompleteListener {
+            val email = AESCrypt.decrypt(SellerRegistration.eSellerDataKey,seller.email)
+            firestore.collection("Seller").document(email).set(seller).addOnCompleteListener {
                 if (it.isSuccessful){
                     //here
                 }else{
@@ -111,6 +116,7 @@ class GraphicsActivity : AppCompatActivity() {
                 if (it.isSuccessful){
                     //code
                 }else{
+                    progressDialog.dismiss()
                     Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
                 }
             }
@@ -119,11 +125,13 @@ class GraphicsActivity : AppCompatActivity() {
                     regUser()
                     //code
                 }else{
+                    progressDialog.dismiss()
                     Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
                 }
             }
 
         }catch (e: Exception){
+            progressDialog.dismiss()
             Toast.makeText(this,e.message,Toast.LENGTH_SHORT).show()
         }
 

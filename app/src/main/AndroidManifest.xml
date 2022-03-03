@@ -13,13 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
             android:name=".BuyerHome"
             android:exported="false" />
         <activity
             android:name=".SellerHome"
             android:exported="true"
             android:label="@string/title_activity_seller_home"
-            android:theme="@style/Theme.CrazyShop"></activity>
+            android:theme="@style/Theme.CrazyShop" />
         <activity
             android:name=".GraphicsActivity"
             android:exported="false" />
@@ -31,9 +34,6 @@
             android:exported="false" />
         <activity
             android:name=".SellerRegistration"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".UserType"

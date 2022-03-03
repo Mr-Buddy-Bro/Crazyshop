@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.scottyab.aescrypt.AESCrypt
 import com.tech2develop.crazyshop.Models.SellerModel
 import com.tech2develop.crazyshop.databinding.ActivitySellerRegistrationBinding
 
@@ -13,6 +14,7 @@ class SellerRegistration : AppCompatActivity() {
 
     companion object{
         lateinit var seller : SellerModel
+        val eSellerDataKey = "sellerDataKey1332"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,9 +37,14 @@ class SellerRegistration : AppCompatActivity() {
         }else if (!binding.etPass.text.toString().equals(binding.etRePass.text.toString())){
             Toast.makeText(this, "Password do not match", Toast.LENGTH_LONG).show()
         }else{
-            seller = SellerModel(binding.etCompanyName.text.toString(),binding.etCompanyDescription.text.toString(),
-                binding.etFullName.text.toString(),binding.etEmail.text.toString(),binding.etPhone.text.toString(),
-                binding.etPass.text.toString(),null,"false",null)
+            val companyName = AESCrypt.encrypt(eSellerDataKey,binding.etCompanyName.text.toString())
+            val companyDesc = AESCrypt.encrypt(eSellerDataKey,binding.etCompanyDescription.text.toString())
+            val fullName = AESCrypt.encrypt(eSellerDataKey,binding.etFullName.text.toString())
+            val email = AESCrypt.encrypt(eSellerDataKey,binding.etEmail.text.toString())
+            val phone = AESCrypt.encrypt(eSellerDataKey,binding.etPhone.text.toString())
+            val password = AESCrypt.encrypt(eSellerDataKey,binding.etPass.text.toString())
+
+            seller = SellerModel(companyName,companyDesc,fullName,email,phone,password,null,"false",null)
             nextAct()
         }
     }

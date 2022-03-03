@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
-    android:background="@color/black_vary"
+    android:background="@color/white"
     tools:context=".GraphicsActivity">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="32dp"
         android:text="Graphics"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="Upload your shop Icon and Banner to make your shop Outstanding."
-        android:textColor="#7AD5FF"
+        android:textColor="@color/blue"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:text="Shop Banner"
-        android:textColor="@color/white"
+        android:textColor="@color/black_vary"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,9 +86,9 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/grey"
             android:text="Choose an image to set as shop Banner\n Preferred resolution is 1280*720"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/dark_vary" />
 
     </RelativeLayout>
 
@@ -98,7 +98,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
         android:text="Shop Icon"
-        android:textColor="@color/white"
+        android:textColor="@color/black_vary"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,9 +143,9 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/grey"
             android:text="Choose an image to set as shop Icon\n Preferred resolution is 512x512"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/dark_vary" />
 
     </RelativeLayout>
 

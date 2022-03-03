@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_vary"
+    android:background="@color/white"
     tools:context=".SellerRegistration">
 
     <TextView
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="96dp"
         android:text="New seller"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +26,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="Register your shop/store is important to start selling"
-        android:textColor="#6FD2FF"
+        android:textColor="@color/blue"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="52dp"
         app:boxStrokeColor="@color/white"
-        android:textColorHint="#D0EAEAEA"
+        android:textColorHint="@color/blue"
         android:hint="Company name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/etCompanyName"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:inputType="text"
             android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="112dp"
-        android:textColorHint="#D0EAEAEA"
+        android:textColorHint="@color/blue"
         android:hint="Company description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:inputType="text"
             android:id="@+id/etCompanyDescription"
             android:singleLine="true"/>
@@ -84,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:textColorHint="#D0EAEAEA"
+        android:textColorHint="@color/blue"
         android:layout_marginTop="8dp"
         android:hint="Your full name"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/etFullName"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:inputType="text"
             android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -105,7 +105,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="#D0EAEAEA"
+        android:textColorHint="@color/blue"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="8dp"
         android:hint="Email"
@@ -118,7 +118,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/etEmail"
             android:inputType="textEmailAddress"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,7 +127,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColorHint="#D0EAEAEA"
+        android:textColorHint="@color/blue"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="8dp"
         android:hint="Phone"
@@ -140,7 +140,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/etPhone"
             android:inputType="phone"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,7 +148,7 @@
         android:id="@+id/textInputLayout8"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
-        android:textColorHint="#D0EAEAEA"
+        android:textColorHint="@color/blue"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="4dp"
@@ -162,7 +162,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/etPass"
             android:inputType="textPassword"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -174,7 +174,7 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="8dp"
         android:hint="Re-enter password"
-        android:textColorHint="#D0EAEAEA"
+        android:textColorHint="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
@@ -184,7 +184,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/etRePass"
             android:inputType="textPassword"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -192,13 +192,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:backgroundTint="@color/grey"
+        android:backgroundTint="@color/blue"
         android:paddingHorizontal="35dp"
         android:paddingVertical="15dp"
         android:text="Next"
         android:onClick="btnNext1"
         android:textAllCaps="false"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:cornerRadius="5dp"

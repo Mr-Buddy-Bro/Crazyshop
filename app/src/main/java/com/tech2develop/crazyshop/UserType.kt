@@ -31,15 +31,15 @@ class UserType : AppCompatActivity() {
 
         setContent()
         btnExisting.setOnClickListener {
-//            val i = Intent(this,LoginActivity::class.java)
-//            i.putExtra("type", userType)
-//            startActivity(i)
+            val i = Intent(this,LoginActivity::class.java)
+            i.putExtra("type", userType)
+            startActivity(i)
         }
         btnNew.setOnClickListener {
             if (userType.equals("seller")) {
                 startActivity(Intent(this, SellerRegistration::class.java))
             }else{
-                startActivity(Intent(this, BuyerRegistration::class.java))
+//                startActivity(Intent(this, BuyerRegistration::class.java))
             }
         }
 
