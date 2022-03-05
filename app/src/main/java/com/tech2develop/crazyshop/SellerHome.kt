@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.scottyab.aescrypt.AESCrypt
 import com.tech2develop.crazyshop.databinding.ActivitySellerHomeBinding
+import com.tech2develop.crazyshop.ui.all_orders.AllOrdersFragment
 import com.tech2develop.crazyshop.ui.categories.CategoriesFragment
 import com.tech2develop.crazyshop.ui.dashboard.DashboardFragment
 import com.tech2develop.crazyshop.ui.products.ProductsFragment
@@ -70,7 +71,7 @@ class SellerHome : AppCompatActivity() {
                     updateFragment(CategoriesFragment())
                 }
                 R.id.nav_all_orders->{
-                    updateFragment(ProductsFragment())
+                    updateFragment(AllOrdersFragment())
                 }
                 R.id.nav_settings->{
                     updateFragment(SettingsFragment())
@@ -120,7 +121,6 @@ class SellerHome : AppCompatActivity() {
         bannerStorageRef.getFile(bannerLocalFile).addOnSuccessListener {
             val bitmap = BitmapFactory.decodeFile(bannerLocalFile.absolutePath)
             binding.navView.getHeaderView(0).findViewById<ImageView>(R.id.navBg).setImageBitmap(bitmap)
-            binding.navView.getHeaderView(0).findViewById<ImageView>(R.id.navBg).rotation = -90f
         }
     }
 

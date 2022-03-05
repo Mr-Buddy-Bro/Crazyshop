@@ -21,4 +21,18 @@
     <string name="close">Close</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="allOrdersDurationList">
+        <item>Today</item>
+        <item>Last 7 days</item>
+        <item>Last 30 days</item>
+        <item>Last 360 days</item>
+        <item>Lifetime</item>
+    </string-array>
+
+    <string-array name="allOrdersTypeList">
+        <item>Un-delivered</item>
+        <item>Delivered</item>
+        <item>All</item>
+    </string-array>
 </resources>
