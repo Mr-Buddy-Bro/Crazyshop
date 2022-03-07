@@ -25,6 +25,7 @@ import com.tech2develop.crazyshop.databinding.ActivitySellerHomeBinding
 import com.tech2develop.crazyshop.ui.all_orders.AllOrdersFragment
 import com.tech2develop.crazyshop.ui.categories.CategoriesFragment
 import com.tech2develop.crazyshop.ui.dashboard.DashboardFragment
+import com.tech2develop.crazyshop.ui.feedback.FeedbackFragment
 import com.tech2develop.crazyshop.ui.products.ProductsFragment
 import com.tech2develop.crazyshop.ui.settings.SettingsFragment
 import org.w3c.dom.Text
@@ -75,6 +76,9 @@ class SellerHome : AppCompatActivity() {
                 }
                 R.id.nav_settings->{
                     updateFragment(SettingsFragment())
+                }
+                R.id.nav_feedbacks->{
+                    updateFragment(FeedbackFragment())
                 }
 
             }
