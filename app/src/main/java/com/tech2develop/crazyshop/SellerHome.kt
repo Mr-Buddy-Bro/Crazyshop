@@ -1,50 +1,42 @@
 package com.tech2develop.crazyshop
 
-import android.app.Dialog
-import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
-import android.view.MenuItem
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.scottyab.aescrypt.AESCrypt
 import com.tech2develop.crazyshop.databinding.ActivitySellerHomeBinding
-import com.tech2develop.crazyshop.ui.all_orders.AllOrdersFragment
-import com.tech2develop.crazyshop.ui.categories.CategoriesFragment
-import com.tech2develop.crazyshop.ui.dashboard.DashboardFragment
-import com.tech2develop.crazyshop.ui.feedback.FeedbackFragment
-import com.tech2develop.crazyshop.ui.products.ProductsFragment
-import com.tech2develop.crazyshop.ui.settings.SettingsFragment
-import org.w3c.dom.Text
+import com.tech2develop.crazyshop.ui.sellerFragments.AllOrdersFragment
+import com.tech2develop.crazyshop.ui.sellerFragments.CategoriesFragment
+import com.tech2develop.crazyshop.ui.sellerFragments.DashboardFragment
+import com.tech2develop.crazyshop.ui.sellerFragments.FeedbackFragment
+import com.tech2develop.crazyshop.ui.sellerFragments.Help_and_feedbackFragment
+import com.tech2develop.crazyshop.ui.sellerFragments.NotificationFragment
+import com.tech2develop.crazyshop.ui.sellerFragments.ProductsFragment
+import com.tech2develop.crazyshop.ui.sellerFragments.SettingsFragment
 import java.io.File
 
 class SellerHome : AppCompatActivity() {
 
     lateinit var binding : ActivitySellerHomeBinding
+    lateinit var firestore : FirebaseFirestore
 
     companion object{
-        lateinit var firestore : FirebaseFirestore
         lateinit var storage : FirebaseStorage
         lateinit var auth: FirebaseAuth
         lateinit var shopId : String
         val eSellerDataKey = "sellerDataKey1332"
-        val eSellerCatKey = "sellerCategoryKey1332"
-        val eSellerProductKey = "sellerProductsKey1332"
+        var isDashboard = false
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +71,12 @@ class SellerHome : AppCompatActivity() {
                 }
                 R.id.nav_feedbacks->{
                     updateFragment(FeedbackFragment())
+                }
+                R.id.nav_help->{
+                    updateFragment(Help_and_feedbackFragment())
+                }
+                R.id.nav_notifies->{
+                    updateFragment(NotificationFragment())
                 }
 
             }
@@ -130,16 +128,17 @@ class SellerHome : AppCompatActivity() {
 
     fun updateFragment(fragment : Fragment){
         val fragManager = supportFragmentManager.beginTransaction()
-        val fragmentTransaction = fragManager.replace(R.id.fragmentContainer, fragment).commit()
+        fragManager.replace(R.id.fragmentContainer, fragment).commit()
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        finishAffinity()
-    }
 
-    fun navClick(view: android.view.View) {
-        Log.d("TAG", "onCreate: Clicked")
-        view.findViewById<LinearLayout>(R.id.navHeader).setBackgroundResource(R.drawable.logo)
+        if(!isDashboard){
+            updateFragment(DashboardFragment())
+        }else{
+            finishAffinity()
+        }
+
     }
 }

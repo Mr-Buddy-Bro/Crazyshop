@@ -13,11 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
+            android:name=".BuyerRegistration"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
             android:name=".BuyerHome"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.CrazyShop"/>
         <activity
             android:name=".SellerHome"
             android:exported="true"
@@ -28,9 +32,6 @@
             android:exported="false" />
         <activity
             android:name=".ChooseAudience"
-            android:exported="false" />
-        <activity
-            android:name=".BuyerRegistration"
             android:exported="false" />
         <activity
             android:name=".SellerRegistration"

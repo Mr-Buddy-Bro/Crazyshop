@@ -1,14 +1,13 @@
-package com.tech2develop.crazyshop.ui.all_orders
+package com.tech2develop.crazyshop.ui.sellerFragments
 
 import android.os.Bundle
 import android.view.View
 import android.widget.Spinner
-import android.widget.Toast
-import androidx.constraintlayout.motion.widget.TransitionBuilder.validate
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.firestore.FirebaseFirestore
 import com.tech2develop.crazyshop.Adapters.AllOrdersAdapter
 import com.tech2develop.crazyshop.Models.OrderModel
 import com.tech2develop.crazyshop.R
@@ -21,6 +20,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
     lateinit var ordersList: ArrayList<OrderModel>
     lateinit var spDuration: Spinner
     lateinit var spType: Spinner
+    lateinit var firestore : FirebaseFirestore
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,6 +28,8 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
 
         spDuration = view.findViewById(R.id.spDuration)
         spType = view.findViewById(R.id.spType)
+        SellerHome.isDashboard = false
+        firestore = FirebaseFirestore.getInstance()
 
         fetchOrders(view)
 
@@ -62,7 +64,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
         val calendar = Calendar.getInstance().time
         val currentDate = calendar.date.toString()
         if (duration.equals("Today") && type.equals("Un-delivered")) {
-            SellerHome.firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
+            firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
                 .collection("All orders").get().addOnCompleteListener {
                     if (it.isSuccessful) {
                         for (doc in it.result!!) {
@@ -84,7 +86,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                 }
 
         } else if (duration.equals("Last 7 days") && type.equals("Un-delivered")) {
-            SellerHome.firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
+            firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
                 .collection("All orders").get().addOnCompleteListener {
                     if (it.isSuccessful) {
                         for (doc in it.result!!) {
@@ -198,7 +200,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                     }
                 }
         } else if (duration.equals("Last 30 days") && type.equals("Un-delivered")) {
-            SellerHome.firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
+           firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
                 .collection("All orders").get().addOnCompleteListener {
                     if (it.isSuccessful) {
                         for (doc in it.result!!) {
@@ -222,7 +224,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                     }
                 }
         } else if (duration.equals("Last 7 days") && type.equals("Delivered")) {
-            SellerHome.firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
+            firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
                 .collection("All orders").get().addOnCompleteListener {
                     if (it.isSuccessful) {
                         for (doc in it.result!!) {

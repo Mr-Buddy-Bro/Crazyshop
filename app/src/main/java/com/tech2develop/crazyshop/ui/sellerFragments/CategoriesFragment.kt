@@ -1,4 +1,4 @@
-package com.tech2develop.crazyshop.ui.categories
+package com.tech2develop.crazyshop.ui.sellerFragments
 
 import android.app.Dialog
 import android.app.ProgressDialog
@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.firestore.FirebaseFirestore
 import com.tech2develop.crazyshop.Adapters.CategoryAdapter
 import com.tech2develop.crazyshop.Models.CategoryModel
 import com.tech2develop.crazyshop.R
@@ -22,6 +22,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_category) {
     lateinit var dialog : Dialog
     lateinit var progress: ProgressDialog
     lateinit var catList: ArrayList<CategoryModel>
+    lateinit var firestore : FirebaseFirestore
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,6 +30,9 @@ class CategoriesFragment : Fragment(R.layout.fragment_category) {
         dialog = Dialog(view.context)
         progress = ProgressDialog(view.context)
         dialog.setContentView(R.layout.add_cat_pop_up)
+        SellerHome.isDashboard = false
+
+        firestore = FirebaseFirestore.getInstance()
 
         view.findViewById<MaterialButton>(R.id.btnAddCat).setOnClickListener {
             dialog.show()
@@ -48,7 +52,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_category) {
 
         catList = ArrayList()
 
-        SellerHome.firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
+       firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
             .collection("Categories").get().addOnCompleteListener {
                 progress.dismiss()
                 if (it.isSuccessful){
@@ -78,7 +82,7 @@ class CategoriesFragment : Fragment(R.layout.fragment_category) {
         }else{
             progress.show()
             val cat = CategoryModel(catName)
-            SellerHome.firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
+           firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
                 .collection("Categories").add(cat).addOnCompleteListener {
                     if (it.isSuccessful){
                         progress.dismiss()

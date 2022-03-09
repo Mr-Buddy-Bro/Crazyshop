@@ -1,10 +1,8 @@
-package com.tech2develop.crazyshop.ui.products
+package com.tech2develop.crazyshop.ui.sellerFragments
 
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -19,11 +17,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.tech2develop.crazyshop.Adapters.ProductAdapter
-import com.tech2develop.crazyshop.GraphicsActivity
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
-import java.io.File
 import java.util.ArrayList
 
 class ProductsFragment : Fragment(R.layout.fragment_products) {
@@ -52,6 +48,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
+        SellerHome.isDashboard = false
         spinner = dialog.findViewById<Spinner>(R.id.prSpinner)
         btnSubmitPr = dialog.findViewById(R.id.btnSubmitPr)
         btnSubmitPr.setOnClickListener {

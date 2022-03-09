@@ -12,10 +12,10 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.google.firebase.firestore.FirebaseFirestore
 import com.tech2develop.crazyshop.Models.CategoryModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
-import com.tech2develop.crazyshop.ui.categories.CategoriesFragment
 import java.util.ArrayList
 
 class CategoryAdapter(context: Context, list: ArrayList<CategoryModel>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
@@ -25,6 +25,7 @@ class CategoryAdapter(context: Context, list: ArrayList<CategoryModel>) : Recycl
     lateinit var progress  : ProgressDialog
     lateinit var dialog: Dialog
     lateinit var catName: String
+    lateinit var firestore : FirebaseFirestore
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.category_item_layout, parent, false)
@@ -37,6 +38,8 @@ class CategoryAdapter(context: Context, list: ArrayList<CategoryModel>) : Recycl
         progress = ProgressDialog(context)
         dialog = Dialog(context)
         dialog.setContentView(R.layout.delete_cat_pop_up)
+
+        firestore = FirebaseFirestore.getInstance()
 
         holder.catName.text = cat.name
         holder.btnDelete.setOnClickListener {
@@ -54,7 +57,7 @@ class CategoryAdapter(context: Context, list: ArrayList<CategoryModel>) : Recycl
                 Toast.makeText(context, "Please enter your password", Toast.LENGTH_SHORT).show()
             }else{
                 progress.show()
-                SellerHome.firestore.collection("Seller").get()
+                firestore.collection("Seller").get()
                     .addOnCompleteListener { task ->
                     if (task.isSuccessful){
                         for (doc in task.result!!){
@@ -84,14 +87,14 @@ class CategoryAdapter(context: Context, list: ArrayList<CategoryModel>) : Recycl
 
     private fun deleteItem(cat: String) {
         var docId = ""
-        SellerHome.firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("Categories")
+        firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("Categories")
             .get().addOnCompleteListener {
                 progress.dismiss()
                 if (it.isSuccessful){
                     for (doc in it.result!!){
                         if (doc.data.getValue("name").toString()==cat){
                             docId = doc.id
-                            SellerHome.firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("Categories")
+                           firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("Categories")
                                 .document(docId).delete().addOnCompleteListener {
                                     progress.dismiss()
                                     dialog.dismiss()

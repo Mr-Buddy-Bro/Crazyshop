@@ -39,7 +39,7 @@ class UserType : AppCompatActivity() {
             if (userType.equals("seller")) {
                 startActivity(Intent(this, SellerRegistration::class.java))
             }else{
-//                startActivity(Intent(this, BuyerRegistration::class.java))
+                startActivity(Intent(this, BuyerRegistration::class.java))
             }
         }
 

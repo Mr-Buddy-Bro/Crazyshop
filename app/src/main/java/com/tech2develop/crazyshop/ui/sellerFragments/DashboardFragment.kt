@@ -1,4 +1,4 @@
-package com.tech2develop.crazyshop.ui.dashboard
+package com.tech2develop.crazyshop.ui.sellerFragments
 
 import android.app.Dialog
 import android.app.ProgressDialog
@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -21,6 +20,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.tech2develop.crazyshop.Models.SellerModel
 import com.tech2develop.crazyshop.Models.VerificationReqModel
 import com.tech2develop.crazyshop.R
+import com.tech2develop.crazyshop.SellerHome
 
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
@@ -46,6 +46,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         dialog = Dialog(view.context)
         dialog.setContentView(R.layout.varify_popup)
         btnVerify1 = view.findViewById(R.id.btnVerify1)
+        SellerHome.isDashboard = true
         btnVerify1.setOnClickListener {
             btnPopVarify(view)
         }

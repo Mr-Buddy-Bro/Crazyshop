@@ -14,8 +14,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-
     fun btnSeller(view: android.view.View) {
         switchActivity("seller")
     }

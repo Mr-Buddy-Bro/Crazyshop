@@ -1,4 +1,4 @@
-package com.tech2develop.crazyshop.ui.feedback
+package com.tech2develop.crazyshop.ui.sellerFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,4 +9,6 @@ import com.tech2develop.crazyshop.R
 
 
 class FeedbackFragment : Fragment(R.layout.fragment_feedback) {
+
+
 }

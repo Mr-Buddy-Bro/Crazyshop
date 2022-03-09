@@ -5,7 +5,7 @@
 
         <item
             android:id="@+id/nav_dashboard"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_baseline_dashboard_24"
             android:title="@string/dashboard" />
         <item
                 android:title="Options">
@@ -21,7 +21,7 @@
                             android:title="@string/categories" />
                         <item
                             android:id="@+id/nav_all_orders"
-                            android:icon="@drawable/ic_menu_slideshow"
+                            android:icon="@drawable/ic_baseline_shopping_cart_24"
                             android:title="@string/all_orders" />
                 </menu>
 
@@ -31,16 +31,16 @@
                 <menu>
                         <item
                             android:id="@+id/nav_feedbacks"
-                            android:icon="@drawable/ic_menu_slideshow"
+                            android:icon="@drawable/ic_feedback"
                             android:title="@string/feedbacks" />
                         <item
                             android:id="@+id/nav_help"
-                            android:icon="@drawable/ic_menu_slideshow"
+                            android:icon="@drawable/ic_baseline_help_outline_24"
                             android:title="@string/help_and_feedback" />
 
                         <item
                             android:id="@+id/nav_notifies"
-                            android:icon="@drawable/ic_menu_slideshow"
+                            android:icon="@drawable/ic_baseline_notifications_active_24"
                             android:title="Notifications" />
                 </menu>
         </item>
@@ -49,7 +49,7 @@
                 <menu>
                         <item
                             android:id="@+id/nav_settings"
-                            android:icon="@drawable/ic_menu_slideshow"
+                            android:icon="@drawable/ic_baseline_settings_24"
                             android:title="Settings" />
                 </menu>
         </item>

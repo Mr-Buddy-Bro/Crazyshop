@@ -21,6 +21,12 @@
     <string name="close">Close</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_txt">Home</string>
+    <string name="cart_txt">Cart</string>
+    <string name="my_orders_txt">My orders</string>
+    <string name="delivery_address_txt">Delivery Address</string>
+    <string name="no_shop_warning_txt">You can easily add a shop by entering the Shop ID of the shops near you\n\nYou can get the shop ID from your nearest shops itself</string>
+    <string name="add_shop_pop_message">Enter the shop ID to add the shop to your home so you can start purchasing online from the store</string>
 
     <string-array name="allOrdersDurationList">
         <item>Today</item>
