@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
+    android:scrollbars="none"
     tools:context=".ui.buyerFragments.BuyerHomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,21 +35,40 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView50" />
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/no_shops_layout"
+        <LinearLayout
+            android:id="@+id/noShopsLay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView51" />
+            app:layout_constraintTop_toBottomOf="@+id/textView51">
+
+            <include
+                android:id="@+id/include"
+                layout="@layout/no_shops_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvShops"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginTop="16dp"
+            android:scrollbars="none"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@+id/textView51"
+            tools:layout_editor_absoluteX="0dp"
+            tools:listitem="@layout/shop_item_layout" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="236dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@color/blue"
             android:text="Add shop"
             android:textAllCaps="false"
@@ -57,7 +77,7 @@
             app:iconTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView51" />
+            app:layout_constraintTop_toBottomOf="@+id/rvShops" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
