@@ -25,7 +25,9 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
     lateinit var firestore : FirebaseFirestore
     lateinit var dialog: Dialog
     lateinit var mySellerDocId : String
-    lateinit var shopsList : ArrayList<ShopModel>
+    companion object {
+        lateinit var shopsList: ArrayList<ShopModel>
+    }
     lateinit var catList : ArrayList<CategoryModel>
     lateinit var prodList : ArrayList<ProductModel>
     lateinit var sellerDoc : String
@@ -107,51 +109,22 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
                                         val companyDescription = AESCrypt.decrypt(BuyerHome.eSellerDataKey, myDoc.data.getValue("companyDescription").toString())
                                         val email = AESCrypt.decrypt(BuyerHome.eSellerDataKey, myDoc.data.getValue("email").toString())
                                         val fullName = AESCrypt.decrypt(BuyerHome.eSellerDataKey, myDoc.data.getValue("fullName").toString())
-                                        val phoneNo = AESCrypt.decrypt(BuyerHome.eSellerDataKey, myDoc.data.getValue("fullName").toString())
-                                        val sellerKey = AESCrypt.decrypt(BuyerHome.eSellerDataKey, myDoc.data.getValue("fullName").toString())
-
-                                        firestore.collection("Seller").document(email).collection("Categories").get()
-                                            .addOnCompleteListener {
-                                                if (it.isSuccessful){
-                                                    for (docu in it.result!!){
-                                                        val catItem = CategoryModel(docu.data.getValue("name").toString())
-                                                        catList.add(catItem)
-                                                    }
-                                                    getShopProducts(view,companyName,companyDescription,email,fullName,phoneNo,sellerKey)
-                                                }
-                                            }
+                                        val phoneNo = AESCrypt.decrypt(BuyerHome.eSellerDataKey, myDoc.data.getValue("phoneNo").toString())
+                                        val sellerKey = myDoc.data.getValue("sellerKey").toString()
+                                        val shopItem = ShopModel(companyName,companyDescription,email,fullName,phoneNo,sellerKey,null,null)
+                                        shopsList.add(shopItem)
                                     }
                                 }
+                                setAdapter(view)
                             }
             }
         }
     }
 
-    private fun getShopProducts(view: View, companyName: String?, companyDescription: String?, email: String?, fullName: String?, phoneNo: String?, sellerKey: String?) {
-        firestore.collection("Seller").document(email!!).collection("Products").get()
-            .addOnCompleteListener {
-                if (it.isSuccessful){
-                    for (docu in it.result!!){
-                        val prodItem = ProductModel(docu.data.getValue("name").toString(), docu.data.getValue("description").toString(),
-                            docu.data.getValue("category").toString(), docu.data.getValue("price").toString())
-                        prodList.add(prodItem)
-                    }
-                    finaliseFetch(view, companyName,companyDescription,email,fullName,phoneNo,sellerKey)
-                }
-            }
-    }
-
-    private fun finaliseFetch(view:View , companyName: String?, companyDescription: String?, email: String, fullName: String?, phoneNo: String?, sellerKey: String?) {
-        val shopItem = ShopModel(companyName,companyDescription,email,fullName,phoneNo,sellerKey,catList,prodList)
-        shopsList.add(shopItem)
-        setAdapter(view)
-    }
-
-
     private fun setAdapter(view: View) {
-        if (shopsList.isEmpty()){
+        if (shopsList.isEmpty()) {
             view.findViewById<LinearLayout>(R.id.noShopsLay).visibility = View.VISIBLE
-        }else{
+        } else {
             view.findViewById<LinearLayout>(R.id.noShopsLay).visibility = View.INVISIBLE
         }
 
@@ -159,6 +132,5 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
         val rv = view.findViewById<RecyclerView>(R.id.rvShops)
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(view.context)
-
     }
 }

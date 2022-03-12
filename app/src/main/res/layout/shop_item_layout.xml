@@ -21,14 +21,15 @@
             android:src="@drawable/logo"
             app:layout_constraintEnd_toEndOf="parent" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/overLay"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@drawable/shop_overlay"-->
-<!--            android:scaleType="fitXY"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"/>-->
+        <ImageView
+            android:id="@+id/overLay"
+            android:layout_width="match_parent"
+            android:layout_marginEnd="100dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/shop_overlay"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/tvShopItemName"
@@ -37,7 +38,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="44dp"
             android:text="Shop name"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:text="shop description will show here"
-            android:textColor="@color/black_vary"
+            android:textColor="@color/grey"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvShopItemName" />
 

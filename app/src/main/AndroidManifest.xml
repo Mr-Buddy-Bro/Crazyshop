@@ -12,6 +12,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
+
+        <activity
+            android:name=".ProdustDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ShopDetailedActivity"
+            android:exported="false" />
         <activity
             android:name=".BuyerRegistration"
             android:exported="false" />
