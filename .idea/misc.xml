@@ -20,6 +20,7 @@
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_buyer_home.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_buyer_registration.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_cart.xml" value="0.1" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_check_out.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_choose_audience.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_graphics.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_login.xml" value="0.1756578947368421" />
@@ -41,6 +42,7 @@
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/delete_pop_up.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_all_orders.xml" value="0.18" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_home.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_settings.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_category.xml" value="0.15" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_dashboard.xml" value="0.2" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_feedback.xml" value="0.16" />

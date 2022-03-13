@@ -12,7 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
-
+        <activity
+            android:name=".CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CheckOutActivity"
+            android:exported="false" />
         <activity
             android:name=".ProdustDetailActivity"
             android:exported="false" />
@@ -28,7 +33,7 @@
         <activity
             android:name=".BuyerHome"
             android:exported="false"
-            android:theme="@style/Theme.CrazyShop"/>
+            android:theme="@style/Theme.CrazyShop" />
         <activity
             android:name=".SellerHome"
             android:exported="true"

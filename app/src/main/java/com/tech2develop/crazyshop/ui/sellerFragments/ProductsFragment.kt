@@ -2,13 +2,16 @@ package com.tech2develop.crazyshop.ui.sellerFragments
 
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.format.Formatter
 import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toFile
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +23,8 @@ import com.tech2develop.crazyshop.Adapters.ProductAdapter
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
-import java.util.ArrayList
+import java.io.File
+import java.util.*
 
 class ProductsFragment : Fragment(R.layout.fragment_products) {
 
@@ -37,9 +41,14 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
     var prImageUri: Uri? = null
     lateinit var progress: ProgressDialog
     lateinit var productList : ArrayList<ProductModel>
+    lateinit var originalImage : File
+    lateinit var compressedImage : File
+    lateinit var myContext : Context
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        myContext = view.context
 
         btnAddProduct = view.findViewById(R.id.materialButton6)
         progress = ProgressDialog(view.context)
@@ -118,6 +127,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
                 Toast.makeText(view.context,"Something went wrong! please try again later.",Toast.LENGTH_LONG).show()
             }
         }
+
         val storageRef = storage.getReference().child("${SellerHome.shopId}/product images/${itemName}.jpg")
         storageRef.putFile(prImageUri!!)
 
