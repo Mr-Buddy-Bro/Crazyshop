@@ -10,9 +10,11 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.tech2develop.crazyshop.Models.ProductModel
+import com.tech2develop.crazyshop.Models.WishListModel
 import java.io.File
 
 class ProdustDetailActivity : AppCompatActivity() {
@@ -92,5 +94,16 @@ class ProdustDetailActivity : AppCompatActivity() {
         }
     }
 
-    fun btnAddToCart(view: View) {}
+    fun btnAddToWishList(view: View) {
+        loadingDialog.show()
+        val wishItem = WishListModel(product.name!!, product.description!!, product.price!!, ShopDetailedActivity.shop.companyName!!, ShopDetailedActivity.sellerKey)
+
+        firestore.collection("Buyer").document(BuyerHome.auth.currentUser?.email!!).collection("Wish list").add(wishItem)
+            .addOnCompleteListener {
+                loadingDialog.dismiss()
+                if (it.isSuccessful){
+                    Toast.makeText(this, "Added to Wish list", Toast.LENGTH_LONG).show()
+                }
+            }
+    }
 }

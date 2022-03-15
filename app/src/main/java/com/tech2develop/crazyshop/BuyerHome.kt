@@ -1,7 +1,6 @@
 package com.tech2develop.crazyshop
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.tech2develop.crazyshop.ui.buyerFragments.*
-import com.tech2develop.crazyshop.ui.sellerFragments.*
 
 class BuyerHome : AppCompatActivity() {
 
@@ -55,7 +53,7 @@ class BuyerHome : AppCompatActivity() {
                     updateFragment(BuyerHomeFragment())
                 }
                 R.id.nav_cart_buyer->{
-                    updateFragment(BuyerCartFragment())
+                    updateFragment(BuyerWishListFragment())
                 }
                 R.id.nav_my_orders_buyer->{
                     updateFragment(BuyerMyOrdersFragment())

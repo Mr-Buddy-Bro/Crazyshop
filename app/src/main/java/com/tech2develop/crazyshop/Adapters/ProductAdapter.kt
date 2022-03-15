@@ -34,18 +34,6 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
         holder.itemPrice.text = "Rs."+product.price
         getPrImages(holder, product)
 
-//        Log.d("TAG", "onBindViewHolder: ${ivList[position]}")
-//        holder.itemImage.setImageBitmap(ivList[position])
-
-//        holder.addressLayout.setOnClickListener {
-//            var addressId = addressItem
-//            val i = Intent(context, CheckoutActivity::class.java)
-//            i.putExtra("id", item.itemId)
-//            i.putExtra("cat", item.cat)
-//            i.putExtra("amount", item.amount)
-//            i.putExtra("addressId",myAddressId)
-//            context.startActivity(i)
-//        }
     }
 
     private fun getPrImages(holder: ViewHolder, product: ProductModel) {

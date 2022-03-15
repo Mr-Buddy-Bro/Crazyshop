@@ -1,29 +1,28 @@
 package com.tech2develop.crazyshop
 
+import android.R.attr.bitmap
+import android.app.Dialog
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
+import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.zxing.WriterException
 import com.scottyab.aescrypt.AESCrypt
 import com.tech2develop.crazyshop.databinding.ActivitySellerHomeBinding
-import com.tech2develop.crazyshop.ui.sellerFragments.AllOrdersFragment
-import com.tech2develop.crazyshop.ui.sellerFragments.CategoriesFragment
-import com.tech2develop.crazyshop.ui.sellerFragments.DashboardFragment
-import com.tech2develop.crazyshop.ui.sellerFragments.FeedbackFragment
-import com.tech2develop.crazyshop.ui.sellerFragments.Help_and_feedbackFragment
-import com.tech2develop.crazyshop.ui.sellerFragments.NotificationFragment
-import com.tech2develop.crazyshop.ui.sellerFragments.ProductsFragment
-import com.tech2develop.crazyshop.ui.sellerFragments.SettingsFragment
+import com.tech2develop.crazyshop.ui.sellerFragments.*
 import java.io.File
+
 
 class SellerHome : AppCompatActivity() {
 
@@ -78,6 +77,25 @@ class SellerHome : AppCompatActivity() {
                 R.id.nav_notifies->{
                     updateFragment(NotificationFragment())
                 }
+                R.id.nav_share->{
+                    val shopIdDialog = Dialog(this)
+                    shopIdDialog.setContentView(R.layout.shop_id_layout)
+                    shopIdDialog.findViewById<TextView>(R.id.textView60).text = shopId
+                    val qrgEncoder =
+                        QRGEncoder(shopId, null, QRGContents.Type.TEXT, 600 )
+                    qrgEncoder.colorBlack = Color.BLACK
+                    qrgEncoder.colorWhite = Color.WHITE
+                    try {
+                        // Getting QR-Code as Bitmap
+                        val bitmap = qrgEncoder.bitmap
+                        // Setting Bitmap to ImageView
+                        shopIdDialog.findViewById<ImageView>(R.id.imageView5).setImageBitmap(bitmap)
+                    } catch (e: WriterException) {
+                        Log.v("TAG", e.toString())
+                    }
+                    shopIdDialog.show()
+                }
+
 
             }
             drawerLayout.closeDrawer(binding.navView)

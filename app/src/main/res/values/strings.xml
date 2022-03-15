@@ -22,7 +22,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home_txt">Home</string>
-    <string name="cart_txt">Cart</string>
+    <string name="cart_txt">Wish list</string>
     <string name="my_orders_txt">My orders</string>
     <string name="delivery_address_txt">Delivery Address</string>
     <string name="no_shop_warning_txt">You can easily add a shop by scanning the QR Code at the shop or by entering the Shop ID of the shop near you\n\nYou can get the shop ID / QR Code from your nearest shops itself</string>

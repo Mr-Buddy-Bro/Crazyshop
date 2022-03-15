@@ -77,6 +77,7 @@ class CheckOutActivity : AppCompatActivity() {
     }
 
     fun btnPlaceOrder(view: View) {
+        loadingDialog.show()
         var address = AddressModel(null, null, null, null, null)
         firestore.collection("Buyer").document(BuyerHome.auth.currentUser?.email!!).collection("Address").get().addOnCompleteListener{
             if (it.isSuccessful){
@@ -104,6 +105,7 @@ class CheckOutActivity : AppCompatActivity() {
 
         firestore.collection("Buyer").document(BuyerHome.auth.currentUser?.email!!).collection("All orders")
             .add(orderItem).addOnCompleteListener {
+                loadingDialog.dismiss()
                 if (it.isSuccessful){
                     orderPlacedDialog.show()
                 }
@@ -111,6 +113,7 @@ class CheckOutActivity : AppCompatActivity() {
 
         firestore.collection("Seller").document(ShopDetailedActivity.shop.email!!).collection("All orders")
             .add(orderItem).addOnCompleteListener {
+                loadingDialog.dismiss()
                 if (it.isSuccessful){
                     orderPlacedDialog.show()
                 }
