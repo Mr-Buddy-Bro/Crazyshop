@@ -18,16 +18,17 @@
             android:layout_height="match_parent"
             android:background="@color/grey"
             android:scaleType="fitXY"
-            android:src="@drawable/logo"
+            android:src="@drawable/benmart_logo2"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/overLay"
             android:layout_width="match_parent"
-            android:layout_marginEnd="100dp"
+            android:layout_marginEnd="80dp"
             android:layout_height="match_parent"
             android:background="@drawable/shop_overlay"
             android:scaleType="fitXY"
+            android:backgroundTint="#5C0E00"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 

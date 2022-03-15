@@ -1,8 +1,14 @@
 package com.tech2develop.crazyshop
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
@@ -16,6 +22,7 @@ class BuyerHome : AppCompatActivity() {
 
     lateinit var firestore : FirebaseFirestore
     lateinit var navView: NavigationView
+    val CAM_PERM_REQ_CODE = 1
 
     companion object{
         lateinit var storage : FirebaseStorage
@@ -27,6 +34,10 @@ class BuyerHome : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_buyer_home)
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAM_PERM_REQ_CODE)
+        }
 
         supportActionBar?.setTitle(Html.fromHtml("<font color='#000000'>Open shop</font>"))
 
@@ -61,6 +72,17 @@ class BuyerHome : AppCompatActivity() {
             }
             drawerLayout.closeDrawer(navView)
             true
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == CAM_PERM_REQ_CODE && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(this, "permission granted", Toast.LENGTH_SHORT).show()
         }
     }
 

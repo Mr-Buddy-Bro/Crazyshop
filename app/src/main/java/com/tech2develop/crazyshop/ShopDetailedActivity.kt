@@ -1,5 +1,6 @@
 package com.tech2develop.crazyshop
 
+import android.app.Dialog
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,7 +22,7 @@ import java.util.ArrayList
 class ShopDetailedActivity : AppCompatActivity() {
 
     var shopIndex : Int = 0
-    lateinit var shop : ShopModel
+
     lateinit var ivIcon : RoundedImageView
     lateinit var ivBanner : ImageView
     lateinit var tvShopName : TextView
@@ -32,7 +33,9 @@ class ShopDetailedActivity : AppCompatActivity() {
     lateinit var catList : ArrayList<String>
     lateinit var firestore : FirebaseFirestore
     lateinit var selectedCat : String
+    lateinit var loadingDialog  : Dialog
     companion object{
+        lateinit var shop : ShopModel
         lateinit var sellerKey: String
         lateinit var prodList : ArrayList<ProductModel>
     }
@@ -40,6 +43,10 @@ class ShopDetailedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_shop_detailed)
+
+        loadingDialog = Dialog(this)
+        loadingDialog.setContentView(R.layout.loading_layout)
+        loadingDialog.setCancelable(false)
 
         shopIndex = intent.getIntExtra("shopIndex", 0)
         shop = BuyerHomeFragment.shopsList[shopIndex]
@@ -75,7 +82,6 @@ class ShopDetailedActivity : AppCompatActivity() {
 
             ivBanner.setImageBitmap(bitmapImage)
         }
-
         tvShopName.text = shop.companyName
         tvFullName.text = shop.fullName
         tvDesc.text = shop.companyDescription
@@ -112,7 +118,7 @@ class ShopDetailedActivity : AppCompatActivity() {
     }
 
     private fun setAdapter() {
-
+        loadingDialog.dismiss()
         val adapter = ShopProductsAdapter(this,prodList)
         val rv = findViewById<RecyclerView>(R.id.rvShopProducts)
         rv.adapter = adapter
@@ -121,6 +127,7 @@ class ShopDetailedActivity : AppCompatActivity() {
     }
 
     private fun getCat() {
+        loadingDialog.show()
         catList.add("All")
         firestore.collection("Seller").document(
             shop.email!!

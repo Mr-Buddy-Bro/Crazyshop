@@ -2,7 +2,6 @@ package com.tech2develop.crazyshop.Adapters
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +21,7 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
     val list = list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.product_item_layout, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.seller_product_item_layout, parent, false)
         return ViewHolder(view)
     }
 

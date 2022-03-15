@@ -32,19 +32,47 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView53" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/materialButton7"
+        android:layout_width="250dp"
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        app:icon="@drawable/ic_baseline_qr_code_scanner_24"
+        android:layout_marginTop="16dp"
+        app:iconGravity="textStart"
+        android:backgroundTint="@color/blue"
+        android:text="Scan"
+        app:iconTint="@color/white"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView54" />
+
+    <TextView
+        android:id="@+id/textView57"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="OR"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialButton7" />
+
     <EditText
         android:id="@+id/editText2"
         android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/feedbackbg"
         android:hint="Shop ID"
         android:paddingHorizontal="20dp"
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView54" />
+        app:layout_constraintTop_toBottomOf="@+id/textView57" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddShopFirm"

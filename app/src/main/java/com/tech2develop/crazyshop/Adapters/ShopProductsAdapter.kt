@@ -8,14 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.ProdustDetailActivity
 import com.tech2develop.crazyshop.R
-import com.tech2develop.crazyshop.SellerHome
 import com.tech2develop.crazyshop.ShopDetailedActivity
 import java.io.File
 import java.util.ArrayList
@@ -26,7 +24,7 @@ class ShopProductsAdapter(context: Context, list: ArrayList<ProductModel>) : Rec
     val list = list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.product_item_layout, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.buyer_product_item_layout, parent, false)
         return ViewHolder(view)
     }
 

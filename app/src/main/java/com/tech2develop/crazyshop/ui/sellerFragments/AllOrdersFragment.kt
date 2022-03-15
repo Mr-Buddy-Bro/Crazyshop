@@ -76,8 +76,9 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                                     doc.data.getValue("itemName").toString(),
                                     null,
                                     doc.data.getValue("itemPrice").toString(),
-                                    doc.data.getValue("deliveryStatus").toString()
-                                )
+                                    doc.data.getValue("deliveryStatus").toString(),
+                                    doc.data.getValue("shopName").toString(),
+                                    doc.data.getValue("date").toString())
                                 ordersList.add(order)
                             }
                         }
@@ -180,7 +181,8 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                                             null,
                                             doc.data.getValue("itemPrice").toString(),
                                             doc.data.getValue("deliveryStatus").toString()
-                                        )
+                                        ,doc.data.getValue("shopName").toString(),
+                                            doc.data.getValue("date").toString())
                                         ordersList.add(order)
                                     }
                                 }
@@ -191,7 +193,8 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                                         null,
                                         doc.data.getValue("itemPrice").toString(),
                                         doc.data.getValue("deliveryStatus").toString()
-                                    )
+                                    ,doc.data.getValue("shopName").toString(),
+                                        doc.data.getValue("date").toString())
                                     ordersList.add(order)
                                 }
                             }
@@ -215,7 +218,8 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                                             null,
                                             doc.data.getValue("itemPrice").toString(),
                                             doc.data.getValue("deliveryStatus").toString()
-                                        )
+                                        ,doc.data.getValue("shopName").toString(),
+                                            doc.data.getValue("date").toString())
                                         ordersList.add(order)
                                     }
                             }
@@ -317,7 +321,8 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                                             doc.data.getValue("itemName").toString(),
                                             null,
                                             doc.data.getValue("itemPrice").toString(),
-                                            doc.data.getValue("deliveryStatus").toString()
+                                            doc.data.getValue("deliveryStatus").toString(),doc.data.getValue("shopName").toString(),
+                                            doc.data.getValue("date").toString()
                                         )
                                         ordersList.add(order)
                                         break
@@ -329,7 +334,9 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                                         doc.data.getValue("itemName").toString(),
                                         null,
                                         doc.data.getValue("itemPrice").toString(),
-                                        doc.data.getValue("deliveryStatus").toString()
+                                        doc.data.getValue("deliveryStatus").toString(),
+                                        doc.data.getValue("shopName").toString(),
+                                        doc.data.getValue("date").toString()
                                     )
                                     ordersList.add(order)
                                 }
@@ -340,7 +347,6 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                 }
         }
     }
-
 
     private fun setAdapter(view: View) {
         val rvOrders = view.findViewById<RecyclerView>(R.id.rvAllOrders)

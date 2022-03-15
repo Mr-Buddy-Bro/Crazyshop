@@ -8,12 +8,12 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="250dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="296dp"
-        android:src="@drawable/logo"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="232dp"
+        android:src="@drawable/benmart_logo2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

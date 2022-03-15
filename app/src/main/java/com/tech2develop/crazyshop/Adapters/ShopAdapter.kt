@@ -22,15 +22,24 @@ class ShopAdapter(context: Context, list: ArrayList<ShopModel>) : RecyclerView.A
 
     val context = context
     val list = list
+    var pos = 1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.shop_item_layout, parent, false)
+        val view : View
+        if (pos%2 == 0) {
+            view =
+                LayoutInflater.from(context).inflate(R.layout.shop_item_layout1, parent, false)
+        }else{
+            view =
+                LayoutInflater.from(context).inflate(R.layout.shop_item_layout2, parent, false)
+        }
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val shop = list[position]
+        pos = position
 
         holder.name.text = shop.companyName
         holder.desc.text = shop.companyDescription

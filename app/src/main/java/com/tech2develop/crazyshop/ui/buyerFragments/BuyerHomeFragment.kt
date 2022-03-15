@@ -1,12 +1,18 @@
 package com.tech2develop.crazyshop.ui.buyerFragments
 
+import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
@@ -19,12 +25,15 @@ import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.Models.ShopModel
 import com.tech2develop.crazyshop.Models.ShopsDocIdModel
 import com.tech2develop.crazyshop.R
+import io.github.g00fy2.quickie.QRResult
+import io.github.g00fy2.quickie.ScanQRCode
+import java.util.jar.Manifest
 
 class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
 
     lateinit var firestore : FirebaseFirestore
     lateinit var dialog: Dialog
-    lateinit var mySellerDocId : String
+    var mySellerDocId : String? = null
     companion object {
         lateinit var shopsList: ArrayList<ShopModel>
     }
@@ -32,16 +41,27 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
     lateinit var prodList : ArrayList<ProductModel>
     lateinit var sellerDoc : String
     lateinit var shopDocList : ArrayList<String>
+    lateinit var loadingDialog  :Dialog
+    lateinit var currentView : View
+    lateinit var adapter : ShopAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         BuyerHome.isHome = true
+
+        currentView = view
+
+        val scanQrCode = registerForActivityResult(ScanQRCode(), ::handleResult)
 
         firestore = FirebaseFirestore.getInstance()
         catList = ArrayList()
         prodList = ArrayList()
         shopDocList = ArrayList()
         shopsList = ArrayList()
+
+        loadingDialog = Dialog(view.context)
+        loadingDialog.setContentView(R.layout.loading_layout)
+        loadingDialog.setCancelable(false)
 
         dialog = Dialog(view.context)
         dialog.setContentView(R.layout.add_shop_dialog)
@@ -52,40 +72,55 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
             dialog.show()
         }
         dialog.findViewById<MaterialButton>(R.id.btnAddShopFirm).setOnClickListener {
-            getShop(view)
+            val myShopId = dialog.findViewById<EditText>(R.id.editText2).text.toString()
+            getShop(view, myShopId)
+        }
+        dialog.findViewById<MaterialButton>(R.id.materialButton7).setOnClickListener {
+
+            scanQrCode.launch(null)
         }
 
     }
 
-    private fun getShop(view: View) {
-        val myShopId = dialog.findViewById<EditText>(R.id.editText2).text.toString()
+    private fun getShop(view: View, myShopId: String) {
+        dialog.dismiss()
+        loadingDialog.show()
         if (!myShopId.isEmpty()){
             firestore.collection("Seller").get().addOnCompleteListener {
                 if (it.isSuccessful){
                     for (doc in it.result!!){
                         val sellerId = doc.data.getValue("sellerKey").toString()
                         val verified = doc.data.getValue("verified").toString()
-                        if (sellerId.equals(myShopId) || verified.equals("true")){
+                        if (sellerId.equals(myShopId) && verified.equals("true")){
                             mySellerDocId = doc.id
                             Toast.makeText(view.context, "Shop found", Toast.LENGTH_LONG).show()
+                            addShop()
                             break
                         }
                     }
-                    addShop()
+                    if (mySellerDocId == null){
+                        Toast.makeText(view.context, "The shop is not Verified yet", Toast.LENGTH_LONG).show()
+                        loadingDialog.dismiss()
+                    }
+
                 }
             }
         }
     }
 
     private fun addShop() {
-        val shopIdModel = ShopsDocIdModel(mySellerDocId)
+        val shopIdModel = ShopsDocIdModel(mySellerDocId!!)
         firestore.collection("Buyer").document(BuyerHome.auth.currentUser?.email!!)
             .collection("ShopsDocId").add(shopIdModel).addOnCompleteListener {
-
+                loadingDialog.dismiss()
+                getAllShops(currentView)
             }
     }
 
     fun getAllShops(view: View) {
+        loadingDialog.show()
+        shopsList.clear()
+        shopDocList.clear()
         firestore.collection("Buyer").document(BuyerHome.auth.currentUser?.email!!)
             .collection("ShopsDocId").get().addOnCompleteListener {
                 if (it.isSuccessful){
@@ -99,6 +134,15 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
     }
 
     private fun fetchShops(view: View) {
+        if (shopDocList.isEmpty()) {
+            loadingDialog.dismiss()
+            if (shopsList.isEmpty()) {
+                view.findViewById<LinearLayout>(R.id.noShopsLay).visibility = View.VISIBLE
+            } else {
+                view.findViewById<LinearLayout>(R.id.noShopsLay).visibility = View.INVISIBLE
+            }
+        }
+
         for (i in 0..shopDocList.size-1){
             val shopDocItem = shopDocList[i]
             firestore.collection("Seller").get().addOnCompleteListener {
@@ -127,10 +171,25 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
         } else {
             view.findViewById<LinearLayout>(R.id.noShopsLay).visibility = View.INVISIBLE
         }
-
-        val adapter = ShopAdapter(view.context, shopsList)
+        loadingDialog.dismiss()
+        Log.d("qrScan", "handleResult: ${shopsList.size}")
+        adapter = ShopAdapter(view.context, shopsList)
         val rv = view.findViewById<RecyclerView>(R.id.rvShops)
+        rv.isNestedScrollingEnabled = false
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(view.context)
     }
+
+    fun handleResult(qrResult: QRResult?) {
+
+        val result = qrResult.toString()
+        val shopKeyPre1 = result.substringAfter("=")
+        val shopKeyPre = shopKeyPre1.substringAfter("=")
+        val shopKey = shopKeyPre.substringBefore(")")
+        Log.d("qrScan", "handleResult: ${shopKey}")
+        getShop(currentView, shopKey)
+
+    }
 }
+
+
