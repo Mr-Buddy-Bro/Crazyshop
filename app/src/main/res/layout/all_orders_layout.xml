@@ -10,6 +10,7 @@
     <ImageView
         android:id="@+id/ivOrderImage"
         android:layout_width="50dp"
+        android:scaleType="fitXY"
         android:layout_height="50dp"
         android:background="@color/black_vary"
         app:layout_constraintStart_toStartOf="parent"

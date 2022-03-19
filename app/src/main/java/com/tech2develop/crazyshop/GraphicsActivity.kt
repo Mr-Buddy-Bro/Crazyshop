@@ -5,17 +5,28 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.format.Formatter
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.net.toUri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.scottyab.aescrypt.AESCrypt
 import com.tech2develop.crazyshop.Models.SellerModel
+import com.tech2develop.crazyshop.Models.SettingsModel
 import com.tech2develop.crazyshop.Models.ShopGrphics
 import com.tech2develop.crazyshop.databinding.ActivityGraphicsBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import me.shouheng.compress.Compress
+import me.shouheng.compress.concrete
+import me.shouheng.compress.strategy.config.ScaleMode
 import java.lang.Exception
 
 class GraphicsActivity : AppCompatActivity() {
@@ -104,7 +115,10 @@ class GraphicsActivity : AppCompatActivity() {
             val email = AESCrypt.decrypt(SellerRegistration.eSellerDataKey,seller.email)
             firestore.collection("Seller").document(email).set(seller).addOnCompleteListener {
                 if (it.isSuccessful){
-                    //here
+
+                        val setting = SettingsModel(true, "5:00 pm - 6:00 pm", "10",
+                            "7:00 am - 4:00 pm")
+                    firestore.collection("Seller").document(email).collection("Settings").add(setting)
                 }else{
                     Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
                 }
@@ -152,17 +166,53 @@ class GraphicsActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ICON_REQ_CODE && resultCode == RESULT_OK){
-            iconUri = data?.data as Uri
-            binding.ivIcon.setImageURI(iconUri)
-            binding.ivIcon.visibility = View.VISIBLE
-            binding.tvIconInfo.visibility = View.INVISIBLE
-            Log.d("TAG", "onActivityResult: "+ data?.data)
+            val imgUri = data?.data!!
+            GlobalScope.launch {
+                Log.d("TAG", "onActivityResult: Entered")
+                val result = Compress.with(this@GraphicsActivity, imgUri)
+                    .setQuality(70)
+                    .concrete {
+                        withMaxWidth(500f)
+                        withMaxHeight(500f)
+                        withScaleMode(ScaleMode.SCALE_HEIGHT)
+                        withIgnoreIfSmaller(true)
+                    }
+                    .get(Dispatchers.IO)
+                withContext(Dispatchers.Main) {
+                    Log.d("TAG", "onActivityResult: ${Formatter.formatShortFileSize(this@GraphicsActivity, result.length())}")
+                    iconUri = result.toUri()
+                    binding.ivIcon.setImageURI(iconUri)
+                    binding.ivIcon.visibility = View.VISIBLE
+                    binding.tvIconInfo.visibility = View.INVISIBLE
+                    Log.d("TAG", "onActivityResult: "+ data?.data)
+                }
+            }
+
         }
         else if(requestCode == BANNER_REQ_CODE && resultCode == RESULT_OK){
-            bannerUri = data?.data as Uri
-            binding.ivBanner.setImageURI(bannerUri)
-            binding.ivBanner.visibility = View.VISIBLE
-            binding.tvBannerInfo.visibility = View.INVISIBLE
+
+            val imgUri = data?.data!!
+            GlobalScope.launch {
+                Log.d("TAG", "onActivityResult: Entered")
+                val result = Compress.with(this@GraphicsActivity, imgUri)
+                    .setQuality(70)
+                    .concrete {
+                        withMaxWidth(500f)
+                        withMaxHeight(500f)
+                        withScaleMode(ScaleMode.SCALE_HEIGHT)
+                        withIgnoreIfSmaller(true)
+                    }
+                    .get(Dispatchers.IO)
+                withContext(Dispatchers.Main) {
+                    Log.d("TAG", "onActivityResult: ${Formatter.formatShortFileSize(this@GraphicsActivity, result.length())}")
+
+                    bannerUri = result.toUri()
+                    binding.ivBanner.setImageURI(bannerUri)
+                    binding.ivBanner.visibility = View.VISIBLE
+                    binding.tvBannerInfo.visibility = View.INVISIBLE
+                }
+            }
+
         }
         else{
             Log.d("TAG", "onActivityResult: something wrong")

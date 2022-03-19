@@ -35,6 +35,7 @@ class SellerHome : AppCompatActivity() {
         lateinit var shopId : String
         val eSellerDataKey = "sellerDataKey1332"
         var isDashboard = false
+        lateinit var shopName : String
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,7 +110,7 @@ class SellerHome : AppCompatActivity() {
                 for (doc in it.result!!){
                     if (doc.id == auth.currentUser?.email!!){
                         shopId = doc.data.getValue("sellerKey").toString()
-                        val shopName = doc.data.getValue("companyName").toString()
+                        shopName = doc.data.getValue("companyName").toString()
                         val email = doc.data.getValue("email").toString()
                         val decShopName = AESCrypt.decrypt(eSellerDataKey, shopName)
                         val decEmail = AESCrypt.decrypt(eSellerDataKey, email)

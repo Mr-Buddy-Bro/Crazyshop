@@ -58,9 +58,6 @@ class BuyerHome : AppCompatActivity() {
                 R.id.nav_my_orders_buyer->{
                     updateFragment(BuyerMyOrdersFragment())
                 }
-                R.id.nav_delivery_address_buyer->{
-                    updateFragment(BuyerAddressesFragment())
-                }
                 R.id.nav_help_buyer->{
                     updateFragment(BuyerHelpFragment())
                 }
@@ -84,7 +81,7 @@ class BuyerHome : AppCompatActivity() {
         }
     }
 
-    private fun updateFragment(fragment: Fragment) {
+    fun updateFragment(fragment: Fragment) {
         val fragManager = supportFragmentManager.beginTransaction()
         fragManager.replace(R.id.buyerFragmentContainer, fragment).commit()
     }

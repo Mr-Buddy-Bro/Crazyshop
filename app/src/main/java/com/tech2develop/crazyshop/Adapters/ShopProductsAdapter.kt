@@ -33,7 +33,7 @@ class ShopProductsAdapter(context: Context, list: ArrayList<ProductModel>) : Rec
         val product = list[position]
 
         holder.itemName.text = product.name
-        holder.itemCat.text = product.category
+        holder.itemDesc.text = product.description
         holder.itemPrice.text = "Rs."+product.price
         getPrImages(holder, product)
 
@@ -69,7 +69,7 @@ class ShopProductsAdapter(context: Context, list: ArrayList<ProductModel>) : Rec
 
         val itemImage = itemView.findViewById<ImageView>(R.id.imageView2)
         val itemName = itemView.findViewById<TextView>(R.id.textView30)
-        val itemCat = itemView.findViewById<TextView>(R.id.textView31)
+        val itemDesc = itemView.findViewById<TextView>(R.id.textView31)
         val itemPrice = itemView.findViewById<TextView>(R.id.textView33)
         val itemLay = itemView.findViewById<ConstraintLayout>(R.id.prodItemLayout)
 

@@ -36,9 +36,14 @@
             app:layout_constraintTop_toBottomOf="@+id/textView46" />
 
         <Switch
+            android:id="@+id/btnActivateOrdering"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:checked="true"
+            android:thumbTint="@color/red"
+            android:trackTint="@color/red"
+
             android:layout_marginEnd="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView46"
@@ -71,12 +76,13 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tvSetCompanyName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:maxWidth="150dp"
                 android:singleLine="true"
-                android:text="Tech2Develop"
+                android:text="loading.."
                 android:textColor="@color/black_vary"
                 android:textSize="14sp" />
 
@@ -100,12 +106,13 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tvSetDeliveryTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:maxWidth="150dp"
                 android:singleLine="true"
-                android:text="5:00 pm - 6:00 pm"
+                android:text="loading.."
                 android:textColor="@color/black_vary"
                 android:textSize="14sp" />
 
@@ -129,12 +136,13 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tvSetDeliveryCharge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:maxWidth="150dp"
                 android:singleLine="true"
-                android:text="Rs. 10"
+                android:text="loading.."
                 android:textColor="@color/red"
                 android:textSize="14sp" />
 
@@ -157,12 +165,13 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tvSetOrderingTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:maxWidth="150dp"
                 android:singleLine="true"
-                android:text="7:00 am - 4:00 pm"
+                android:text="loading.."
                 android:textColor="@color/black_vary"
                 android:textSize="14sp" />
 
@@ -195,6 +204,7 @@
                 android:textSize="16sp" />
 
             <ImageView
+                android:id="@+id/ivSetIcon"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="74dp"
@@ -219,6 +229,7 @@
                 android:textSize="16sp" />
 
             <ImageView
+                android:id="@+id/ivSetBanner"
                 android:layout_width="60dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="50dp"
@@ -231,10 +242,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/red"
             android:text="Log Out"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:backgroundTint="@color/red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

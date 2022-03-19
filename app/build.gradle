@@ -60,5 +60,6 @@ dependencies {
     implementation("io.github.g00fy2.quickie:quickie-bundled:1.4.0")
     implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.4'
     implementation 'com.google.zxing:core:3.3.2'
+    implementation 'com.github.Shouheng88:compressor:1.6.0'
 
 }

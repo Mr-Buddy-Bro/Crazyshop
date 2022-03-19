@@ -101,7 +101,7 @@ class CheckOutActivity : AppCompatActivity() {
 
         val calendar = Calendar.getInstance().time
         val date = calendar.date.toString() +"/"+(calendar.month+1).toString()+"/"+calendar.year.toString()
-        val orderItem = OrderModel(product.name, address, (product.price!!.toInt() + deliveryCharge).toString(), "Un-delivered", ShopDetailedActivity.shop.companyName,date)
+        val orderItem = OrderModel(product.name, address, (product.price!!.toInt() + deliveryCharge).toString(), "Un-delivered", ShopDetailedActivity.shop.companyName,date, ShopDetailedActivity.sellerKey, null)
 
         firestore.collection("Buyer").document(BuyerHome.auth.currentUser?.email!!).collection("All orders")
             .add(orderItem).addOnCompleteListener {

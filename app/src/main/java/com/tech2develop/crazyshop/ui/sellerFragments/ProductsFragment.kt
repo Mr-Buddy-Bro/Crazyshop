@@ -2,16 +2,21 @@ package com.tech2develop.crazyshop.ui.sellerFragments
 
 import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.format.Formatter
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toFile
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +28,13 @@ import com.tech2develop.crazyshop.Adapters.ProductAdapter
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import me.shouheng.compress.Compress
+import me.shouheng.compress.concrete
+import me.shouheng.compress.strategy.config.ScaleMode
 import java.io.File
 import java.util.*
 
@@ -161,9 +173,29 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == PR_IV_REQ_CODE && resultCode == AppCompatActivity.RESULT_OK) {
-                prImageUri = data?.data!!
-                dialog.findViewById<ImageView>(R.id.ivPrAdd).setImageURI(prImageUri)
-                dialog.findViewById<ImageView>(R.id.ivPrAdd).visibility = View.VISIBLE
+                val imgUri = data?.data!!
+            GlobalScope.launch {
+                Log.d("TAG", "onActivityResult: Entered")
+                val result = Compress.with(myContext, imgUri)
+                    .setQuality(70)
+                    .concrete {
+                        withMaxWidth(500f)
+                        withMaxHeight(500f)
+                        withScaleMode(ScaleMode.SCALE_HEIGHT)
+                        withIgnoreIfSmaller(true)
+                    }
+                    .get(Dispatchers.IO)
+                withContext(Dispatchers.Main) {
+                    Log.d("TAG", "onActivityResult: ${Formatter.formatShortFileSize(myContext, result.length())}")
+
+                    prImageUri = result.toUri()
+
+                    dialog.findViewById<ImageView>(R.id.ivPrAdd).setImageURI(prImageUri)
+                    dialog.findViewById<ImageView>(R.id.ivPrAdd).visibility = View.VISIBLE
+                }
+            }
+
+
         }
 
     }

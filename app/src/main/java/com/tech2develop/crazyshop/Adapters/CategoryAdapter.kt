@@ -20,7 +20,7 @@ import java.util.ArrayList
 
 class CategoryAdapter(context: Context, list: ArrayList<CategoryModel>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
-    val context = context
+    val myContext = context
     val list = list
     lateinit var progress  : ProgressDialog
     lateinit var dialog: Dialog
@@ -28,15 +28,15 @@ class CategoryAdapter(context: Context, list: ArrayList<CategoryModel>) : Recycl
     lateinit var firestore : FirebaseFirestore
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.category_item_layout, parent, false)
+        val view = LayoutInflater.from(myContext).inflate(R.layout.category_item_layout, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val cat = list[position]
-        progress = ProgressDialog(context)
-        dialog = Dialog(context)
+        progress = ProgressDialog(myContext)
+        dialog = Dialog(myContext)
         dialog.setContentView(R.layout.delete_cat_pop_up)
 
         firestore = FirebaseFirestore.getInstance()
@@ -54,7 +54,7 @@ class CategoryAdapter(context: Context, list: ArrayList<CategoryModel>) : Recycl
             var realPass = ""
 
             if (pass.isEmpty()){
-                Toast.makeText(context, "Please enter your password", Toast.LENGTH_SHORT).show()
+                Toast.makeText(myContext, "Please enter your password", Toast.LENGTH_SHORT).show()
             }else{
                 progress.show()
                 firestore.collection("Seller").get()
@@ -71,12 +71,12 @@ class CategoryAdapter(context: Context, list: ArrayList<CategoryModel>) : Recycl
                             deleteItem(catName)
                         }else{
                             progress.dismiss()
-                            Toast.makeText(context, "Invalid password", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(myContext, "Invalid password", Toast.LENGTH_SHORT).show()
                         }
 
                     }else{
                         progress.dismiss()
-                        Toast.makeText(context, "Something went wrong!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(myContext, "Something went wrong!", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -98,14 +98,14 @@ class CategoryAdapter(context: Context, list: ArrayList<CategoryModel>) : Recycl
                                 .document(docId).delete().addOnCompleteListener {
                                     progress.dismiss()
                                     dialog.dismiss()
-                                    Toast.makeText(context,"category deleted",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(myContext,"category deleted",Toast.LENGTH_SHORT).show()
                                 }
                         }
                     }
                 }
                 else{
                     progress.dismiss()
-                    Toast.makeText(context,"something went wrong",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(myContext,"something went wrong",Toast.LENGTH_SHORT).show()
                 }
             }
     }

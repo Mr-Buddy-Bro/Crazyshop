@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.tech2develop.crazyshop.Models.ProductModel
@@ -24,6 +25,8 @@ class ProdustDetailActivity : AppCompatActivity() {
     lateinit var prImage : Bitmap
     lateinit var loadingDialog  : Dialog
     lateinit var firestore : FirebaseFirestore
+    lateinit var btnContinue : MaterialButton
+    val shopActive : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,10 @@ class ProdustDetailActivity : AppCompatActivity() {
         index = intent.getIntExtra("index",0)
         product = ShopDetailedActivity.prodList[index]
         firestore = FirebaseFirestore.getInstance()
+        btnContinue = findViewById(R.id.btnContinue)
+        btnContinue.setOnClickListener {
+            continueBtn()
+        }
 
         loadingDialog = Dialog(this)
         loadingDialog.setContentView(R.layout.loading_layout)
@@ -48,6 +55,21 @@ class ProdustDetailActivity : AppCompatActivity() {
         val storage : FirebaseStorage
         storage = FirebaseStorage.getInstance()
         loadingDialog.show()
+        firestore.collection("Seller").document(ShopDetailedActivity.shop.email!!).collection("Settings").get()
+            .addOnCompleteListener {
+                if (it.isSuccessful){
+                    for (doc in it.result!!){
+                        val isActive = doc.data.getValue("active") as Boolean
+                        btnContinue.isEnabled = isActive
+                        if (!isActive) {
+                            findViewById<TextView>(R.id.tvDisabled).visibility = View.VISIBLE
+                        }else{
+                            findViewById<TextView>(R.id.tvDisabled).visibility = View.INVISIBLE
+                        }
+                    }
+                }
+            }
+
 
         val storageRef = storage.getReference().child("${ShopDetailedActivity.sellerKey}/product images/${product.name}.jpg")
         val localImage = File.createTempFile(product.name,"jpg")
@@ -62,7 +84,7 @@ class ProdustDetailActivity : AppCompatActivity() {
         }
     }
 
-    fun btnContinue(view: View) {
+    fun continueBtn() {
         var name : String? = null
         var addressExist = false
         firestore.collection("Buyer").document(BuyerHome.auth.currentUser?.email!!).collection("Address").get().addOnCompleteListener{

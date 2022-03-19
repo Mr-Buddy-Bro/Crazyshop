@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:paddingVertical="10dp"
+    android:layout_height="wrap_content">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivMyOrders"
+        android:layout_width="79dp"
+        android:layout_height="77dp"
+        android:background="@color/white"
+        android:scaleType="fitXY"
+        android:src="@drawable/benmart_logo2"
+        app:circularflow_defaultRadius="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="15dp"
+        app:riv_mutate_background="true" />
+
+    <TextView
+        android:id="@+id/tvMyOrderName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="itemName"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/ivMyOrders"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvMyOrderDate"
+        android:layout_width="200dp"
+        android:singleLine="true"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Booked at : 12/03/2022 3:30 pm"
+        android:textColor="@color/black_vary"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/ivMyOrders"
+        app:layout_constraintTop_toBottomOf="@+id/tvMyOrderName" />
+
+    <TextView
+        android:id="@+id/tvMyOrderPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Rs.20"
+        android:textColor="@color/red"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/ivMyOrders"
+        app:layout_constraintTop_toBottomOf="@+id/tvMyOrderDate" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnRemoveMyOrder"
+        android:backgroundTint="@color/white"
+        app:strokeColor="@color/blue"
+        android:textColor="@color/blue"
+        android:text="Cancel"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDelivered"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delivered"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        android:textColor="@color/blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

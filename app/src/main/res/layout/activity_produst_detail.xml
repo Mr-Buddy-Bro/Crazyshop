@@ -108,9 +108,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/btnContinue"
-        android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="100dp"
         android:backgroundTint="@color/teal_700"
         android:onClick="btnAddToWishList"
         android:paddingVertical="10dp"
@@ -127,11 +125,9 @@
         android:id="@+id/btnContinue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/tvDisabled"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginBottom="40dp"
         android:backgroundTint="@color/red"
-        android:onClick="btnContinue"
         android:paddingVertical="10dp"
         android:text="@string/continue_check"
         android:textAllCaps="false"
@@ -143,5 +139,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/tvDisabled"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:visibility="invisible"
+        android:layout_marginBottom="20dp"
+        android:text="Shop temporarily disable receiving new orders"
+        android:textColor="@color/black" />
 
 </RelativeLayout>

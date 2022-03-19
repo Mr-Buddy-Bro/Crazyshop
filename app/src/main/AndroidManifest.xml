@@ -21,9 +21,6 @@
             android:name=".CreateAddressActivity"
             android:exported="false" />
         <activity
-            android:name=".CartActivity"
-            android:exported="false" />
-        <activity
             android:name=".CheckOutActivity"
             android:exported="false" />
         <activity

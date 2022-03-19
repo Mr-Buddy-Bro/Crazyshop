@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -38,6 +39,7 @@ class ShopAdapter(context: Context, list: ArrayList<ShopModel>) : RecyclerView.A
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        holder.itemLayout.animation = AnimationUtils.loadAnimation(holder.itemLayout.context, R.anim.rv_layout_anim)
         val shop = list[position]
         pos = position
 

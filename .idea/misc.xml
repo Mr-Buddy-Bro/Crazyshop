@@ -6,14 +6,23 @@
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable-anydpi/ic_allorders.xml" value="0.18585526315789475" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable-anydpi/ic_feedback.xml" value="0.18585526315789475" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable-car/n.xml" value="0.18585526315789475" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1505" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/all_orders_spinner_bg.xml" value="0.18585526315789475" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/feedbackbg.xml" value="0.10888157894736843" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_add_24.xml" value="0.18585526315789475" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_alarm_24.xml" value="0.18585526315789475" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_dashboard_24.xml" value="0.1505" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_delete_forever_24.xml" value="0.10888157894736843" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_edit_24.xml" value="0.2942708333333333" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_help_outline_24.xml" value="0.1505" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_notifications_active_24.xml" value="0.1505" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_qr_code_scanner_24.xml" value="0.1505" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.1505" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_shop_24.xml" value="0.10888157894736843" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_shopping_basket_24.xml" value="0.1505" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_baseline_shopping_cart_24.xml" value="0.1505" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_menu_camera.xml" value="0.18585526315789475" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/ic_menu_gallery.xml" value="0.1505" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/rv_card_bg.xml" value="0.18585526315789475" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/select_file_bg.xml" value="0.18585526315789475" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/side_nav_bar.xml" value="0.18585526315789475" />
@@ -37,6 +46,7 @@
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/all_orders_layout.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/all_orders_spinner_bg.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/app_bar_seller_home.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/buyer_my_order_item.xml" value="0.22" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/buyer_product_item_layout.xml" value="0.22830269345874304" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/cart_item.xml" value="0.25" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/category_item_layout.xml" value="0.1756578947368421" />
@@ -44,8 +54,11 @@
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/delete_cat_pop_up.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/delete_pop_up.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_all_orders.xml" value="0.18" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_addresses.xml" value="0.2" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_cart.xml" value="0.22830269345874304" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_help.xml" value="0.15" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_home.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_my_orders.xml" value="0.2" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_settings.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_wish_list.xml" value="0.22830269345874304" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_category.xml" value="0.15" />
@@ -75,7 +88,7 @@
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/shop_item_layout3.xml" value="0.22830269345874304" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/varify_identity_lay.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/varify_popup.xml" value="0.1756578947368421" />
-        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/menu/activity_main_drawer.xml" value="0.5" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/menu/activity_main_drawer.xml" value="0.25" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/menu/buyer_main_drawer.xml" value="0.25" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/menu/seller_home.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.235" />
