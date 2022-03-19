@@ -2,22 +2,20 @@ package com.tech2develop.crazyshop
 
 import android.app.Dialog
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.makeramen.roundedimageview.RoundedImageView
 import com.tech2develop.crazyshop.Adapters.ShopProductsAdapter
-import com.tech2develop.crazyshop.Models.CategoryModel
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.Models.ShopModel
 import com.tech2develop.crazyshop.ui.buyerFragments.BuyerHomeFragment
 import java.io.File
-import java.util.ArrayList
 
 class ShopDetailedActivity : AppCompatActivity() {
 
@@ -34,10 +32,12 @@ class ShopDetailedActivity : AppCompatActivity() {
     lateinit var firestore : FirebaseFirestore
     lateinit var selectedCat : String
     lateinit var loadingDialog  : Dialog
+    lateinit var etSearch : EditText
     companion object{
         lateinit var shop : ShopModel
         lateinit var sellerKey: String
         lateinit var prodList : ArrayList<ProductModel>
+        lateinit var searchProdList : ArrayList<ProductModel>
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +51,7 @@ class ShopDetailedActivity : AppCompatActivity() {
         shopIndex = intent.getIntExtra("shopIndex", 0)
         shop = BuyerHomeFragment.shopsList[shopIndex]
         sellerKey = shop.sellerKey!!
+        searchProdList = ArrayList()
 
         ivIcon = findViewById(R.id.iv_shop_detailed_icon)
         tvShopName = findViewById(R.id.tv_shop_detailed_name)
@@ -58,6 +59,16 @@ class ShopDetailedActivity : AppCompatActivity() {
         tvDesc = findViewById(R.id.tv_shop_detailed_desc)
         ivBanner = findViewById(R.id.iv_shop_banner)
         sp_cat = findViewById(R.id.sp_shop_cat)
+        etSearch = findViewById(R.id.etSearch)
+        etSearch.doOnTextChanged { text, start, before, count ->
+            searchProdList.clear()
+            for (doc in prodList){
+                if (doc.name!!.contains(text.toString()) || doc.description!!.contains(text.toString())){
+                    searchProdList.add(doc)
+                }
+            }
+            setAdapter(searchProdList)
+        }
 
         catList = ArrayList()
         prodList = ArrayList()
@@ -112,14 +123,14 @@ class ShopDetailedActivity : AppCompatActivity() {
                             prodList.add(prodItem)
                         }
                     }
-                    setAdapter()
+                    setAdapter(prodList)
                 }
             }
     }
 
-    private fun setAdapter() {
+    private fun setAdapter(list: ArrayList<ProductModel>) {
         loadingDialog.dismiss()
-        val adapter = ShopProductsAdapter(this,prodList)
+        val adapter = ShopProductsAdapter(this,list)
         val rv = findViewById<RecyclerView>(R.id.rvShopProducts)
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(this)
