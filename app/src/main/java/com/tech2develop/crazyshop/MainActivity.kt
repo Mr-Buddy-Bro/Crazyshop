@@ -6,10 +6,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.tech2develop.crazyshop.Models.SellerModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     var lastLoginAs : String? = null
     lateinit var auth: FirebaseAuth
@@ -19,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         auth = FirebaseAuth.getInstance()
-
         val sharedPreferences: SharedPreferences = getSharedPreferences("userType", MODE_PRIVATE)
         lastLoginAs = sharedPreferences.getString("type","akhil")
         Log.d("sharedPreference", lastLoginAs!!)

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Crazy shop</string>
+    <string name="app_name">BenMart</string>
     <string name="title_activity_seller_home">SellerHome</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

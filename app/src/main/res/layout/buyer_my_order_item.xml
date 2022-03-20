@@ -63,6 +63,7 @@
         android:backgroundTint="@color/white"
         app:strokeColor="@color/blue"
         android:textColor="@color/blue"
+        android:textStyle="bold"
         android:text="Cancel"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"

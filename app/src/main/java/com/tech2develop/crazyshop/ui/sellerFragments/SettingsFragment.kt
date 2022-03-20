@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
+import com.android.billingclient.api.*
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,8 +18,10 @@ import com.tech2develop.crazyshop.MainActivity
 import com.tech2develop.crazyshop.Models.SettingsModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class SettingsFragment : Fragment(R.layout.fragment_settings) {
+class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedListener {
 
     lateinit var auth: FirebaseAuth
     lateinit var firestore: FirebaseFirestore
@@ -30,6 +34,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
     lateinit var ivSetBanner : ImageView
     lateinit var myView : View
     lateinit var settDocId : String
+    lateinit var btnSubscribe : MaterialButton
+    var billingClient: BillingClient? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,6 +43,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         auth = FirebaseAuth.getInstance()
         SellerHome.isDashboard = false
         firestore = FirebaseFirestore.getInstance()
+
+        billingClient = SellerHome.billingClient
 
         myView = view
 
@@ -47,6 +55,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         tvSetOrderingTime = view.findViewById(R.id.tvSetOrderingTime)
         ivSetIcon = view.findViewById(R.id.ivSetIcon)
         ivSetBanner = view.findViewById(R.id.ivSetBanner)
+        btnSubscribe = view.findViewById(R.id.btnSubscribe)
+
+        btnSubscribe.setOnClickListener {
+            onSubscribe()
+        }
 
         btnActivateOrdering.setOnCheckedChangeListener { compoundButton, b ->
             Log.d("TAG", b.toString())
@@ -60,6 +73,59 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
 
         fetchSettingsData()
+    }
+
+    private fun onSubscribe() {
+        if (billingClient!!.isReady){
+            initiatePurchase()
+        }else{
+            billingClient!!.startConnection(object : BillingClientStateListener {
+                override fun onBillingSetupFinished(billingResult: BillingResult) {
+                    if (billingResult.responseCode ==  BillingClient.BillingResponseCode.OK) {
+                        // The BillingClient is ready. You can query purchases here.
+                        initiatePurchase()
+                    }
+                }
+                override fun onBillingServiceDisconnected() {
+                    // Try to restart the connection on the next request to
+                    // Google Play by calling the startConnection() method.
+                }
+            })
+        }
+    }
+
+    private fun initiatePurchase() {
+        Log.d("TAG", "initiatePurchase: 1")
+        val skuList = ArrayList<String>()
+        skuList.add("seller_subscription_1_month")
+        val params = SkuDetailsParams.newBuilder()
+        params.setSkusList(skuList).setType(BillingClient.SkuType.SUBS)
+        val billingResult = billingClient!!.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS)
+        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK){
+            Log.d("TAG", "initiatePurchase: 2")
+            billingClient!!.querySkuDetailsAsync(params.build()){
+                billingResult, skuDetailsList ->
+                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK){
+                    Log.d("TAG", "initiatePurchase: 3")
+                    Log.d("TAG", "initiatePurchase: ${skuDetailsList!!.size}")
+                    if (skuDetailsList != null && skuDetailsList.size > 0){
+                        Log.d("TAG", "initiatePurchase: 4")
+                        val flowParams = BillingFlowParams.newBuilder()
+                            .setSkuDetails(skuDetailsList[0])
+                            .build()
+                        billingClient!!.launchBillingFlow(SellerHome.myContext, flowParams)
+                    }else{
+                        Toast.makeText(myView.context, "Subscription not available", Toast.LENGTH_LONG).show()
+                    }
+                }else{
+                    Toast.makeText(myView.context, "Error "+ billingResult.debugMessage, Toast.LENGTH_LONG).show()
+                }
+            }
+        }else{
+            Toast.makeText(myView.context, "Sorry, subscription not supported. Please update Play Store", Toast.LENGTH_LONG).show()
+        }
+
+        // Process the result.
     }
 
     private fun fetchSettingsData() {
@@ -90,6 +156,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             true-> btnActivateOrdering.isChecked = true
             false-> btnActivateOrdering.isChecked = false
         }
+    }
+
+    override fun onPurchasesUpdated(p0: BillingResult, p1: MutableList<Purchase>?) {
+
     }
 
 }

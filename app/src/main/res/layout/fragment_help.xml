@@ -61,6 +61,7 @@
             android:backgroundTint="@color/blue"
             android:text="Send"
             android:inputType="text"
+            android:textStyle="bold"
             android:textAllCaps="false"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"

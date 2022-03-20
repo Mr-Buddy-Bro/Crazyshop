@@ -35,6 +35,7 @@
         android:backgroundTint="@color/yellow"
         android:text="Verify"
         android:onClick="btnPopVarify"
+        android:textStyle="bold"
         android:id="@+id/btnVerify1"
         android:textAllCaps="false"
         android:letterSpacing="0"

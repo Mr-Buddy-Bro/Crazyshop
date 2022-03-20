@@ -101,6 +101,7 @@
             android:backgroundTint="@color/grey"
             android:letterSpacing="0"
             android:onClick="btnChooseDoc"
+            android:textStyle="bold"
             android:text="Choose"
             android:textAllCaps="false"
             android:textColor="@color/black" />
@@ -130,6 +131,7 @@
         android:text="Verify"
         android:textAllCaps="false"
         android:textColor="@color/black"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout3" />
 

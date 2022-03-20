@@ -1,7 +1,9 @@
 package com.tech2develop.crazyshop
 
 import android.R.attr.bitmap
+import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
@@ -14,6 +16,10 @@ import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -24,7 +30,7 @@ import com.tech2develop.crazyshop.ui.sellerFragments.*
 import java.io.File
 
 
-class SellerHome : AppCompatActivity() {
+class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
 
     lateinit var binding : ActivitySellerHomeBinding
     lateinit var firestore : FirebaseFirestore
@@ -36,12 +42,18 @@ class SellerHome : AppCompatActivity() {
         val eSellerDataKey = "sellerDataKey1332"
         var isDashboard = false
         lateinit var shopName : String
+        var billingClient: BillingClient? = null
+        lateinit var myContext : Activity
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySellerHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        myContext = this
+
+        billingClient = BillingClient.newBuilder(this).enablePendingPurchases().setListener(this).build()
 
         supportActionBar?.setTitle(Html.fromHtml("<font color='#000000'>Loading..</font>"))
 
@@ -158,6 +170,10 @@ class SellerHome : AppCompatActivity() {
         }else{
             finishAffinity()
         }
+
+    }
+
+    override fun onPurchasesUpdated(p0: BillingResult, p1: MutableList<Purchase>?) {
 
     }
 }

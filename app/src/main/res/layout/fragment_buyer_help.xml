@@ -59,6 +59,7 @@
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/blue"
             android:text="Send"
+            android:textStyle="bold"
             android:inputType="text"
             android:textAllCaps="false"
             android:textColor="@color/white"

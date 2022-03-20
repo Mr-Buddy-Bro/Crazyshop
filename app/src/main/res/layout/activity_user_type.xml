@@ -62,6 +62,7 @@
         android:paddingVertical="20dp"
         android:text="New Seller"
         android:textAllCaps="false"
+        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:cornerRadius="5dp"

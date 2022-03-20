@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/logo"
+            android:src="@drawable/benmart_logo2"
             tools:layout_editor_absoluteX="37dp"
             tools:layout_editor_absoluteY="130dp" />
 
