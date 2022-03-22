@@ -1,6 +1,7 @@
 package com.tech2develop.crazyshop
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -119,5 +120,17 @@ class CheckOutActivity : AppCompatActivity() {
                 }
             }
 
+    }
+
+    fun btnGoToMyOrders(view: View) {
+        val i = Intent(this,BuyerHome::class.java)
+        i.putExtra("btnType", "myOrders")
+        startActivity(i)
+        finish()
+    }
+    fun btnShopMore(view: View) {
+        val i = Intent(this,BuyerHome::class.java)
+        startActivity(i)
+        finish()
     }
 }

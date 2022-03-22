@@ -26,6 +26,7 @@
         android:layout_marginStart="20dp"
         android:text="itemName"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/ivMyOrders"
         app:layout_constraintTop_toTopOf="parent" />

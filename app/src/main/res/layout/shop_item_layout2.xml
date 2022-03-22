@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/shop_overlay"
             android:scaleType="fitXY"
-            android:backgroundTint="#5C0E00"
+            android:backgroundTint="#B71C1C"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -55,7 +55,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvShopItemName" />
 
-
+        <TextView
+            android:id="@+id/tvStoreStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="Open"
+            android:textColor="#FFF59D"
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvShopItemDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

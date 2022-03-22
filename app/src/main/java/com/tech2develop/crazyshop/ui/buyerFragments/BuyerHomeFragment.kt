@@ -105,6 +105,9 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
 
                 }
             }
+        }else{
+            Toast.makeText(view.context, "Invalid QR", Toast.LENGTH_LONG).show()
+            loadingDialog.dismiss()
         }
     }
 

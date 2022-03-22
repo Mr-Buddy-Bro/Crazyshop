@@ -47,6 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
+            android:textAlignment="center"
             android:text="You haven't added any products to show!"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"

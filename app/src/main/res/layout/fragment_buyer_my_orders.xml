@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.buyerFragments.BuyerMyOrdersFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
 
     <TextView
         android:id="@+id/textView27"
@@ -16,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:text="My Orders"
-        android:textColor="@color/black_vary"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,7 +27,8 @@
         android:layout_height="wrap_content"
         android:text="@string/all_your_orders_will_show_up_here"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textSize="14sp"
+        android:textSize="16sp"
+        android:textColor="@color/black_vary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView27" />
 

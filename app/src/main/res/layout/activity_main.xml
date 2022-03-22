@@ -6,10 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.motion.widget.MotionLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutDescription="@xml/activity_main_scene">
+        android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/imageView"
@@ -36,6 +35,7 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:cornerRadius="10dp"
+        android:textStyle="bold"
         app:icon="@drawable/ic_baseline_shop_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
@@ -53,6 +53,7 @@
         android:paddingVertical="15dp"
         android:text="Continue as Buyer"
         android:textAllCaps="false"
+        android:textStyle="bold"
         android:textColor="@color/white"
         app:cornerRadius="10dp"
         app:icon="@drawable/ic_baseline_shopping_basket_24"
@@ -75,5 +76,5 @@
         app:layout_constraintVertical_bias="0.0" />
 
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

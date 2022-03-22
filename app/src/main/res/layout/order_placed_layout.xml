@@ -57,6 +57,7 @@
                 android:textColor="#B51105"
                 android:onClick="btnGoToMyOrders"
                 android:textAllCaps="false"
+                android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
                 android:text="View your orders"/>
 
@@ -65,7 +66,8 @@
                 android:layout_height="wrap_content"
                 android:text="Shop more"
                 android:layout_marginTop="10dp"
-                android:textColor="#C51F13"
+                android:textColor="#0D47A1"
+                android:textSize="16sp"
                 android:onClick="btnShopMore"
                 android:textStyle="bold"
                 android:layout_marginBottom="40dp"

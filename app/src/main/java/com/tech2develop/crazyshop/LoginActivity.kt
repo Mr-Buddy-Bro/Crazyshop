@@ -35,11 +35,27 @@ class LoginActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(email,password).addOnCompleteListener {
                 if (it.isSuccessful){
                     if (userType.equals("seller")) {
-                        startActivity(Intent(this, SellerHome::class.java))
+                        auth.currentUser!!.reload().addOnCompleteListener {
+                            if (auth.currentUser!!.isEmailVerified){
+                                val i = Intent(this, SellerHome::class.java)
+                                startActivity(i)
+                            }else{
+                                startActivity(Intent(this, VerifyEmailActivity::class.java))
+                                finish()
+                            }
+                        }
                     }else{
-
+                        auth.currentUser!!.reload().addOnCompleteListener {
+                            if (auth.currentUser!!.isEmailVerified){
+                                val i = Intent(this, BuyerHome::class.java)
+                                startActivity(i)
+                            }else{
+                                startActivity(Intent(this, VerifyEmailActivity::class.java))
+                                finish()
+                            }
+                        }
                     }
-                    finish()
+
                 }else{
                     Toast.makeText(this,"Invalid credentials",Toast.LENGTH_LONG).show()
                 }

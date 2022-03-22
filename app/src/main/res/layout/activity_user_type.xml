@@ -27,6 +27,8 @@
         android:layout_marginTop="4dp"
         android:text="Start/Continue selling your products through Yugoo"
         android:textColor="@color/blue"
+        android:textStyle="bold"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

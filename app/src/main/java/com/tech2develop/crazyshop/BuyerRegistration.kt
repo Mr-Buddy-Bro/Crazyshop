@@ -53,7 +53,7 @@ class BuyerRegistration : AppCompatActivity() {
     }
 
     private fun uploadData() {
-        val tempFullname = etfName.text.toString() +" "+etlName
+        val tempFullname = etfName.text.toString() +" "+etlName.text
 
         val fullName = AESCrypt.encrypt(BuyerDataKey, tempFullname)
         val email = AESCrypt.encrypt(BuyerDataKey, etEmail.text.toString())
@@ -78,7 +78,16 @@ class BuyerRegistration : AppCompatActivity() {
     }
 
     private fun updateUI() {
-        val i = Intent(this, BuyerHome::class.java)
-        startActivity(i)
+
+        auth.currentUser!!.reload().addOnCompleteListener {
+            if (auth.currentUser!!.isEmailVerified){
+                val i = Intent(this, BuyerHome::class.java)
+                startActivity(i)
+            }else{
+                val i = Intent(this, VerifyEmailActivity::class.java)
+                startActivity(i)
+            }
+        }
+
     }
 }

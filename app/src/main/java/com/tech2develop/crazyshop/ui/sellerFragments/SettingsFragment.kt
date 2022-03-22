@@ -1,14 +1,15 @@
 package com.tech2develop.crazyshop.ui.sellerFragments
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.android.billingclient.api.*
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
@@ -18,12 +19,16 @@ import com.tech2develop.crazyshop.MainActivity
 import com.tech2develop.crazyshop.Models.SettingsModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedListener {
 
     lateinit var auth: FirebaseAuth
+    val TAG = "TAG"
     lateinit var firestore: FirebaseFirestore
     lateinit var btnActivateOrdering : Switch
     lateinit var tvSetCompanyName : TextView
@@ -36,17 +41,17 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
     lateinit var settDocId : String
     lateinit var btnSubscribe : MaterialButton
     var billingClient: BillingClient? = null
+    
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        myView = view
 
         auth = FirebaseAuth.getInstance()
         SellerHome.isDashboard = false
         firestore = FirebaseFirestore.getInstance()
 
         billingClient = SellerHome.billingClient
-
-        myView = view
 
         btnActivateOrdering = view.findViewById(R.id.btnActivateOrdering)
         tvSetCompanyName = view.findViewById(R.id.tvSetCompanyName)
@@ -73,6 +78,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         }
 
         fetchSettingsData()
+        if (SellerHome.subscribed){
+//            myView.findViewById<MaterialButton>(R.id.btnSubscribe).visibility = View.INVISIBLE
+            myView.findViewById<TextView>(R.id.subscriptionStatus).text = "Subscribed"
+        }else{
+//            myView.findViewById<MaterialButton>(R.id.btnSubscribe).visibility = View.VISIBLE
+            myView.findViewById<TextView>(R.id.subscriptionStatus).text = "Expired"
+        }
     }
 
     private fun onSubscribe() {
@@ -158,8 +170,25 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         }
     }
 
-    override fun onPurchasesUpdated(p0: BillingResult, p1: MutableList<Purchase>?) {
+    override fun onPurchasesUpdated(billingResult: BillingResult, purchases: MutableList<Purchase>?) {
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
+                handlePurchases(purchases)
+            }
+            else if (billingResult.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+                val queryAlreadyPurchasesResult = billingClient!!.queryPurchases(BillingClient.SkuType.SUBS)
+                val alreadyPurchases = queryAlreadyPurchasesResult.purchasesList
+                alreadyPurchases?.let { handlePurchases(it) }
+            }
+            else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
+                Toast.makeText(myView.context, "Purchase Canceled", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(myView.context, "Error " + billingResult.debugMessage, Toast.LENGTH_SHORT).show()
+            }
 
     }
 
+    private fun handlePurchases(purchases: List<Purchase>) {
+
+    }
 }

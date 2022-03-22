@@ -1,14 +1,18 @@
 package com.tech2develop.crazyshop.ui.sellerFragments
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -36,19 +40,29 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     lateinit var btnVerify1 : MaterialButton
     lateinit var chooseDoc : MaterialButton
     lateinit var submitVerify : MaterialButton
+    lateinit var btnVerifyEmail : TextView
     lateinit var dialog : Dialog
     val CHOOSE_DOC_REQ_CODE = 102
     lateinit var pop_up_view : View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        SellerHome.isDashboard = true
+
+        firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+        storage = FirebaseStorage.getInstance()
 
         dialog = Dialog(view.context)
         dialog.setContentView(R.layout.varify_popup)
         btnVerify1 = view.findViewById(R.id.btnVerify1)
-        SellerHome.isDashboard = true
+        btnVerifyEmail = dialog.findViewById(R.id.btnVerifyEmail)
+
+        dialog.findViewById<TextView>(R.id.textView65).text = auth.currentUser!!.email
+
         btnVerify1.setOnClickListener {
             btnPopVarify(view)
+            checkEmailVerified()
         }
         chooseDoc = dialog.findViewById(R.id.btnChooseDoc)
         chooseDoc.setOnClickListener {
@@ -56,18 +70,47 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         }
         submitVerify = dialog.findViewById(R.id.materialButton5)
         submitVerify.setOnClickListener {
-            submitDoc(view)
+           if(auth.currentUser!!.isEmailVerified){
+               dialog.findViewById<TextView>(R.id.textView66).visibility = View.INVISIBLE
+               if (docUri != null) {
+                   submitDoc(view)
+               }else{
+                   Toast.makeText(view.context, "Please choose a document", Toast.LENGTH_SHORT).show()
+               }
+           }else{
+               dialog.findViewById<TextView>(R.id.textView66).visibility = View.VISIBLE
+           }
+        }
+
+        btnVerifyEmail.setOnClickListener {
+            if (auth.currentUser!!.isEmailVerified){
+                Toast.makeText(view.context, "Email already verified", Toast.LENGTH_SHORT).show()
+            }else{
+                auth.currentUser!!.sendEmailVerification().addOnCompleteListener {
+                    if (it.isSuccessful){
+                        Toast.makeText(view.context, "Verification link send to ${auth.currentUser!!.email}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
 
         progress = ProgressDialog(view.context)
         progress.setTitle("Loading..")
         progress.setMessage("please wait")
-        firestore = FirebaseFirestore.getInstance()
-        auth = FirebaseAuth.getInstance()
-        storage = FirebaseStorage.getInstance()
+
         checkVerified(view)
 
+    }
 
+    @SuppressLint("ResourceAsColor")
+    fun checkEmailVerified(){
+        auth.currentUser!!.reload().addOnCompleteListener {
+            Log.d("TAG", "onResume: Checking email ${auth.currentUser!!.isEmailVerified}")
+            if (auth.currentUser!!.isEmailVerified){
+                btnVerifyEmail.text = "Verified"
+                btnVerifyEmail.setTextColor(R.color.teal_700)
+            }
+        }
     }
 
     fun submitDoc(view: View) {
@@ -77,12 +120,12 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         firestore.collection("Seller").get().addOnCompleteListener {
             if (it.isSuccessful){
                 for (doc in it.result!!){
-                    if (doc.id == user?.email){
+                    if (doc.id == user.email){
                         seller = SellerModel(doc.data.getValue("companyName").toString(),doc.data.getValue("companyDescription").toString(),
                             doc.data.getValue("fullName").toString(),
                             doc.data.getValue("email").toString(),doc.data.getValue("phoneNo").toString(),doc.data.getValue("password").toString(),
                             doc.data.getValue("audienceSize").toString(),"progress",doc.data.getValue("sellerKey").toString())
-                        firestore.collection("Seller").document(user?.email!!).set(seller).addOnCompleteListener { it1 ->
+                        firestore.collection("Seller").document(user.email!!).set(seller).addOnCompleteListener { it1 ->
                             if (it1.isSuccessful){
                                 val storageRef = storage.getReference("${seller.sellerKey}/govId")
                                 storageRef.putFile(docUri!!).addOnCompleteListener{
@@ -118,7 +161,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     }
 
     fun chooseDocu(view: View) {
-        var i = Intent(Intent.ACTION_PICK)
+        val i = Intent(Intent.ACTION_PICK)
         i.type = "image/*"
         pop_up_view = view
         startActivityForResult(i, CHOOSE_DOC_REQ_CODE)
@@ -169,5 +212,10 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     private fun showVerify(view: View) {
         progress.dismiss()
         view.findViewById<LinearLayout>(R.id.verifyCard).visibility = View.VISIBLE
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkEmailVerified()
     }
 }

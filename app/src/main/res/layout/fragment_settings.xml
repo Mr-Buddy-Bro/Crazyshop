@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Activate ordering"
+            android:textStyle="bold"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,6 +83,7 @@
                 android:layout_marginStart="30dp"
                 android:maxWidth="150dp"
                 android:singleLine="true"
+                android:textStyle="bold"
                 android:text="loading.."
                 android:textColor="@color/black_vary"
                 android:textSize="14sp" />
@@ -112,6 +114,7 @@
                 android:layout_marginStart="30dp"
                 android:maxWidth="150dp"
                 android:singleLine="true"
+                android:textStyle="bold"
                 android:text="loading.."
                 android:textColor="@color/black_vary"
                 android:textSize="14sp" />
@@ -141,6 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
                 android:maxWidth="150dp"
+                android:textStyle="bold"
                 android:singleLine="true"
                 android:text="loading.."
                 android:textColor="@color/red"
@@ -171,6 +175,7 @@
                 android:layout_marginStart="30dp"
                 android:maxWidth="150dp"
                 android:singleLine="true"
+                android:textStyle="bold"
                 android:text="loading.."
                 android:textColor="@color/black_vary"
                 android:textSize="14sp" />
@@ -261,7 +266,7 @@
 
         <TextView
             android:id="@+id/subscriptionStatus"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"

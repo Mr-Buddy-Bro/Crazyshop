@@ -73,7 +73,12 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         spinner = dialog.findViewById<Spinner>(R.id.prSpinner)
         btnSubmitPr = dialog.findViewById(R.id.btnSubmitPr)
         btnSubmitPr.setOnClickListener {
-            uploadProduct(view)
+            if(prImageUri != null){
+                uploadProduct(view)
+            }else{
+                Toast.makeText(view.context,"Please choose an image",Toast.LENGTH_LONG).show()
+            }
+
         }
         categories = ArrayList()
         btnAddProduct.setOnClickListener {
@@ -91,6 +96,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
 
     private fun getProducts(view: View) {
         productList = ArrayList()
+        productList.clear()
         firestore.collection("Seller").document(auth.currentUser?.email.toString()).collection("Products").get().addOnCompleteListener {
             if (it.isSuccessful){
                 for (doc in it.result!!){
@@ -116,7 +122,6 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
 
         progress.setTitle("Please wait")
         progress.setMessage("Adding product..")
-        progress.show()
         val itemName = dialog.findViewById<EditText>(R.id.etPrName).text.toString()
         val itemDesc = dialog.findViewById<EditText>(R.id.etPrDesc).text.toString()
         val itemPrice = dialog.findViewById<EditText>(R.id.etPrPrice).text.toString()
@@ -130,9 +135,12 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         }else if(itemName.isEmpty() || itemDesc.isEmpty() || itemPrice.isEmpty()){
                 Toast.makeText(view.context,"Please fill all the details",Toast.LENGTH_LONG).show()
         }else{
+            progress.show()
             firestore.collection("Seller").document(auth.currentUser?.email.toString()).collection("Products").add(product).addOnSuccessListener {
                 progress.dismiss()
                 Toast.makeText(view.context,"New product added",Toast.LENGTH_LONG).show()
+                dialog.dismiss()
+                getProducts(view)
             }.addOnFailureListener {
                 progress.dismiss()
                 dialog.dismiss()

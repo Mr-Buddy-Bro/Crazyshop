@@ -9,17 +9,17 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Html
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toolbar
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingResult
-import com.android.billingclient.api.Purchase
-import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.*
+import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -28,12 +28,14 @@ import com.scottyab.aescrypt.AESCrypt
 import com.tech2develop.crazyshop.databinding.ActivitySellerHomeBinding
 import com.tech2develop.crazyshop.ui.sellerFragments.*
 import java.io.File
+import java.util.*
 
 
 class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
 
     lateinit var binding : ActivitySellerHomeBinding
     lateinit var firestore : FirebaseFirestore
+    lateinit var drawerLayout : DrawerLayout
 
     companion object{
         lateinit var storage : FirebaseStorage
@@ -41,6 +43,7 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
         lateinit var shopId : String
         val eSellerDataKey = "sellerDataKey1332"
         var isDashboard = false
+        var subscribed = false
         lateinit var shopName : String
         var billingClient: BillingClient? = null
         lateinit var myContext : Activity
@@ -55,14 +58,12 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
 
         billingClient = BillingClient.newBuilder(this).enablePendingPurchases().setListener(this).build()
 
-        supportActionBar?.setTitle(Html.fromHtml("<font color='#000000'>Loading..</font>"))
-
         updateFragment(DashboardFragment())
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
 
-        val drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
+        drawerLayout = findViewById<DrawerLayout>(R.id.drawer_layout)
 
         binding.navView.setNavigationItemSelectedListener {
             when(it.itemId){
@@ -126,7 +127,7 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
                         val email = doc.data.getValue("email").toString()
                         val decShopName = AESCrypt.decrypt(eSellerDataKey, shopName)
                         val decEmail = AESCrypt.decrypt(eSellerDataKey, email)
-                        supportActionBar?.setTitle(Html.fromHtml("<font color='#000000'>${decShopName}</font>"))
+                        binding.tvToolbarTitle.text = decShopName
                         binding.navView.getHeaderView(0).findViewById<TextView>(R.id.navName).text = decShopName
                         binding.navView.getHeaderView(0).findViewById<TextView>(R.id.textView).text = decEmail
                         setHeaderGraphics()
@@ -135,6 +136,44 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
                 }
             }
         }
+        checkSubscription()
+    }
+
+    private fun checkSubscription() {
+        billingClient =
+            BillingClient.newBuilder(this).enablePendingPurchases().setListener(this).build()
+        billingClient!!.startConnection(object : BillingClientStateListener {
+            override fun onBillingSetupFinished(billingResult: BillingResult) {
+                val purchasesResult = billingClient!!.queryPurchases(BillingClient.SkuType.SUBS)
+                billingClient!!.queryPurchaseHistoryAsync(
+                    BillingClient.SkuType.SUBS
+                ) { billingResult1: BillingResult, list: List<PurchaseHistoryRecord?>? ->
+                    Log.d(
+                        "TAG",
+                        "purchasesResult.getPurchasesList():" + purchasesResult.purchasesList
+                    )
+                    if (billingResult1.responseCode == BillingClient.BillingResponseCode.OK &&
+                        !Objects.requireNonNull(purchasesResult.purchasesList).isEmpty()
+                    ) {
+
+                        //here you can pass the user to use the app because he has an active subscription
+                        updatetoSubscribed(purchasesResult.purchasesList)
+
+                    }
+                }
+            }
+
+            override fun onBillingServiceDisconnected() {
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+                Log.d("TAG", "onBillingServiceDisconnected")
+            }
+        })
+    }
+
+    private fun updatetoSubscribed(purchasesList: MutableList<Purchase>?) {
+
+        subscribed = true
 
     }
     fun setHeaderGraphics(){
@@ -163,8 +202,6 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-
         if(!isDashboard){
             updateFragment(DashboardFragment())
         }else{
@@ -174,6 +211,15 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
     }
 
     override fun onPurchasesUpdated(p0: BillingResult, p1: MutableList<Purchase>?) {
+
+    }
+
+    fun btnNavigationIcon(view: View) {
+        if (!drawerLayout.isOpen){
+            drawerLayout.openDrawer(binding.navView)
+        }else{
+            drawerLayout.closeDrawer(binding.navView)
+        }
 
     }
 }

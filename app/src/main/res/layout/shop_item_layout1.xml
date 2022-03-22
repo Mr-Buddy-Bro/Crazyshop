@@ -28,7 +28,7 @@
             android:layout_marginEnd="80dp"
             android:background="@drawable/shop_overlay"
             android:scaleType="fitXY"
-            android:backgroundTint="#002853"
+            android:backgroundTint="#311B92"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="32dp"
             android:text="Shop name"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -55,9 +55,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvShopItemName" />
 
+        <TextView
+            android:id="@+id/tvStoreStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:text="Open"
+            android:textColor="#FFF59D"
+            android:textSize="16sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvShopItemDescription" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 </androidx.cardview.widget.CardView>

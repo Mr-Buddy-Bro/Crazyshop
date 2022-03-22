@@ -15,6 +15,7 @@
         android:layout_marginVertical="10dp"
         android:maxWidth="300dp"
         android:singleLine="true"
+        android:textStyle="bold"
         android:text="category name"
         android:textColor="@color/black_vary"
         android:textSize="18sp"
@@ -31,7 +32,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/black" />
+        app:tint="@color/blue" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

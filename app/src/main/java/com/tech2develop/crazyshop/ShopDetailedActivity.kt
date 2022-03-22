@@ -81,7 +81,7 @@ class ShopDetailedActivity : AppCompatActivity() {
 
         storageRef.getFile(localImage).addOnSuccessListener {
             val bitmapImage1 = BitmapFactory.decodeFile(localImage.absolutePath)
-
+            loadingDialog.dismiss()
             ivIcon.setImageBitmap(bitmapImage1)
         }
 
@@ -90,7 +90,7 @@ class ShopDetailedActivity : AppCompatActivity() {
 
         storageRef1.getFile(localImage1).addOnSuccessListener {
             val bitmapImage = BitmapFactory.decodeFile(localImage1.absolutePath)
-
+            loadingDialog.dismiss()
             ivBanner.setImageBitmap(bitmapImage)
         }
         tvShopName.text = shop.companyName
@@ -129,7 +129,6 @@ class ShopDetailedActivity : AppCompatActivity() {
     }
 
     private fun setAdapter(list: ArrayList<ProductModel>) {
-        loadingDialog.dismiss()
         val adapter = ShopProductsAdapter(this,list)
         val rv = findViewById<RecyclerView>(R.id.rvShopProducts)
         rv.adapter = adapter

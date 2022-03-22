@@ -7,14 +7,23 @@
     android:layout_marginBottom="5dp"
     android:layout_height="wrap_content">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
     <ImageView
         android:id="@+id/ivOrderImage"
         android:layout_width="50dp"
         android:scaleType="fitXY"
         android:layout_height="50dp"
-        android:background="@color/black_vary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:background="@color/black_vary" />
+
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tvOrderName"
@@ -26,7 +35,7 @@
         android:textColor="@color/black_vary"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ivOrderImage"
+        app:layout_constraintStart_toEndOf="@+id/cardView2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.521" />
 

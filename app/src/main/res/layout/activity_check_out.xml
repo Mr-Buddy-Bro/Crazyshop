@@ -189,6 +189,7 @@
         android:layout_marginTop="10dp"
         android:text="* Pay on delivery"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView29" />
@@ -204,6 +205,7 @@
         android:text="Place order"
         android:textAllCaps="false"
         android:textSize="16sp"
+        android:textStyle="bold"
         app:cornerRadius="5dp"
         app:icon="@drawable/ic_baseline_shopping_basket_24"
         app:layout_constraintBottom_toBottomOf="parent"
