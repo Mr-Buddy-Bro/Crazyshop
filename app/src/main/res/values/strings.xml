@@ -3,14 +3,12 @@
     <string name="title_activity_seller_home">BenMart</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_slideshow" translatable="false">Slideshow</string>
     <string name="dashboard">Dashboard</string>
     <string name="products">Products</string>
     <string name="feedbacks">Feedbacks</string>
@@ -19,8 +17,7 @@
     <string name="categories">Categories</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="home_txt">Home</string>
     <string name="cart_txt">Wish list</string>
     <string name="my_orders_txt">My orders</string>
@@ -29,12 +26,99 @@
     <string name="add_shop_pop_message">Enter the shop ID / Scan QR to add the shop to your home so you can start purchasing online from the store</string>
     <string name="continue_check">Continue</string>
     <string name="all_your_orders_will_show_up_here">All your orders will show up here</string>
+    <string name="new_buyer">New Buyer</string>
+    <string name="new_buyer_sub">Join with us to start digital shopping from your favourite shops</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="email_id">Email id</string>
+    <string name="password">Password</string>
+    <string name="re_password">Re-password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="checkout">Checkout</string>
+    <string name="item_price">Item price :</string>
+    <string name="delivery_charge">Delivery charge :</string>
+    <string name="total_amount">Total amount :</string>
+    <string name="payment_method">Payment method</string>
+    <string name="pay_on_delivery">* Pay on delivery</string>
+    <string name="place_order">Place order</string>
+    <string name="audience_size">Audience size</string>
+    <string name="small_nless_than_500_monthly_customers">Small\nless than 500 monthly customers</string>
+    <string name="standard_n500_to_5000_monthly_customers">Standard\n500 to 5000 monthly customers</string>
+    <string name="large_ngreater_than_5000_monthly_customers">Large\ngreater than 5000 monthly customers</string>
+    <string name="next">Next</string>
+    <string name="choose_user_audience_customers_size_per_month">Choose user Audience/Customers size per month</string>
+    <string name="enter_delivery_address">Enter delivery address</string>
+    <string name="new_addres_desc">Item will be delivered to the following address. This will be your permanent delivery address</string>
+    <string name="mobile">Mobile</string>
+    <string name="house_name">House name</string>
+    <string name="house_number">House number</string>
+    <string name="landmark">Landmark</string>
+    <string name="please_make_sure_all_the_details_are_correct">(please make sure all the details are correct)</string>
+    <string name="save_address">Save address</string>
+    <string name="continue_as_seller">Continue as Seller</string>
+    <string name="continue_as_buyer">Continue as Buyer</string>
+    <string name="powered_by_tech2develop">Powered by Tech2Develop</string>
+    <string name="details">DETAILS</string>
+    <string name="flower">flower</string>
+    <string name="price">Price</string>
+    <string name="add_to_wish_list">Add to Wish list</string>
+    <string name="shop_temporarily_disable_receiving_new_orders">Shop temporarily disable receiving new orders</string>
+    <string name="new_seller">New seller</string>
+    <string name="register_your_shop_store_is_important_to_start_selling">Register your shop/store is important to start selling</string>
+    <string name="company_name">Company name</string>
+    <string name="company_description">Company description</string>
+    <string name="your_full_name">Your full name</string>
+    <string name="enter_a_password">Enter a password</string>
+    <string name="re_enter_password">Re-enter password</string>
+    <string name="graphics">Graphics</string>
+    <string name="graph_dec">Upload your shop Icon and Banner to make your shop Outstanding.</string>
+    <string name="shop_banner">Shop Banner</string>
+    <string name="choose">Choose</string>
+    <string name="choose_an_image_to_set_as_shop_banner_n_preferred_resolution_is_1280_720">Choose an image to set as shop Banner\n Preferred resolution is 1280*720</string>
+    <string name="shop_icon">Shop Icon</string>
+    <string name="choose_an_image_to_set_as_shop_icon_n_preferred_resolution_is_512x512">Choose an image to set as shop Icon\n Preferred resolution is 512x512</string>
+    <string name="submit">Submit</string>
+    <string name="log_in">Log In</string>
+    <string name="login_to_your_existing_account">Login to your existing account</string>
+    <string name="forgot_password">forgot password?</string>
+    <string name="search">search</string>
+    <string name="apply">Apply</string>
+    <string name="seller_mode">Seller mode</string>
+    <string name="start_continue_selling_your_products_through_yugoo">Start/Continue selling your products through Yugoo</string>
+    <string name="existing_seller">Existing Seller</string>
+    <string name="verify_your_email">Verify your Email</string>
+    <string name="a_verification_link_is_send_to_your_email_address">A verification link is send to your email address</string>
+    <string name="new_category">New category</string>
+    <string name="category_name">Category name</string>
+    <string name="you_can_add_products_to_this_category">You can add products to this category</string>
+    <string name="add_category">Add category</string>
+    <string name="new_product">New Product</string>
+    <string name="add_new_product_to_your_shop">add new product to your shop</string>
+    <string name="image">Image</string>
+    <string name="select">Select</string>
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="add">Add</string>
+    <string name="add_shop_to_your_home">Add shop to your home</string>
+    <string name="scan">Scan</string>
+    <string name="or">OR</string>
+    <string name="shop_id">Shop ID</string>
+    <string name="change_company_name">Change company name</string>
+    <string name="change_company_name_dec">your stores name will be changed. Your customers will see the new name of your shop.</string>
+    <string name="new_name">New name</string>
+    <string name="save_change">Save change</string>
+    <string name="change_delivery_time">Change delivery time</string>
+    <string name="set_your_daily_delivery_time">Set your daily delivery time</string>
+    <string name="search_shop">Search shop..</string>
+    <string name="add_shop">Add shop</string>
+    <string name="overview_of_your_shop_in_a_single_tab">Overview of your shop in a single tab</string>
+    <string name="un_delivered">Un-delivered</string>
+    <string name="delivered">Delivered</string>
+
 
     <string-array name="allOrdersDurationList">
         <item>Today</item>
-        <item>Last 7 days</item>
-        <item>Last 30 days</item>
-        <item>Last 360 days</item>
+        <item>Custom</item>
         <item>Lifetime</item>
     </string-array>
 

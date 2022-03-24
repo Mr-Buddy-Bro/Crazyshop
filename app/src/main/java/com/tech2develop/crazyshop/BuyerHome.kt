@@ -1,13 +1,17 @@
 package com.tech2develop.crazyshop
 
 import android.Manifest
+import android.app.Dialog
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Html
+import android.view.Gravity
 import android.view.View
+import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -19,6 +23,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.scottyab.aescrypt.AESCrypt
 import com.tech2develop.crazyshop.ui.buyerFragments.*
 
+
 class BuyerHome : AppCompatActivity() {
 
     lateinit var firestore : FirebaseFirestore
@@ -27,6 +32,8 @@ class BuyerHome : AppCompatActivity() {
     lateinit var drawerLayout : DrawerLayout
     lateinit var buyerName : String
     var btnType : String? = null
+    lateinit var btnSearchBuyerHome : ImageView
+    lateinit var searchDialog : Dialog
 
     companion object{
         lateinit var storage : FirebaseStorage
@@ -44,6 +51,10 @@ class BuyerHome : AppCompatActivity() {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAM_PERM_REQ_CODE)
         }
 
+        searchDialog = Dialog(this)
+        searchDialog.setContentView(R.layout.search_dialog_layout)
+        searchDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+        searchDialog.window!!.setWindowAnimations(R.style.AnimationWindowForSearchDialog)
         btnType = intent.getStringExtra("btnType")
 
         if (btnType != null){
@@ -59,6 +70,16 @@ class BuyerHome : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
         navView = findViewById(R.id.buyerNavView)
+        btnSearchBuyerHome = findViewById(R.id.btnSearchBuyerHome)
+
+        btnSearchBuyerHome.setOnClickListener {
+            val window = searchDialog.window
+            val wlp = window!!.attributes
+            wlp.gravity = Gravity.TOP
+            wlp.flags = wlp.flags and WindowManager.LayoutParams.FLAG_DIM_BEHIND.inv()
+            window.attributes = wlp
+            searchDialog.show()
+        }
 
         firestore.collection("Buyer").get().addOnCompleteListener {
             if (it.isSuccessful){

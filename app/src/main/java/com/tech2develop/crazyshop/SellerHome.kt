@@ -53,7 +53,6 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
         super.onCreate(savedInstanceState)
         binding = ActivitySellerHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         myContext = this
 
         billingClient = BillingClient.newBuilder(this).enablePendingPurchases().setListener(this).build()
@@ -81,9 +80,6 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
                 }
                 R.id.nav_settings->{
                     updateFragment(SettingsFragment())
-                }
-                R.id.nav_feedbacks->{
-                    updateFragment(FeedbackFragment())
                 }
                 R.id.nav_help->{
                     updateFragment(Help_and_feedbackFragment())

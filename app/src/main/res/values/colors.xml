@@ -16,4 +16,5 @@
     <color name="black_vary">#BA000000</color>
     <color name="yellow">#FFC107</color>
     <color name="trans">#00000000</color>
+    <color name="light_blue">#FFE9F6FF</color>
 </resources>

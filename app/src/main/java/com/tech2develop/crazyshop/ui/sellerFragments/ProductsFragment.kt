@@ -2,20 +2,16 @@ package com.tech2develop.crazyshop.ui.sellerFragments
 
 import android.app.Dialog
 import android.app.ProgressDialog
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
-import android.graphics.ImageDecoder
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.text.format.Formatter
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toFile
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,7 +31,6 @@ import kotlinx.coroutines.withContext
 import me.shouheng.compress.Compress
 import me.shouheng.compress.concrete
 import me.shouheng.compress.strategy.config.ScaleMode
-import java.io.File
 import java.util.*
 
 class ProductsFragment : Fragment(R.layout.fragment_products) {
@@ -53,25 +48,30 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
     var prImageUri: Uri? = null
     lateinit var progress: ProgressDialog
     lateinit var productList : ArrayList<ProductModel>
-    lateinit var originalImage : File
-    lateinit var compressedImage : File
+    lateinit var loadingDialog : Dialog
     lateinit var myContext : Context
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         myContext = view.context
+
+        loadingDialog = Dialog(view.context)
+        loadingDialog.setContentView(R.layout.loading_layout)
 
         btnAddProduct = view.findViewById(R.id.materialButton6)
         progress = ProgressDialog(view.context)
         dialog = Dialog(view.context)
         dialog.setContentView(R.layout.add_product_pop_up)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+        dialog.window!!.setWindowAnimations(R.style.AnimationWindowForAddShopDialog)
+
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
         SellerHome.isDashboard = false
         spinner = dialog.findViewById<Spinner>(R.id.prSpinner)
         btnSubmitPr = dialog.findViewById(R.id.btnSubmitPr)
+
         btnSubmitPr.setOnClickListener {
             if(prImageUri != null){
                 uploadProduct(view)
@@ -95,9 +95,11 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
     }
 
     private fun getProducts(view: View) {
+        loadingDialog.show()
         productList = ArrayList()
         productList.clear()
         firestore.collection("Seller").document(auth.currentUser?.email.toString()).collection("Products").get().addOnCompleteListener {
+            loadingDialog.dismiss()
             if (it.isSuccessful){
                 for (doc in it.result!!){
                     val product = ProductModel(doc.data.getValue("name").toString(),doc.data.getValue("description").toString(),
@@ -155,7 +157,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
 
     private fun getCatergories(view: View) {
 
-        categories.add(" -- Select -- ")
+        categories.add(" -- Select category -- ")
         firestore.collection("Seller").document(auth.currentUser?.email.toString())
             .collection("Categories").get().addOnCompleteListener {
                 Log.d("TAG", "getCatergories: Cat Completed ${it.result!!.size()}")

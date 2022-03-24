@@ -30,10 +30,6 @@
         <item android:title="Info">
                 <menu>
                         <item
-                            android:id="@+id/nav_feedbacks"
-                            android:icon="@drawable/ic_feedback"
-                            android:title="@string/feedbacks" />
-                        <item
                             android:id="@+id/nav_help"
                             android:icon="@drawable/ic_baseline_help_outline_24"
                             android:title="@string/help_and_feedback" />

@@ -29,6 +29,15 @@ class MainActivity : AppCompatActivity(){
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (lastLoginAs.equals("Seller") && auth.currentUser != null){
+            startActivity(Intent(this, SellerHome::class.java))
+        }else if (lastLoginAs.equals("Buyer") && auth.currentUser != null){
+            startActivity(Intent(this, BuyerHome::class.java))
+        }
+    }
+
     fun btnSeller(view: android.view.View) {
         if (lastLoginAs.equals("Buyer") && auth.currentUser != null){
                 Toast.makeText(this, "Please logout from Buyer account before, to start Seller mode", Toast.LENGTH_LONG).show()

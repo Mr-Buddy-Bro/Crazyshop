@@ -1,14 +1,16 @@
 package com.tech2develop.crazyshop.ui.sellerFragments
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.app.Dialog
+import android.app.TimePickerDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.Switch
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.android.billingclient.api.*
 import com.google.android.material.button.MaterialButton
@@ -38,10 +40,25 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
     lateinit var ivSetIcon : ImageView
     lateinit var ivSetBanner : ImageView
     lateinit var myView : View
+    lateinit var loadingDialog : Dialog
+    lateinit var cNameChangeDialog: Dialog
+    lateinit var dTimeChangeDialog: Dialog
     lateinit var settDocId : String
     lateinit var btnSubscribe : MaterialButton
+
+    lateinit var deliveFromHour : String
+    lateinit var deliveFromMin : String
+    lateinit var deliveFromNoon : String
+
+    lateinit var deliveToHour : String
+    lateinit var deliveToMin : String
+    lateinit var deliveToNoon : String
+
+    lateinit var btnChooseFromTime : MaterialButton
+    lateinit var btnChooseToTime : MaterialButton
+    lateinit var btnSaveDeliveryTime : MaterialButton
+
     var billingClient: BillingClient? = null
-    
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,6 +67,34 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         auth = FirebaseAuth.getInstance()
         SellerHome.isDashboard = false
         firestore = FirebaseFirestore.getInstance()
+
+        dTimeChangeDialog = Dialog(view.context)
+        dTimeChangeDialog.setContentView(R.layout.change_delivery_time_layout)
+
+        btnChooseFromTime = dTimeChangeDialog.findViewById(R.id.materialButton9)
+        btnChooseToTime = dTimeChangeDialog.findViewById(R.id.materialButton8)
+        btnSaveDeliveryTime = dTimeChangeDialog.findViewById(R.id.btnSaveDeliveryTime)
+
+        btnChooseFromTime.setOnClickListener {
+            val cal = Calendar.getInstance()
+
+            val timeSetListener = TimePickerDialog.OnTimeSetListener{ timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+
+                btnChooseFromTime.text = SimpleDateFormat("HH:mm xm").format(cal.time)
+            }
+//            DatePickerDialog(view.context, timeSetListener,
+//                cal.get(Calendar.YEAR),
+//                cal.get(Calendar.MONTH),
+//                cal.get(Calendar.DAY_OF_MONTH)).show()
+        }
+
+        loadingDialog = Dialog(view.context)
+        loadingDialog.setContentView(R.layout.loading_layout)
+
+        cNameChangeDialog = Dialog(view.context)
+        cNameChangeDialog.setContentView(R.layout.et_company_name_layout)
 
         billingClient = SellerHome.billingClient
 
@@ -75,6 +120,33 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         view.findViewById<MaterialButton>(R.id.btnLogOut).setOnClickListener {
             auth.signOut()
             startActivity(Intent(view.context, MainActivity::class.java))
+        }
+
+        tvSetCompanyName.setOnClickListener {
+            cNameChangeDialog.show()
+        }
+
+        cNameChangeDialog.findViewById<MaterialButton>(R.id.btnChangeCName).setOnClickListener {
+            val etNewName = cNameChangeDialog.findViewById<EditText>(R.id.etChangeCName)
+            if (etNewName.text.toString().equals("") || etNewName.text == null){
+                Toast.makeText(myView.context, "Please enter a new Company name", Toast.LENGTH_LONG).show()
+            }else{
+                loadingDialog.show()
+                val newName = AESCrypt.encrypt(SellerHome.eSellerDataKey,etNewName.text.toString())
+                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).update("companyName", newName).addOnCompleteListener {
+                    loadingDialog.dismiss()
+                    if (it.isSuccessful){
+                        Toast.makeText(myView.context, "Company name changed to $newName", Toast.LENGTH_LONG).show()
+                        cNameChangeDialog.dismiss()
+                        val i = Intent(myView.context, SellerHome::class.java)
+                        myView.context.startActivity(i)
+                    }
+                }
+            }
+        }
+
+        tvSetDeliveryTime.setOnClickListener {
+            dTimeChangeDialog.show()
         }
 
         fetchSettingsData()
@@ -141,9 +213,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
     }
 
     private fun fetchSettingsData() {
+        loadingDialog.show()
         var setting : SettingsModel
         firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("Settings").get()
             .addOnCompleteListener {
+                loadingDialog.dismiss()
                 if (it.isSuccessful){
                     for (doc in it.result!!){
                         settDocId = doc.id
@@ -164,6 +238,10 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         tvSetDeliveryCharge.text = "Rs. "+setting.deliveryCharge
         tvSetOrderingTime.text = setting.orderingTime
         Log.d("TAG", setting.active.toString())
+
+//        val fH = setting.deliveryTime!!.toString().subString(0,2)
+//        Log.d("TAG", "displaySetting: $fH")
+
         when(setting.active){
             true-> btnActivateOrdering.isChecked = true
             false-> btnActivateOrdering.isChecked = false

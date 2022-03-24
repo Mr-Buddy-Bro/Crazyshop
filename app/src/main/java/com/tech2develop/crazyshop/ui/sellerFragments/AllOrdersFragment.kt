@@ -1,8 +1,13 @@
 package com.tech2develop.crazyshop.ui.sellerFragments
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Spinner
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +18,7 @@ import com.tech2develop.crazyshop.Models.OrderModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
 import java.util.*
+import javax.xml.datatype.DatatypeConstants.MONTHS
 import kotlin.collections.ArrayList
 
 
@@ -22,6 +28,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
     lateinit var spType: Spinner
     lateinit var firestore : FirebaseFirestore
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ordersList = ArrayList()
@@ -39,15 +46,14 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     fun fetchOrders(view: View) {
         ordersList.clear()
         var duration = ""
         var type = ""
         when (spDuration.selectedItem.toString()) {
             "Today" -> duration = "Today"
-            "Last 7 days" -> duration = "Last 7 days"
-            "Last 30 days" -> duration = "Last 30 days"
-            "Last 360 days" -> duration = "Last 360 days"
+            "Custom" -> duration = "Custom"
             "Lifetime" -> duration = "Lifetime"
 
         }
@@ -60,19 +66,81 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
         getOrders(view, duration, type)
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     private fun getOrders(view: View, duration: String, type: String) {
-        val calendar = Calendar.getInstance().time
-        val currentDate = calendar.date.toString()
-        if (duration.equals("Today") && type.equals("Un-delivered")) {
+        val calendar = Calendar.getInstance()
+        val currentDate = "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH)+1}/${calendar.get(Calendar.YEAR)}"
+
+        if (duration.equals("Today")) {
             firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
                 .collection("All orders").get().addOnCompleteListener {
                     if (it.isSuccessful) {
+                        ordersList.clear()
                         for (doc in it.result!!) {
                             val orderDate = doc.data.getValue("date").toString()
                             val status = doc.data.getValue("deliveryStatus").toString()
-                            val date = orderDate.substringBefore("/")
-                            if (date.equals(currentDate) && type.equals(status)) {
-                                var order = OrderModel(
+
+                            if (orderDate.equals(currentDate) && (type.equals(status) || type.equals("ALL"))) {
+                                val order = OrderModel(
+                                    doc.data.getValue("itemName").toString(),
+                                    null,
+                                    doc.data.getValue("itemPrice").toString(),
+                                    doc.data.getValue("deliveryStatus").toString(),
+                                    doc.data.getValue("shopName").toString(),
+                                    doc.data.getValue("date").toString(), null, null)
+                                ordersList.add(order)
+                            }
+                        }
+                        setAdapter(view)
+                    }
+                }
+        }
+        else if (duration.equals("Lifetime")) {
+            firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
+                .collection("All orders").get().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        ordersList.clear()
+                        for (doc in it.result!!) {
+                            val status = doc.data.getValue("deliveryStatus").toString()
+
+                            if ((type.equals(status) || type.equals("ALL"))) {
+                                val order = OrderModel(
+                                    doc.data.getValue("itemName").toString(),
+                                    null,
+                                    doc.data.getValue("itemPrice").toString(),
+                                    doc.data.getValue("deliveryStatus").toString(),
+                                    doc.data.getValue("shopName").toString(),
+                                    doc.data.getValue("date").toString(), null, null)
+                                ordersList.add(order)
+                            }
+                        }
+                        setAdapter(view)
+                    }
+                }
+        }
+        else if (duration.equals("Custom")) {
+
+            val c = Calendar.getInstance()
+            val year = c.get(Calendar.YEAR)
+            val month = c.get(Calendar.MONTH)
+            val day = c.get(Calendar.DAY_OF_MONTH)
+
+            val dpd = DatePickerDialog(view.context, DatePickerDialog.OnDateSetListener { view1, year1, monthOfYear, dayOfMonth ->
+
+                // Display Selected date in textbox
+                Log.d("TAG", "$dayOfMonth/${monthOfYear+1}/$year")
+                val choosenDate = "$dayOfMonth/${monthOfYear+1}/$year1"
+
+            firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
+                .collection("All orders").get().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        ordersList.clear()
+                        for (doc in it.result!!) {
+                            val status = doc.data.getValue("deliveryStatus").toString()
+                            val orderDate = doc.data.getValue("date").toString()
+
+                            if ((type.equals(status) || type.equals("ALL")) && orderDate.equals(choosenDate)) {
+                                val order = OrderModel(
                                     doc.data.getValue("itemName").toString(),
                                     null,
                                     doc.data.getValue("itemPrice").toString(),
@@ -86,265 +154,8 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                     }
                 }
 
-        } else if (duration.equals("Last 7 days") && type.equals("Un-delivered")) {
-            firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
-                .collection("All orders").get().addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        for (doc in it.result!!) {
-                            val orderDate = doc.data.getValue("date").toString()
-                            val status = doc.data.getValue("deliveryStatus").toString()
-                            val date = orderDate.substringBefore("/")
-                            val monthstart = orderDate.substringAfter("/")
-                            val month = monthstart.substringBefore("/").toInt()
-                            var endDate = currentDate.toInt() - 7
-                            var endMonth = 0
-                            when (calendar.month) {
-                                0 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                1 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                2 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 28 + endDate
-                                    }
-                                }
-                                3 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                4 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 30 + endDate
-                                    }
-                                }
-                                5 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                6 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 30 + endDate
-                                    }
-                                }
-                                7 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                8 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                9 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 30 + endDate
-                                    }
-                                }
-                                10 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                11 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 30 + endDate
-                                    }
-                                }
-
-                            }
-                            if (calendar.month + 1 == endMonth) {
-                                if (date.toInt() <= currentDate.toInt() && date.toInt() >= endDate) {
-                                    if (type.equals(status)) {
-                                        var order = OrderModel(
-                                            doc.data.getValue("itemName").toString(),
-                                            null,
-                                            doc.data.getValue("itemPrice").toString(),
-                                            doc.data.getValue("deliveryStatus").toString()
-                                        ,doc.data.getValue("shopName").toString(),
-                                            doc.data.getValue("date").toString(),null, null)
-                                        ordersList.add(order)
-                                    }
-                                }
-                            } else if (date.toInt() <= currentDate.toInt() && calendar.month + 1 >= month) {
-                                if (type.equals(status)) {
-                                    var order = OrderModel(
-                                        doc.data.getValue("itemName").toString(),
-                                        null,
-                                        doc.data.getValue("itemPrice").toString(),
-                                        doc.data.getValue("deliveryStatus").toString()
-                                    ,doc.data.getValue("shopName").toString(),
-                                        doc.data.getValue("date").toString(),null, null)
-                                    ordersList.add(order)
-                                }
-                            }
-                        }
-                        setAdapter(view)
-                    }
-                }
-        } else if (duration.equals("Last 30 days") && type.equals("Un-delivered")) {
-           firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
-                .collection("All orders").get().addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        for (doc in it.result!!) {
-                            val orderDate = doc.data.getValue("date").toString()
-                            val status = doc.data.getValue("deliveryStatus").toString()
-                            val monthstart = orderDate.substringAfter("/")
-                            val month = monthstart.substringBefore("/").toInt()
-                            if ( month <= (calendar.month + 1) && month > (calendar.month - 1)) {
-                                    if (type.equals(status)) {
-                                        var order = OrderModel(
-                                            doc.data.getValue("itemName").toString(),
-                                            null,
-                                            doc.data.getValue("itemPrice").toString(),
-                                            doc.data.getValue("deliveryStatus").toString()
-                                        ,doc.data.getValue("shopName").toString(),
-                                            doc.data.getValue("date").toString(),null, null)
-                                        ordersList.add(order)
-                                    }
-                            }
-                        }
-                        setAdapter(view)
-                    }
-                }
-        } else if (duration.equals("Last 7 days") && type.equals("Delivered")) {
-            firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
-                .collection("All orders").get().addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        for (doc in it.result!!) {
-                            val orderDate = doc.data.getValue("date").toString()
-                            val status = doc.data.getValue("deliveryStatus").toString()
-                            val date = orderDate.substringBefore("/")
-                            val monthstart = orderDate.substringAfter("/")
-                            val month = monthstart.substringBefore("/").toInt()
-                            var endDate = currentDate.toInt() - 7
-                            var endMonth = 0
-                            when (calendar.month) {
-                                0 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                1 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                2 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 28 + endDate
-                                    }
-                                }
-                                3 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                4 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 30 + endDate
-                                    }
-                                }
-                                5 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                6 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 30 + endDate
-                                    }
-                                }
-                                7 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                8 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                9 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 30 + endDate
-                                    }
-                                }
-                                10 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 31 + endDate
-                                    }
-                                }
-                                11 -> {
-                                    if (calendar.date <= 7) {
-                                        endMonth = calendar.month
-                                        endDate = 30 + endDate
-                                    }
-                                }
-
-                            }
-                            if (calendar.month + 1 == endMonth) {
-                                if (date.toInt() <= currentDate.toInt() && date.toInt() >= endDate) {
-                                    if (type.equals(status)) {
-                                        var order = OrderModel(
-                                            doc.data.getValue("itemName").toString(),
-                                            null,
-                                            doc.data.getValue("itemPrice").toString(),
-                                            doc.data.getValue("deliveryStatus").toString(),doc.data.getValue("shopName").toString(),
-                                            doc.data.getValue("date").toString(),null, null
-                                        )
-                                        ordersList.add(order)
-                                        break
-                                    }
-                                }
-                            } else if (date.toInt() <= currentDate.toInt() && calendar.month + 1 >= month) {
-                                if (type.equals(status)) {
-                                    var order = OrderModel(
-                                        doc.data.getValue("itemName").toString(),
-                                        null,
-                                        doc.data.getValue("itemPrice").toString(),
-                                        doc.data.getValue("deliveryStatus").toString(),
-                                        doc.data.getValue("shopName").toString(),
-                                        doc.data.getValue("date").toString(),null, null
-                                    )
-                                    ordersList.add(order)
-                                }
-                            }
-                        }
-                        setAdapter(view)
-                    }
-                }
+            }, year, month, day)
+            dpd.show()
         }
     }
 

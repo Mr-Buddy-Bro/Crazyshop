@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -65,6 +66,8 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
 
         dialog = Dialog(view.context)
         dialog.setContentView(R.layout.add_shop_dialog)
+        dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+        dialog.window!!.setWindowAnimations(R.style.AnimationWindowForAddShopDialog)
 
         getAllShops(view)
 

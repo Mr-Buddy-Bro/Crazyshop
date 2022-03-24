@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
+    android:background="@drawable/fragment_container_bg"
     android:scrollbars="none"
     tools:context=".ui.buyerFragments.BuyerHomeFragment">
 
@@ -77,7 +78,7 @@
             android:layout_marginTop="44dp"
             android:layout_marginEnd="16dp"
             android:backgroundTint="@color/blue"
-            android:text="Add shop"
+            android:text="@string/add_shop"
             android:textStyle="bold"
             android:textAllCaps="false"
             android:textColor="@color/white"

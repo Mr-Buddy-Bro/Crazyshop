@@ -13,7 +13,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="72dp"
-        android:text="Audience size"
+        android:text="@string/audience_size"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:textColor="@color/black"
-            android:text="Small\nless than 500 monthly customers"
+            android:text="@string/small_nless_than_500_monthly_customers"
             android:textSize="20sp" />
 
         <RadioButton
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:textColor="@color/black"
-            android:text="Standard\n500 to 5000 monthly customers"
+            android:text="@string/standard_n500_to_5000_monthly_customers"
             android:textSize="20sp" />
 
         <RadioButton
@@ -55,7 +55,7 @@
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Large\ngreater than 5000 monthly customers"
+            android:text="@string/large_ngreater_than_5000_monthly_customers"
             android:textSize="20sp" />
 
     </RadioGroup>
@@ -68,7 +68,7 @@
         android:backgroundTint="@color/blue"
         android:paddingHorizontal="50dp"
         android:paddingVertical="10dp"
-        android:text="Next"
+        android:text="@string/next"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -86,7 +86,7 @@
         android:layout_marginTop="4dp"
         android:textColor="@color/blue"
         android:textStyle="bold"
-        android:text="Choose user Audience/Customers size per month"
+        android:text="@string/choose_user_audience_customers_size_per_month"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

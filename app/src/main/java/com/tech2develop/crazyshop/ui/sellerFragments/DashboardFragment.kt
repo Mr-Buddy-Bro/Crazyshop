@@ -21,10 +21,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.tech2develop.crazyshop.Models.OrderModel
 import com.tech2develop.crazyshop.Models.SellerModel
 import com.tech2develop.crazyshop.Models.VerificationReqModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
@@ -45,6 +48,11 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     val CHOOSE_DOC_REQ_CODE = 102
     lateinit var pop_up_view : View
 
+    lateinit var tvDCR : TextView
+    lateinit var tvDashTodayAllOrders : TextView
+    lateinit var tvDashDelivered : TextView
+    lateinit var tvDashUnDelivered : TextView
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         SellerHome.isDashboard = true
@@ -52,6 +60,13 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
         storage = FirebaseStorage.getInstance()
+
+        tvDCR = view.findViewById(R.id.textView25)
+        tvDashTodayAllOrders = view.findViewById(R.id.tvDashTodayAllOrders)
+        tvDashDelivered = view.findViewById(R.id.tvDashDelivered)
+        tvDashUnDelivered = view.findViewById(R.id.tvDashUnDelivered)
+
+        getDashboardData(view)
 
         dialog = Dialog(view.context)
         dialog.setContentView(R.layout.varify_popup)
@@ -100,6 +115,53 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
         checkVerified(view)
 
+    }
+
+    private fun getDashboardData(view: View) {
+        val list = ArrayList<OrderModel>()
+        val calendar = Calendar.getInstance()
+        val currentDate = "${calendar.get(Calendar.DAY_OF_MONTH)}/${calendar.get(Calendar.MONTH)+1}/${calendar.get(
+            Calendar.YEAR)}"
+        firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("All orders")
+            .get().addOnCompleteListener {
+                if (it.isSuccessful){
+                    for (doc in it.result){
+                        if (doc.data.getValue("date").toString().equals(currentDate)){
+                            val order = OrderModel(
+                                doc.data.getValue("itemName").toString(),
+                                null,
+                                doc.data.getValue("itemPrice").toString(),
+                                doc.data.getValue("deliveryStatus").toString(),
+                                doc.data.getValue("shopName").toString(),
+                                doc.data.getValue("date").toString(), null, null)
+                            list.add(order)
+                        }
+                    }
+                    setData(list)
+                }
+            }
+
+    }
+
+    private fun setData(list: ArrayList<OrderModel>) {
+        tvDashTodayAllOrders.text = list.size.toString()
+
+        val deliveredList = ArrayList<String>()
+        val unDeliveredList = ArrayList<String>()
+
+        for (doc in list){
+            if (doc.deliveryStatus!!.equals("Delivered")){
+                deliveredList.add(doc.itemName.toString())
+            }
+        }
+        tvDashDelivered.text = deliveredList.size.toString()
+
+        for (doc in list){
+            if (doc.deliveryStatus!!.equals("Un-delivered")){
+                unDeliveredList.add(doc.itemName.toString())
+            }
+        }
+        tvDashUnDelivered.text = unDeliveredList.size.toString()
     }
 
     @SuppressLint("ResourceAsColor")
@@ -196,7 +258,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
     private fun continueProcess(view: View) {
         progress.dismiss()
-        view.findViewById<ConstraintLayout>(R.id.dashboardView).visibility = View.VISIBLE
+        view.findViewById<LinearLayout>(R.id.dashboardView).visibility = View.VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

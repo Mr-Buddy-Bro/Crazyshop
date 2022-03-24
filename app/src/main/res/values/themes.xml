@@ -19,7 +19,7 @@
     <style name="NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/grey</item>
-        <item name="colorPrimaryVariant">@color/grey</item>
+        <item name="colorPrimaryVariant">@color/light_blue</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -41,5 +41,15 @@
     <style name="NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AnimationWindowForSearchDialog">
+        <item name="android:windowEnterAnimation">@anim/search_dialog_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/search_dialog_out_anim</item>
+    </style>
+
+    <style name="AnimationWindowForAddShopDialog">
+        <item name="android:windowEnterAnimation">@anim/add_shop_dialog_in_anim</item>
+        <item name="android:windowExitAnimation">@anim/add_shop_dialog_out_anim</item>
+    </style>
 
 </resources>
