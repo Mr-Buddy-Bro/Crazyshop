@@ -130,6 +130,15 @@
     <string name="apply_filter">Apply filter</string>
     <string name="pick">Pick</string>
     <string name="pick_time">Pick time</string>
+    <string name="something_went_wrong_please_try_again">Something went wrong. Please try again</string>
+    <string name="notification">Notification</string>
+    <string name="no_new_notifications_found">No new notifications found</string>
+    <string name="you_are_about_to_go">You are about to go</string>
+    <string name="you_must_varify_your_identity_before_starting_a_new_online_store">You must varify your Identity before starting a new Online store</string>
+    <string name="verify">Verify</string>
+    <string name="no_orders">No orders</string>
+    <string name="no_item_in_wish_list">No item in wish list</string>
+    <string name="wish_list">WISH LIST</string>
 
 
     <string-array name="allOrdersDurationList">

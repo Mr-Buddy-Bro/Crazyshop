@@ -74,17 +74,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
     lateinit var settDocId: String
     lateinit var btnSubscribe: MaterialButton
 
-    lateinit var deliveFromHour: String
-    lateinit var deliveFromMin: String
-    lateinit var deliveFromNoon: String
-
-    lateinit var deliveToHour: String
-    lateinit var deliveToMin: String
-    lateinit var deliveToNoon: String
-
     lateinit var btnChooseFromTime: MaterialButton
     lateinit var btnChooseToTime: MaterialButton
     lateinit var btnSaveDeliveryTime: MaterialButton
+
+    lateinit var timeFromOrTo : String
+    var timeDelOrOrder : String = ""
 
     var billingClient: BillingClient? = null
 
@@ -152,6 +147,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         }
 
         tvSetDeliveryCharge_edit.setOnClickListener {
+            timeDelOrOrder = "del"
             dDelChargeDialog.show()
         }
 
@@ -202,6 +198,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         }
 
         tvSetOrderingTime_edit.setOnClickListener {
+            timeDelOrOrder = "order"
             dTimeChangeDialog.findViewById<TextView>(R.id.textView73).text =
                 "Set time for customers to order from your shop"
             dTimeChangeDialog.show()
@@ -219,15 +216,17 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
 
         btnChooseFromTime.setOnClickListener {
             timePickerDialog.show()
+            timeFromOrTo = "from"
         }
 
         btnChooseToTime.setOnClickListener {
             timePickerDialog.show()
+            timeFromOrTo = "to"
         }
 
         timePickerDialog.findViewById<MaterialButton>(R.id.btnPickTime).setOnClickListener {
             val timePicker = timePickerDialog.findViewById<TimePicker>(R.id.timePicker)
-            val mHour : Int
+            var mHour : Int = 0
             val xm : String
             if (timePicker.currentHour > 12){
                 mHour = timePicker.currentHour - 12
@@ -240,7 +239,66 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
             val mMin = timePicker.currentMinute
             Log.d("time", "onViewCreated: $mHour : $mMin $xm" )
 
-            btnChooseFromTime.text = "$mHour:$mMin $xm"
+            val time : String
+
+            if(mMin.toString().length < 2){
+                time = "$mHour:0$mMin $xm"
+            }else{
+                time = "$mHour:$mMin $xm"
+            }
+
+            if (timeFromOrTo.equals("from")) {
+                btnChooseFromTime.text = time
+            }else{
+                btnChooseToTime.text = time
+            }
+            timePickerDialog.dismiss()
+        }
+
+        btnSaveDeliveryTime.setOnClickListener {
+            loadingDialog.show()
+            val newTime = "${btnChooseFromTime.text} - ${btnChooseToTime.text}"
+            if (timeDelOrOrder == "order") {
+                Log.d("newTime", "new Ordering time: $newTime")
+                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("Settings").get()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful){
+                            var docId: String
+                                for (doc in it.result!!) {
+                                    docId = doc.id
+                                    firestore.collection("Seller")
+                                        .document(SellerHome.auth.currentUser?.email!!)
+                                        .collection("Settings").document(docId)
+                                        .update("orderingTime", newTime).addOnCompleteListener {
+                                            loadingDialog.dismiss()
+                                            dDelChargeDialog.dismiss()
+                                            fetchSettingsData()
+                                        }
+                                }
+
+                        }
+                    }
+            }else{
+                Log.d("newTime", "new Delivery time: $newTime")
+                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("Settings").get()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful){
+                            var docId: String
+                            for (doc in it.result!!) {
+                                docId = doc.id
+                                firestore.collection("Seller")
+                                    .document(SellerHome.auth.currentUser?.email!!)
+                                    .collection("Settings").document(docId)
+                                    .update("deliveryTime", newTime).addOnCompleteListener {
+                                        loadingDialog.dismiss()
+                                        dDelChargeDialog.dismiss()
+                                        fetchSettingsData()
+                                    }
+                            }
+
+                        }
+                    }
+            }
         }
 
 //////////////////////////////////////////////////////////////////////////
@@ -403,9 +461,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         tvSetOrderingTime.text = setting.orderingTime
         Log.d("TAG", setting.active.toString())
 
-//        val fH = setting.deliveryTime!!.toString().subString(0,2)
-//        Log.d("TAG", "displaySetting: $fH")
-
         when (setting.active) {
             true -> btnActivateOrdering.isChecked = true
             false -> btnActivateOrdering.isChecked = false
@@ -436,7 +491,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
     }
 
     private fun handlePurchases(purchases: List<Purchase>) {
-
+        fetchSettingsData()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

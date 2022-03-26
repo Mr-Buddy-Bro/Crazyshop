@@ -195,6 +195,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             Log.d("TAG", "onResume: Checking email ${auth.currentUser!!.isEmailVerified}")
             if (auth.currentUser!!.isEmailVerified){
                 btnVerifyEmail.text = "Verified"
+                dialog.findViewById<TextView>(R.id.textView66).visibility = View.INVISIBLE
                 btnVerifyEmail.setTextColor(R.color.teal_700)
             }
         }

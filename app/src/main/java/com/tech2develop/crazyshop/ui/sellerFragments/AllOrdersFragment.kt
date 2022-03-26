@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -160,6 +161,11 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
     }
 
     private fun setAdapter(view: View) {
+        if (ordersList.isEmpty()){
+            view.findViewById<TextView>(R.id.tvNoOrders).visibility = View.VISIBLE
+        }else{
+            view.findViewById<TextView>(R.id.tvNoOrders).visibility = View.GONE
+        }
         val rvOrders = view.findViewById<RecyclerView>(R.id.rvAllOrders)
         val adapter = AllOrdersAdapter(view.context, ordersList)
         rvOrders.adapter = adapter

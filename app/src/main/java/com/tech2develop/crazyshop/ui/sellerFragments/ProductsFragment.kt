@@ -16,6 +16,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,6 +51,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
     lateinit var productList : ArrayList<ProductModel>
     lateinit var loadingDialog : Dialog
     lateinit var myView : View
+    lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,6 +59,13 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
 
         loadingDialog = Dialog(view.context)
         loadingDialog.setContentView(R.layout.loading_layout)
+
+        swipeRefreshLayout = view.findViewById(R.id.pr_swipe_refresh)
+
+        swipeRefreshLayout.setOnRefreshListener {
+            getCatergories(view)
+            getProducts()
+        }
 
         btnAddProduct = view.findViewById(R.id.materialButton6)
         progress = ProgressDialog(view.context)
@@ -100,6 +109,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         productList.clear()
         firestore.collection("Seller").document(auth.currentUser?.email.toString()).collection("Products").get().addOnCompleteListener {
             loadingDialog.dismiss()
+            swipeRefreshLayout.isRefreshing = false
             if (it.isSuccessful){
                 for (doc in it.result!!){
                     val product = ProductModel(doc.data.getValue("name").toString(),doc.data.getValue("description").toString(),
@@ -107,6 +117,8 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
                     productList.add(product)
                 }
               setAdapter(myView)
+            }else{
+                myView.findViewById<TextView>(R.id.tvNoProducts).visibility = View.VISIBLE
             }
         }
     }
@@ -156,7 +168,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
     }
 
     private fun getCatergories(view: View) {
-
+        categories.clear()
         categories.add(" -- Select category -- ")
         firestore.collection("Seller").document(auth.currentUser?.email.toString())
             .collection("Categories").get().addOnCompleteListener {
