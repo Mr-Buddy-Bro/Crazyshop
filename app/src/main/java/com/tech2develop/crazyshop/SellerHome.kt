@@ -4,10 +4,14 @@ import android.R.attr.bitmap
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html
+import android.text.format.Formatter
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -16,6 +20,7 @@ import android.widget.Toolbar
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.android.billingclient.api.*
@@ -25,8 +30,16 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.zxing.WriterException
 import com.scottyab.aescrypt.AESCrypt
+import com.tech2develop.crazyshop.Adapters.ProductAdapter
 import com.tech2develop.crazyshop.databinding.ActivitySellerHomeBinding
 import com.tech2develop.crazyshop.ui.sellerFragments.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import me.shouheng.compress.Compress
+import me.shouheng.compress.concrete
+import me.shouheng.compress.strategy.config.ScaleMode
 import java.io.File
 import java.util.*
 
@@ -47,6 +60,7 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
         lateinit var shopName : String
         var billingClient: BillingClient? = null
         lateinit var myContext : Activity
+        var prImageUri : Uri? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,6 +104,8 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
                 R.id.nav_share->{
                     val shopIdDialog = Dialog(this)
                     shopIdDialog.setContentView(R.layout.shop_id_layout)
+                    shopIdDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+                    shopIdDialog.window!!.setWindowAnimations(R.style.Animation_Design_BottomSheetDialog)
                     shopIdDialog.findViewById<TextView>(R.id.textView60).text = shopId
                     val qrgEncoder =
                         QRGEncoder(shopId, null, QRGContents.Type.TEXT, 600 )
@@ -217,5 +233,30 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
             drawerLayout.closeDrawer(binding.navView)
         }
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 201 && resultCode == RESULT_OK){
+            val imgUri = data?.data!!
+            GlobalScope.launch {
+                Log.d("TAG", "onActivityResult: Entered")
+                val result = Compress.with(myContext, imgUri)
+                    .setQuality(70)
+                    .concrete {
+                        withMaxWidth(500f)
+                        withMaxHeight(500f)
+                        withScaleMode(ScaleMode.SCALE_HEIGHT)
+                        withIgnoreIfSmaller(true)
+                    }
+                    .get(Dispatchers.IO)
+                withContext(Dispatchers.Main) {
+                    Log.d("TAG", "onActivityResult: ${Formatter.formatShortFileSize(myContext, result.length())}")
+
+                    prImageUri = result.toUri()
+                    ProductAdapter.dialog.findViewById<ImageView>(R.id.ivPrAdd).setImageURI(prImageUri)
+                }
+            }
+        }
     }
 }

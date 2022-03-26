@@ -110,7 +110,7 @@ class ShopDetailedActivity : AppCompatActivity() {
                                 doc.data.getValue("name").toString(),
                                 doc.data.getValue("description").toString(),
                                 doc.data.getValue("category").toString(),
-                                doc.data.getValue("price").toString()
+                                doc.data.getValue("price").toString(), null
                             )
                             prodList.add(prodItem)
                         }else if (doc.data.getValue("category").toString().equals(selectedCat)) {
@@ -118,7 +118,7 @@ class ShopDetailedActivity : AppCompatActivity() {
                                 doc.data.getValue("name").toString(),
                                 doc.data.getValue("description").toString(),
                                 doc.data.getValue("category").toString(),
-                                doc.data.getValue("price").toString()
+                                doc.data.getValue("price").toString(), null
                             )
                             prodList.add(prodItem)
                         }

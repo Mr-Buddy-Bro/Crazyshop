@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:paddingHorizontal="20dp"
     tools:context=".ui.sellerFragments.SettingsFragment">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        android:background="@drawable/fragment_container_bg">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="30dp">
 
         <TextView
             android:id="@+id/textView46"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="Settings"
+            android:text="@string/settings"
             android:textColor="@color/black"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -30,9 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Activate ordering"
-            android:textStyle="bold"
             android:textColor="@color/black"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView46" />
 
@@ -42,10 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:checked="true"
-            android:thumbTint="@color/red"
-            android:trackTint="@color/red"
-
-            android:layout_marginEnd="40dp"
+            android:thumbTint="@color/white"
+            android:track="@drawable/switch_track_selector"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView46"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
@@ -54,39 +56,49 @@
             android:id="@+id/materialDivider2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="36dp"
             app:dividerColor="@color/grey"
             app:layout_constraintTop_toBottomOf="@+id/textView47"
-            tools:layout_editor_absoluteX="0dp" />
+            tools:layout_editor_absoluteX="30dp" />
 
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="36dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/materialDivider2"
-            tools:layout_editor_absoluteX="0dp">
+            tools:layout_editor_absoluteX="31dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Company name :"
+                android:text="@string/company_name_"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvSetCompanyName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:layout_weight="1"
                 android:maxWidth="150dp"
                 android:singleLine="true"
-                android:textStyle="bold"
-                android:text="loading.."
-                android:textColor="@color/black_vary"
-                android:textSize="14sp" />
+                android:text="@string/loading"
+                android:textColor="@color/black"
+                android:textAlignment="viewEnd"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/tvSetCompanyName_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:tint="#002944" />
 
 
         </LinearLayout>
@@ -95,29 +107,39 @@
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            tools:layout_editor_absoluteX="0dp">
+            tools:layout_editor_absoluteX="31dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Daily delivery time :"
+                android:text="@string/daily_delivery_time"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvSetDeliveryTime"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:layout_weight="1"
                 android:maxWidth="150dp"
                 android:singleLine="true"
-                android:textStyle="bold"
-                android:text="loading.."
-                android:textColor="@color/black_vary"
-                android:textSize="14sp" />
+                android:text="@string/loading"
+                android:textColor="#002944"
+                android:textAlignment="viewEnd"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/tvSetDeliveryTime_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:tint="#002944" />
 
 
         </LinearLayout>
@@ -126,29 +148,41 @@
             android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-            tools:layout_editor_absoluteX="0dp">
+            tools:layout_editor_absoluteX="30dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Delivery charge per item :"
+                android:text="@string/delivery_charge_per_item"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvSetDeliveryCharge"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:layout_weight="1"
                 android:maxWidth="150dp"
-                android:textStyle="bold"
                 android:singleLine="true"
-                android:text="loading.."
+                android:text="@string/loading"
                 android:textColor="@color/red"
-                android:textSize="14sp" />
+                android:textAlignment="viewEnd"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/tvSetDeliveryCharge_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:tint="#002944" />
+
 
         </LinearLayout>
 
@@ -156,29 +190,40 @@
             android:id="@+id/lay2"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginTop="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-            tools:layout_editor_absoluteX="0dp">
+            tools:layout_editor_absoluteX="31dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ordering time :"
+                android:text="@string/ordering_time"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvSetOrderingTime"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:layout_weight="1"
                 android:maxWidth="150dp"
                 android:singleLine="true"
-                android:textStyle="bold"
-                android:text="loading.."
-                android:textColor="@color/black_vary"
-                android:textSize="14sp" />
+                android:text="@string/loading"
+                android:textColor="#002944"
+                android:textAlignment="viewEnd"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/tvSetOrderingTime_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:tint="#002944" />
+
 
         </LinearLayout>
 
@@ -186,59 +231,78 @@
             android:id="@+id/materialDivider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             app:dividerColor="@color/grey"
             app:layout_constraintTop_toBottomOf="@+id/lay2"
-            tools:layout_editor_absoluteX="0dp" />
+            tools:layout_editor_absoluteX="30dp" />
 
         <LinearLayout
             android:id="@+id/lay123"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/materialDivider"
-            tools:layout_editor_absoluteX="0dp">
+            tools:layout_editor_absoluteX="30dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Change shop icon"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:id="@+id/ivSetIcon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginStart="74dp"
-                android:background="@color/grey" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_set_icon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="36dp"
+                android:background="@color/grey"
+                android:scaleType="centerCrop"
+                app:circularflow_defaultRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.264"
+                app:riv_corner_radius="15dp"
+                app:riv_mutate_background="true" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/lay1"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@+id/lay123"
-            tools:layout_editor_absoluteX="0dp">
+            tools:layout_editor_absoluteX="30dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Change shop banner"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:id="@+id/ivSetBanner"
-                android:layout_width="60dp"
-                android:layout_height="35dp"
-                android:layout_marginStart="50dp"
-                android:background="@color/grey" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_set_banner"
+                android:layout_width="90dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="36dp"
+                android:background="@color/grey"
+                android:scaleType="centerCrop"
+                app:circularflow_defaultRadius="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.264"
+                app:riv_corner_radius="15dp"
+                app:riv_mutate_background="true" />
 
         </LinearLayout>
 
@@ -256,8 +320,8 @@
             android:id="@+id/textView61"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Subscription"
+            android:layout_marginTop="20dp"
+            android:text="@string/subscription"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -271,7 +335,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="Expired"
-            android:textColor="@color/black"
+            android:textColor="@color/black_vary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView61" />
@@ -282,7 +346,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:backgroundTint="@color/red"
+            android:backgroundTint="#0078EF"
             android:text="Subscribe"
             android:textAllCaps="false"
             android:textStyle="bold"
@@ -295,19 +359,24 @@
             android:id="@+id/btnLogOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:backgroundTint="@color/red"
-            android:text="Log Out"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="60dp"
+            android:backgroundTint="#0078EF"
+            android:text="@string/log_out"
             android:textAllCaps="false"
-            android:textStyle="bold"
             android:textColor="@color/white"
+            android:textStyle="bold"
+            app:cornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.491"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSubscribe" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    </androidx.cardview.widget.CardView>
 
-</FrameLayout>
+
+</ScrollView>

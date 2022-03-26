@@ -116,7 +116,7 @@ class GraphicsActivity : AppCompatActivity() {
             firestore.collection("Seller").document(email).set(seller).addOnCompleteListener {
                 if (it.isSuccessful){
 
-                        val setting = SettingsModel(true, "5:00 pm - 6:00 pm", "10",
+                        val setting = SettingsModel(false, "5:00 pm - 6:00 pm", "10",
                             "7:00 am - 4:00 pm")
                     firestore.collection("Seller").document(email).collection("Settings").add(setting)
                 }else{

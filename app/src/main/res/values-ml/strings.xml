@@ -105,4 +105,27 @@
     <string name="or">OR</string>
     <string name="shop_id">Shop ID</string>
 
+    <string name="change_company_name">Change company name</string>
+    <string name="change_company_name_dec">your stores name will be changed. Your customers will see the new name of your shop.</string>
+    <string name="new_name">New name</string>
+    <string name="save_change">Save change</string>
+    <string name="change_delivery_time">Change delivery time</string>
+    <string name="set_your_daily_delivery_time">Set your daily delivery time</string>
+    <string name="search_shop">Search shop..</string>
+    <string name="add_shop">Add shop</string>
+    <string name="overview_of_your_shop_in_a_single_tab">Overview of your shop in a single tab</string>
+    <string name="un_delivered">Un-delivered</string>
+    <string name="delivered">Delivered</string>
+    <string name="company_name_">Company name :</string>
+    <string name="loading">loading..</string>
+    <string name="daily_delivery_time">Daily delivery time :</string>
+    <string name="delivery_charge_per_item">Delivery charge per item :</string>
+    <string name="ordering_time">Ordering time :</string>
+    <string name="settings">Settings</string>
+    <string name="subscription">Subscription</string>
+    <string name="log_out">Log Out</string>
+    <string name="new_delivery_charge">New delivery charge</string>
+    <string name="set_del_cha_desc">Your delivery charge will be changed to the following amount</string>
+    <string name="amount">amount</string>
+
 </resources>

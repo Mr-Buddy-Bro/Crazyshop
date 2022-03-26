@@ -30,7 +30,7 @@
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/feedbackbg"
-            android:hint="Category name"
+            android:hint="@string/category_name"
             android:paddingHorizontal="20dp"
             android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"

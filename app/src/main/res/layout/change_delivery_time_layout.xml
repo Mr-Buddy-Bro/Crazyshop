@@ -11,7 +11,7 @@
         android:layout_width="250dp"
         android:textAlignment="center"
         android:layout_height="wrap_content"
-        android:text="@string/change_delivery_time"
+        android:text="@string/set_time"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"

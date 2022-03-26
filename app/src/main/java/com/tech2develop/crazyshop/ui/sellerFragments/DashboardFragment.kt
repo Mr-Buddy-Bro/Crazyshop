@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Color
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,18 +14,20 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.makeramen.roundedimageview.RoundedImageView
 import com.tech2develop.crazyshop.Models.OrderModel
 import com.tech2develop.crazyshop.Models.SellerModel
 import com.tech2develop.crazyshop.Models.VerificationReqModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
+import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -52,6 +54,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     lateinit var tvDashTodayAllOrders : TextView
     lateinit var tvDashDelivered : TextView
     lateinit var tvDashUnDelivered : TextView
+    lateinit var refreshLay : SwipeRefreshLayout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,6 +68,12 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         tvDashTodayAllOrders = view.findViewById(R.id.tvDashTodayAllOrders)
         tvDashDelivered = view.findViewById(R.id.tvDashDelivered)
         tvDashUnDelivered = view.findViewById(R.id.tvDashUnDelivered)
+        refreshLay = view.findViewById(R.id.refreshLay)
+        refreshLay.setOnRefreshListener {
+            getDashboardData(view)
+//            checkVerified(view)
+        }
+//        refreshLay.setOn
 
         getDashboardData(view)
 
@@ -124,6 +133,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             Calendar.YEAR)}"
         firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("All orders")
             .get().addOnCompleteListener {
+                refreshLay.isRefreshing = false
                 if (it.isSuccessful){
                     for (doc in it.result){
                         if (doc.data.getValue("date").toString().equals(currentDate)){
@@ -140,28 +150,43 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     setData(list)
                 }
             }
-
     }
 
     private fun setData(list: ArrayList<OrderModel>) {
+
         tvDashTodayAllOrders.text = list.size.toString()
 
         val deliveredList = ArrayList<String>()
-        val unDeliveredList = ArrayList<String>()
 
         for (doc in list){
             if (doc.deliveryStatus!!.equals("Delivered")){
                 deliveredList.add(doc.itemName.toString())
             }
         }
-        tvDashDelivered.text = deliveredList.size.toString()
+        con1(list, deliveredList)
 
+    }
+
+    private fun con1(list: ArrayList<OrderModel>, deliveredList: ArrayList<String>) {
+        Log.d("dash", list.size.toString() + " "+ deliveredList.size.toString())
+        val unDeliveredList = ArrayList<String>()
         for (doc in list){
             if (doc.deliveryStatus!!.equals("Un-delivered")){
                 unDeliveredList.add(doc.itemName.toString())
             }
         }
-        tvDashUnDelivered.text = unDeliveredList.size.toString()
+        makeIt(unDeliveredList.size, deliveredList.size, list.size)
+    }
+
+    private fun makeIt(size: Int, size1: Int, size2: Int) {
+        tvDashDelivered.text = size1.toString()
+        tvDashUnDelivered.text = size.toString()
+        val DCR = (((size1.toDouble() / size2)*100).toString()).substringBefore(".")+"%"
+        if (size > 0) {
+            tvDCR.text = DCR
+        }else{
+            tvDCR.text = "0%"
+        }
     }
 
     @SuppressLint("ResourceAsColor")

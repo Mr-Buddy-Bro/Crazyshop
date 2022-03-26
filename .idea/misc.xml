@@ -28,6 +28,8 @@
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/search_bg.xml" value="0.197" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/select_file_bg.xml" value="0.18585526315789475" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/side_nav_bar.xml" value="0.18585526315789475" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/switch_track.xml" value="0.242" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/drawable/switch_track_off.xml" value="0.242" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout-v28/varify_popup.xml" value="0.22" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_buyer_home.xml" value="0.25" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/activity_buyer_registration.xml" value="0.25" />
@@ -56,8 +58,10 @@
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/category_item_layout.xml" value="0.22" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/change_delivery_time_layout.xml" value="0.25" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/content_seller_home.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/del_charge_dialog_lay.xml" value="0.2282051282051282" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/delete_cat_pop_up.xml" value="0.22" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/delete_pop_up.xml" value="0.1756578947368421" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/edit_product_dialog_layout.xml" value="0.2282051282051282" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/et_company_name_layout.xml" value="0.2282051282051282" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_all_orders.xml" value="0.22" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_addresses.xml" value="0.2" />
@@ -68,7 +72,7 @@
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_settings.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_buyer_wish_list.xml" value="0.22830269345874304" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_category.xml" value="0.15" />
-        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_dashboard.xml" value="0.18" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_dashboard.xml" value="0.25" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_feedback.xml" value="0.25" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_gallery.xml" value="0.1756578947368421" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/fragment_help.xml" value="0.22" />
@@ -93,6 +97,7 @@
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/shop_item_layout1.xml" value="0.25" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/shop_item_layout2.xml" value="0.22830269345874304" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/shop_item_layout3.xml" value="0.22830269345874304" />
+        <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/time_picker_dialog_layout.xml" value="0.2282051282051282" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/varify_identity_lay.xml" value="0.33" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/layout/varify_popup.xml" value="0.25" />
         <entry key="..\:/Users/studio/AndroidStudioProjects/Crazyshop/app/src/main/res/menu/activity_main_drawer.xml" value="0.25" />

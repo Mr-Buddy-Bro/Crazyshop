@@ -49,11 +49,11 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
     lateinit var progress: ProgressDialog
     lateinit var productList : ArrayList<ProductModel>
     lateinit var loadingDialog : Dialog
-    lateinit var myContext : Context
+    lateinit var myView : View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        myContext = view.context
+        myView = view
 
         loadingDialog = Dialog(view.context)
         loadingDialog.setContentView(R.layout.loading_layout)
@@ -85,7 +85,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
             dialog.show()
         }
         getCatergories(view)
-        getProducts(view)
+        getProducts()
         dialog.findViewById<MaterialButton>(R.id.btnChoosePrImage).setOnClickListener {
             val i = Intent(Intent.ACTION_PICK)
             i.type = "image/*"
@@ -94,7 +94,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
 
     }
 
-    private fun getProducts(view: View) {
+    fun getProducts() {
         loadingDialog.show()
         productList = ArrayList()
         productList.clear()
@@ -103,10 +103,10 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
             if (it.isSuccessful){
                 for (doc in it.result!!){
                     val product = ProductModel(doc.data.getValue("name").toString(),doc.data.getValue("description").toString(),
-                        doc.data.getValue("category").toString(),doc.data.getValue("price").toString())
+                        doc.data.getValue("category").toString(),doc.data.getValue("price").toString(), doc.id)
                     productList.add(product)
                 }
-              setAdapter(view)
+              setAdapter(myView)
             }
         }
     }
@@ -129,7 +129,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         val itemPrice = dialog.findViewById<EditText>(R.id.etPrPrice).text.toString()
         val cat = dialog.findViewById<Spinner>(R.id.prSpinner).selectedItem.toString()
         Log.d("TAG", "uploadProduct: ${cat}")
-        val product = ProductModel(itemName,itemDesc,cat,itemPrice)
+        val product = ProductModel(itemName,itemDesc,cat,itemPrice, null)
         if (prImageUri == null){
             Toast.makeText(view.context,"Please choose an image",Toast.LENGTH_LONG).show()
         }else if (cat.equals(" -- Select -- ")) {
@@ -142,7 +142,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
                 progress.dismiss()
                 Toast.makeText(view.context,"New product added",Toast.LENGTH_LONG).show()
                 dialog.dismiss()
-                getProducts(view)
+                getProducts()
             }.addOnFailureListener {
                 progress.dismiss()
                 dialog.dismiss()
@@ -183,10 +183,10 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == PR_IV_REQ_CODE && resultCode == AppCompatActivity.RESULT_OK) {
-                val imgUri = data?.data!!
+            val imgUri = data?.data!!
             GlobalScope.launch {
                 Log.d("TAG", "onActivityResult: Entered")
-                val result = Compress.with(myContext, imgUri)
+                val result = Compress.with(myView.context, imgUri)
                     .setQuality(70)
                     .concrete {
                         withMaxWidth(500f)
@@ -196,7 +196,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
                     }
                     .get(Dispatchers.IO)
                 withContext(Dispatchers.Main) {
-                    Log.d("TAG", "onActivityResult: ${Formatter.formatShortFileSize(myContext, result.length())}")
+                    Log.d("TAG", "onActivityResult: ${Formatter.formatShortFileSize(myView.context, result.length())}")
 
                     prImageUri = result.toUri()
 
