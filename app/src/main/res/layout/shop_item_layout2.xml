@@ -10,14 +10,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:layout_height="80dp">
 
         <ImageView
             android:id="@+id/ivShopItemImage"
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:background="@color/grey"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:src="@drawable/benmart_logo2"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="10dp"
             android:text="Shop name"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -52,20 +52,10 @@
             android:layout_marginStart="32dp"
             android:text="shop description will show here"
             android:textColor="@color/black_vary"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvShopItemName" />
 
-        <TextView
-            android:id="@+id/tvStoreStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:text="Open"
-            android:textColor="#F57C00"
-            android:textSize="16sp"
-            android:textStyle="bold|italic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvShopItemDescription" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

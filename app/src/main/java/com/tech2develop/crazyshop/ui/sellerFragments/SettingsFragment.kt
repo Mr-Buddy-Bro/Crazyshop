@@ -77,6 +77,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
     lateinit var btnChooseFromTime: MaterialButton
     lateinit var btnChooseToTime: MaterialButton
     lateinit var btnSaveDeliveryTime: MaterialButton
+    var active = false
 
     lateinit var timeFromOrTo : String
     var timeDelOrOrder : String = ""
@@ -86,6 +87,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         myView = view
+
+        active = DashboardFragment.active
 
         auth = FirebaseAuth.getInstance()
         SellerHome.isDashboard = false
@@ -104,6 +107,9 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         btnSaveDeliveryTime = dTimeChangeDialog.findViewById(R.id.btnSaveDeliveryTime)
 
         btnActivateOrdering = view.findViewById(R.id.btnActivateOrdering)
+
+        btnActivateOrdering.isChecked = active
+
         tvSetCompanyName = view.findViewById(R.id.tvSetCompanyName)
         tvSetDeliveryTime = view.findViewById(R.id.tvSetDeliveryTime)
         tvSetDeliveryCharge = view.findViewById(R.id.tvSetDeliveryCharge)
@@ -119,6 +125,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
 
         loadingDialog = Dialog(view.context)
         loadingDialog.setContentView(R.layout.loading_layout)
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
 
         cNameChangeDialog = Dialog(view.context)
         cNameChangeDialog.setContentView(R.layout.et_company_name_layout)

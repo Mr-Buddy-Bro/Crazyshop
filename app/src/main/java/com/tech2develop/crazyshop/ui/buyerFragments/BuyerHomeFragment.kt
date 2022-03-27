@@ -28,6 +28,8 @@ import com.tech2develop.crazyshop.Models.ShopsDocIdModel
 import com.tech2develop.crazyshop.R
 import io.github.g00fy2.quickie.QRResult
 import io.github.g00fy2.quickie.ScanQRCode
+import org.imaginativeworld.whynotimagecarousel.ImageCarousel
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 import java.util.jar.Manifest
 
 class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
@@ -62,6 +64,7 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
 
         loadingDialog = Dialog(view.context)
         loadingDialog.setContentView(R.layout.loading_layout)
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
         loadingDialog.setCancelable(false)
 
         dialog = Dialog(view.context)
@@ -82,6 +85,40 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
 
             scanQrCode.launch(null)
         }
+        loadBanner()
+
+    }
+
+    fun loadBanner(){
+
+        val bannerImageUrlList = ArrayList<String>()
+        var bannerUrl=""
+        firestore.collection("Banner Urls").get().addOnCompleteListener {
+            if ( it.isSuccessful) {
+                for (document in it.result!!) {
+                    val url = document.data.getValue("bannerUrl")
+                    bannerImageUrlList.add(url.toString())
+                }
+                setBanner(bannerImageUrlList)
+            }
+        }
+    }
+
+    private fun setBanner(bannerImageUrlList: ArrayList<String>) {
+        val ivBanner = currentView.findViewById<ImageCarousel>(R.id.bannerImg)
+        ivBanner.registerLifecycle(lifecycle)
+
+        val list = mutableListOf<CarouselItem>()
+
+        for (position in 0..bannerImageUrlList.size-1){
+            list.add(
+                CarouselItem(
+                    imageUrl = bannerImageUrlList[position]
+
+                )
+            )
+        }
+        ivBanner.setData(list)
 
     }
 

@@ -1,6 +1,7 @@
 package com.tech2develop.crazyshop.ui.sellerFragments
 
 import android.app.Dialog
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -24,6 +25,7 @@ class Help_and_feedbackFragment: Fragment(R.layout.fragment_help) {
 
         loadingDialog = Dialog(view.context)
         loadingDialog.setContentView(R.layout.loading_layout)
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
 
         firebase = FirebaseFirestore.getInstance()
 

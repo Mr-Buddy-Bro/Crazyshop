@@ -3,6 +3,7 @@ package com.tech2develop.crazyshop
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -40,6 +41,7 @@ class CheckOutActivity : AppCompatActivity() {
 
         loadingDialog = Dialog(this)
         loadingDialog.setContentView(R.layout.loading_layout)
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
         loadingDialog.setCancelable(false)
 
         firestore = FirebaseFirestore.getInstance()

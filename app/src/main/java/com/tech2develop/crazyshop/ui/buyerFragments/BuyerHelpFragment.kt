@@ -1,6 +1,7 @@
 package com.tech2develop.crazyshop.ui.buyerFragments
 
 import android.app.Dialog
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -28,6 +29,7 @@ class BuyerHelpFragment : Fragment(R.layout.fragment_buyer_help) {
 
         loadingDialog = Dialog(view.context)
         loadingDialog.setContentView(R.layout.loading_layout)
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
 
         firebase = FirebaseFirestore.getInstance()
 

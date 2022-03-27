@@ -12,9 +12,11 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tech2develop.crazyshop.Adapters.AllOrdersAdapter
+import com.tech2develop.crazyshop.Models.AddressModel
 import com.tech2develop.crazyshop.Models.OrderModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
@@ -28,6 +30,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
     lateinit var spDuration: Spinner
     lateinit var spType: Spinner
     lateinit var firestore : FirebaseFirestore
+    lateinit var refresh : SwipeRefreshLayout
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,6 +41,11 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
         spType = view.findViewById(R.id.spType)
         SellerHome.isDashboard = false
         firestore = FirebaseFirestore.getInstance()
+
+        refresh = view.findViewById(R.id.refreshAllOrders)
+        refresh.setOnRefreshListener {
+            fetchOrders(view)
+        }
 
         fetchOrders(view)
 
@@ -75,20 +83,37 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
         if (duration.equals("Today")) {
             firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
                 .collection("All orders").get().addOnCompleteListener {
+                    refresh.isRefreshing = false
                     if (it.isSuccessful) {
                         ordersList.clear()
                         for (doc in it.result!!) {
+                            val docId = doc.id
                             val orderDate = doc.data.getValue("date").toString()
                             val status = doc.data.getValue("deliveryStatus").toString()
 
                             if (orderDate.equals(currentDate) && (type.equals(status) || type.equals("ALL"))) {
+
+                                val myAddress = doc.data.getValue("deliveryAddress") as Map<*,*>
+
+                                val address = AddressModel(myAddress["name"].toString(), myAddress["houseNo"].toString(), myAddress["houseName"].toString(),
+                                myAddress["landmark"].toString(), myAddress["phoneNo"].toString())
+
                                 val order = OrderModel(
                                     doc.data.getValue("itemName").toString(),
-                                    null,
+                                    address,
                                     doc.data.getValue("itemPrice").toString(),
                                     doc.data.getValue("deliveryStatus").toString(),
                                     doc.data.getValue("shopName").toString(),
                                     doc.data.getValue("date").toString(), null, null)
+
+                                Log.d("ADdress", "getOrders: "+address.name)
+
+
+                                //address call
+//                                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
+//                                    .collection("All orders").document(docId).collection(".document(SellerHome.auth.currentUser?.email!!)\n" +
+//                                            "                .collection(\"All orders\")")
+
                                 ordersList.add(order)
                             }
                         }
@@ -99,6 +124,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
         else if (duration.equals("Lifetime")) {
             firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
                 .collection("All orders").get().addOnCompleteListener {
+                    refresh.isRefreshing = false
                     if (it.isSuccessful) {
                         ordersList.clear()
                         for (doc in it.result!!) {
@@ -134,6 +160,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
 
             firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
                 .collection("All orders").get().addOnCompleteListener {
+                    refresh.isRefreshing = false
                     if (it.isSuccessful) {
                         ordersList.clear()
                         for (doc in it.result!!) {

@@ -2,6 +2,7 @@ package com.tech2develop.crazyshop
 
 import android.app.Dialog
 import android.graphics.BitmapFactory
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -46,6 +47,7 @@ class ShopDetailedActivity : AppCompatActivity() {
 
         loadingDialog = Dialog(this)
         loadingDialog.setContentView(R.layout.loading_layout)
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
         loadingDialog.setCancelable(false)
 
         shopIndex = intent.getIntExtra("shopIndex", 0)

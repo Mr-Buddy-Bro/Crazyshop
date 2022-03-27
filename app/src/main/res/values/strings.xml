@@ -139,7 +139,23 @@
     <string name="no_orders">No orders</string>
     <string name="no_item_in_wish_list">No item in wish list</string>
     <string name="wish_list">WISH LIST</string>
-
+    <string name="shop_status">Shop status</string>
+    <string name="you_can_change_your_shop_status_in_settings">You can change your shops status in settings</string>
+    <string name="customers_can_place_order">Customers can place order</string>
+    <string name="orders">Orders</string>
+    <string name="customers_cannot_place_order">Customers cannot place order</string>
+    <string name="today">Today</string>
+    <string name="send_your_feedbacks_and_ideas_to_us">Send your feedbacks and ideas to us</string>
+    <string name="type_your_feedback">Type your feedback</string>
+    <string name="feed_dec">Share your thought with us. We will checkout your feedbacks and reports and will take required actions</string>
+    <string name="home">Home</string>
+    <string name="you_can_buy_from_your_favourite_shops">You can buy from your favourite shops.</string>
+    <string name="shops">Shops</string>
+    <string name="mark_as_delivered">Mark as delivered</string>
+    <string name="order_details">Order Details</string>
+    <string name="item_name">Item name</string>
+    <string name="mark_as_un_delivered">Mark as Un-delivered</string>
+    <string name="address">Address</string>
 
     <string-array name="allOrdersDurationList">
         <item>Today</item>

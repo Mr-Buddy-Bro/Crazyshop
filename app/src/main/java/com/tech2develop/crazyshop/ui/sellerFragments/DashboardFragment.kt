@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -21,13 +20,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.makeramen.roundedimageview.RoundedImageView
 import com.tech2develop.crazyshop.Models.OrderModel
 import com.tech2develop.crazyshop.Models.SellerModel
 import com.tech2develop.crazyshop.Models.VerificationReqModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
-import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -41,6 +38,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     var docUri : Uri? = null
     companion object{
         lateinit var isVerified: String
+        var active : Boolean = false
     }
     lateinit var btnVerify1 : MaterialButton
     lateinit var chooseDoc : MaterialButton
@@ -150,6 +148,28 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                     setData(list)
                 }
             }
+        firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("Settings").get()
+            .addOnCompleteListener {
+                if (it.isSuccessful){
+                    for (doc in it.result!!) {
+                        active = doc.data.getValue("active") as Boolean
+                    }
+                    setStatus(view)
+                }
+            }
+    }
+
+    private fun setStatus(view: View) {
+        val tvStatus = view.findViewById<TextView>(R.id.textView76)
+        if (active){
+            Log.d("active", "setStatus: Shop is active")
+            tvStatus.setText(R.string.customers_can_place_order)
+            tvStatus.setTextColor(resources.getColor(R.color.green))
+        }else{
+            Log.d("active", "setStatus: Shop is not active")
+            tvStatus.setText(R.string.customers_cannot_place_order)
+            tvStatus.setTextColor(resources.getColor(R.color.red))
+        }
     }
 
     private fun setData(list: ArrayList<OrderModel>) {

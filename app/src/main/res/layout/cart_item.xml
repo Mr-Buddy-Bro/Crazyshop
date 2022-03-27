@@ -81,7 +81,6 @@
         android:src="@drawable/ic_baseline_delete_forever_24"
         app:layout_constraintEnd_toEndOf="parent"
         android:clickable="true"
-        android:foreground="?android:selectableItemBackground"
         app:layout_constraintHorizontal_bias="0.87"
         app:layout_constraintStart_toEndOf="@+id/cartName"
         app:layout_constraintTop_toTopOf="parent"

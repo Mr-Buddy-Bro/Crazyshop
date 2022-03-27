@@ -59,6 +59,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
 
         loadingDialog = Dialog(view.context)
         loadingDialog.setContentView(R.layout.loading_layout)
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
 
         swipeRefreshLayout = view.findViewById(R.id.pr_swipe_refresh)
 

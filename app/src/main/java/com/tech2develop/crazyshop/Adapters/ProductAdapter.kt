@@ -131,12 +131,8 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
 
 
     if (SellerHome.prImageUri != null) {
-        var storageRef = storage.getReference()
-        val ref = storageRef.child("${SellerHome.shopId}/product images/${product.name}.jpg")
 
-        ref.delete()
-
-        storageRef =
+        val storageRef =
             storage.getReference().child("${SellerHome.shopId}/product images/${name}.jpg")
         storageRef.putFile(SellerHome.prImageUri!!).addOnCompleteListener{
             Toast.makeText(context,"product updated",Toast.LENGTH_LONG).show()

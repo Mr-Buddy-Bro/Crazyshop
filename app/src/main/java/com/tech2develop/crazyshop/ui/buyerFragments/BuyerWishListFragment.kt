@@ -1,13 +1,16 @@
 package com.tech2develop.crazyshop.ui.buyerFragments
 
 import android.app.Dialog
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.TextureView
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tech2develop.crazyshop.Adapters.WishListAdapter
 import com.tech2develop.crazyshop.BuyerHome
@@ -19,6 +22,7 @@ class BuyerWishListFragment : Fragment(R.layout.fragment_buyer_wish_list) {
     lateinit var firestore : FirebaseFirestore
     lateinit var wishListArray : ArrayList<WishListModel>
     lateinit var loadingDialog : Dialog
+    lateinit var refreshLayout : SwipeRefreshLayout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -26,6 +30,12 @@ class BuyerWishListFragment : Fragment(R.layout.fragment_buyer_wish_list) {
 
         loadingDialog = Dialog(view.context)
         loadingDialog.setContentView(R.layout.loading_layout)
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+
+        refreshLayout = view.findViewById(R.id.btnRefreshWishList)
+        refreshLayout.setOnRefreshListener {
+            loadWishList(view)
+        }
 
         wishListArray = ArrayList()
 
@@ -34,10 +44,12 @@ class BuyerWishListFragment : Fragment(R.layout.fragment_buyer_wish_list) {
     }
 
     private fun loadWishList(view: View) {
+        wishListArray.clear()
         loadingDialog.show()
         firestore = FirebaseFirestore.getInstance()
         firestore.collection("Buyer").document(BuyerHome.auth.currentUser?.email!!).collection("Wish list")
             .get().addOnCompleteListener {
+                refreshLayout.isRefreshing = false
                 loadingDialog.dismiss()
                 if (it.isSuccessful){
                     for (doc in it.result!!){
