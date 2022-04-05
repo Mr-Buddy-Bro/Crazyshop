@@ -1,7 +1,10 @@
 package com.tech2develop.crazyshop.Adapters
 
+import android.app.Dialog
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +16,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.tech2develop.crazyshop.BuyerHome
+import com.tech2develop.crazyshop.Models.AddressModel
 import com.tech2develop.crazyshop.Models.OrderModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
@@ -23,6 +27,7 @@ class MyOrdersAdapter(context : Context, arrayList: ArrayList<OrderModel>) : Rec
 
     val myContext = context
     val list = arrayList
+    lateinit var loadingDialog : Dialog
 
     class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
 
@@ -41,10 +46,15 @@ class MyOrdersAdapter(context : Context, arrayList: ArrayList<OrderModel>) : Rec
     }
 
     override fun onBindViewHolder(holder: MyOrdersAdapter.ViewHolder, position: Int) {
+
+        loadingDialog = Dialog(myContext)
+        loadingDialog.setContentView(R.layout.loading_layout)
+        loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+
         val item = list[position]
         holder.tvMyOrderName.text = item.itemName
         holder.tvMyOrderDate.text = item.date
-        holder.tvMyOrderPrice.text = item.itemPrice
+        holder.tvMyOrderPrice.text = "Rs. "+item.itemPrice
         getPrImages(holder, item)
         if (item.deliveryStatus.equals("Delivered")){
             holder.btnRemoveMyOrder.visibility = View.INVISIBLE
@@ -56,11 +66,66 @@ class MyOrdersAdapter(context : Context, arrayList: ArrayList<OrderModel>) : Rec
     }
 
     private fun deleteItem(item: OrderModel) {
+        loadingDialog.show()
         val firestore = FirebaseFirestore.getInstance()
         firestore.collection("Buyer").document(BuyerHome.auth.currentUser?.email!!).collection("All orders").document(item.docId!!).delete()
             .addOnCompleteListener {
-                Toast.makeText(myContext, "Order cancelled", Toast.LENGTH_SHORT).show()
+
             }
+
+        firestore.collection("Seller").get()
+            .addOnCompleteListener {
+
+                val docId : String
+                if (it.isSuccessful){
+                    for(doc in it.result!!){
+//                        loadingDialog.dismiss()
+                        if (doc.data.getValue("sellerKey").toString() == item.shopKey){
+                            docId = doc.id
+
+                            firestore.collection("Seller").document(docId).collection("All orders").get()
+                                .addOnCompleteListener { t1->
+                                    loadingDialog.dismiss()
+                                    if (t1.isSuccessful){
+//                                        Log.d("deleteorder", "deleteItem: yeeeeeah")
+                                        val sDocId : String
+                                        for (mDoc in t1.result!!){
+                                            Log.d("deleteorder", "deleteItem: yeeeeeah")
+                                            val myAddress = mDoc.data.getValue("deliveryAddress") as Map<*,*>
+//
+                                            val address = AddressModel(myAddress["name"].toString(), myAddress["houseNo"].toString(), myAddress["houseName"].toString(),
+                                                myAddress["landmark"].toString(), myAddress["phoneNo"].toString())
+                                            Log.d("deleteorder", "deleteItem: ${address.phoneNo} ${item.deliveryAddress!!.phoneNo}")
+                                            if (mDoc.data.getValue("itemName").toString() == item.itemName && address.phoneNo == item.deliveryAddress!!.phoneNo){
+                                                Log.d("deleteorder", "deleteItem: mmmmmmm")
+                                                sDocId = mDoc.id
+                                                Log.d("deleteorder", sDocId)
+                                                firestore.collection("Seller").document(docId).collection("All orders")
+                                                    .document(sDocId).delete().addOnCompleteListener{
+                                                        if (it.isSuccessful){
+                                                            Toast.makeText(myContext, "Order cancelled", Toast.LENGTH_SHORT).show()
+                                                        }else{
+                                                            Log.d("deleteorder", it.exception.toString())
+                                                        }
+
+                                                    }
+                                                break
+                                            }
+                                        }
+                                    }else{
+                                        Toast.makeText(myContext, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                                        Log.d("deleteorder", "deleteItem: Noooo")
+                                    }
+                                }
+
+                            break
+                        }
+                    }
+                }else{
+                    Toast.makeText(myContext, it.exception.toString(), Toast.LENGTH_SHORT).show()
+                }
+            }
+
     }
 
     private fun getPrImages(holder: ViewHolder, product: OrderModel) {

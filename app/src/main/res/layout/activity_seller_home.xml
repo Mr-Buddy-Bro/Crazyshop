@@ -29,6 +29,7 @@
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
             android:paddingEnd="12dp"
+            android:contentDescription="@string/navigation_drawer_open"
             android:onClick="btnNavigationIcon"
             android:src="@drawable/ic_baseline_menu_24"
             app:tint="@color/black" />

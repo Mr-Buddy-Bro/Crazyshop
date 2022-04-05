@@ -15,6 +15,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.firebase.firestore.FirebaseFirestore
 import com.tech2develop.crazyshop.Adapters.MyOrdersAdapter
 import com.tech2develop.crazyshop.BuyerHome
+import com.tech2develop.crazyshop.Models.AddressModel
 import com.tech2develop.crazyshop.Models.OrderModel
 import com.tech2develop.crazyshop.R
 
@@ -55,7 +56,13 @@ class BuyerMyOrdersFragment : Fragment(R.layout.fragment_buyer_my_orders) {
                 refreshLay.isRefreshing = false
                 if (it.isSuccessful){
                     for (doc in it.result!!){
-                        val item = OrderModel(doc.data.getValue("itemName").toString(), null, doc.data.getValue("itemPrice").toString(),
+
+                        val myAddress = doc.data.getValue("deliveryAddress") as Map<*,*>
+//
+                        val address = AddressModel(myAddress["name"].toString(), myAddress["houseNo"].toString(), myAddress["houseName"].toString(),
+                            myAddress["landmark"].toString(), myAddress["phoneNo"].toString())
+
+                        val item = OrderModel(doc.data.getValue("itemName").toString(), address, doc.data.getValue("itemPrice").toString(),
                             doc.data.getValue("deliveryStatus").toString(),doc.data.getValue("shopName").toString(),doc.data.getValue("date").toString(),
                             doc.data.getValue("shopKey").toString(), doc.id)
                         list.add(item)

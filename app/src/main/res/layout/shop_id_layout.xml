@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="12dp"
-        android:textColor="@color/teal_700"
+        android:textColor="#00854B"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

@@ -78,7 +78,7 @@ class GraphicsActivity : AppCompatActivity() {
                     mySeller.password,mySeller.audienceSize,mySeller.isVerified, mySeller.companyName+mySeller.phoneNo.substring(1,5))
                 shopGraphics = ShopGrphics(iconUri,bannerUri)
 
-                uploadData()
+                regUser()
 
 
             }
@@ -93,6 +93,7 @@ class GraphicsActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     progressDialog.dismiss()
+                    uploadData()
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("TAG", "createUserWithEmail:success")
                     val user = auth.currentUser
@@ -102,7 +103,7 @@ class GraphicsActivity : AppCompatActivity() {
                     progressDialog.dismiss()
                     // If sign in fails, display a message to the user.
                     Log.w("TAG", "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.makeText(baseContext, "Authentication failed. ${task.exception}",
                         Toast.LENGTH_SHORT).show()
 //                    updateUI(null)
                 }
@@ -136,7 +137,6 @@ class GraphicsActivity : AppCompatActivity() {
             }
             storageRef2.putFile(bannerUri).addOnCompleteListener{
                 if (it.isSuccessful){
-                    regUser()
                     //code
                 }else{
                     progressDialog.dismiss()

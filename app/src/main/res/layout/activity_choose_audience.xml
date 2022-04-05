@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:paddingHorizontal="40dp"
     tools:context=".ChooseAudience">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="30dp">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/benmart_logo2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="96dp"
         android:text="@string/audience_size"
+        android:textAllCaps="true"
         android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -38,8 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:textColor="@color/black"
+            android:gravity="top"
+            android:textStyle="bold"
             android:text="@string/small_nless_than_500_monthly_customers"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/radio2"
@@ -47,16 +62,20 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:textColor="@color/black"
+            android:textStyle="bold"
+            android:gravity="top"
             android:text="@string/standard_n500_to_5000_monthly_customers"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/radio3"
             android:textColor="@color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="top"
             android:text="@string/large_ngreater_than_5000_monthly_customers"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
     </RadioGroup>
 
@@ -72,8 +91,9 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textStyle="bold"
+        android:letterSpacing="0"
         android:textSize="18sp"
-        app:cornerRadius="5dp"
+        app:cornerRadius="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,12 +104,15 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textColor="@color/blue"
+        android:textColor="@color/black_vary"
         android:textStyle="bold"
+        android:textSize="16sp"
         android:text="@string/choose_user_audience_customers_size_per_month"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

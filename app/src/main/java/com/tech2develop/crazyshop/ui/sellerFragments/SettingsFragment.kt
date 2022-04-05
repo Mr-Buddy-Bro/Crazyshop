@@ -19,11 +19,13 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import com.android.billingclient.api.*
+import com.anjlab.android.iab.v3.BillingProcessor
+import com.anjlab.android.iab.v3.PurchaseInfo
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.rpc.context.AttributeContext
 import com.makeramen.roundedimageview.RoundedImageView
 import com.scottyab.aescrypt.AESCrypt
 import com.tech2develop.crazyshop.MainActivity
@@ -44,7 +46,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedListener {
+class SettingsFragment : Fragment(R.layout.fragment_settings), BillingProcessor.IBillingHandler {
+
+    lateinit var bp : BillingProcessor
 
     lateinit var auth: FirebaseAuth
     val TAG = "TAG"
@@ -79,16 +83,21 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
     lateinit var btnSaveDeliveryTime: MaterialButton
     var active = false
 
-    lateinit var timeFromOrTo : String
-    var timeDelOrOrder : String = ""
-
-    var billingClient: BillingClient? = null
+    lateinit var timeFromOrTo: String
+    var timeDelOrOrder: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         myView = view
 
         active = DashboardFragment.active
+
+        bp = BillingProcessor(
+            view.context,
+            "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv0BlaImREgmJrMj6uCyPppr8BVtNAUetZqethA0HMzmZ+uQsogYJ8VMT3KPfIJwQW9XD2Z11EpaZNzAZ+4jN6+ipOokpWzOuBLVazcCXOYQLTEk4UrnMbJFj0aXi4CYHS5RASSZK2U/b/1qCzMdeBIAw9UpX9zBH/R+sdzpXZdvBq9pxTQ4UQ0dkL3NYd4YmCS8nxG71V/qXX/6j8vnN/hKYcXY1S3TYLu4c1gwR10Opv+AfHYlpoyQE52P4tG6Om+4ylCWF23mxo56UsGEMwY9GS0j0qkz7QuOB8g0GfrRb+rj7apodtanJ2UaZCiA/dFVTksbVdOYEBQWO3NdaZwIDAQAB",
+            this
+        )
+        bp.initialize()
 
         auth = FirebaseAuth.getInstance()
         SellerHome.isDashboard = false
@@ -131,13 +140,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         cNameChangeDialog.setContentView(R.layout.et_company_name_layout)
         cNameChangeDialog.window!!.setWindowAnimations(R.style.Animation_Design_BottomSheetDialog)
 
-        billingClient = SellerHome.billingClient
 
         btnSubscribe.setOnClickListener {
-            onSubscribe()
+            bp.subscribe(SellerHome.myContext, "seller_subscription_1_month")
         }
 
         btnActivateOrdering.setOnCheckedChangeListener { compoundButton, b ->
+
             Log.d("TAG", b.toString())
             firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
                 .collection("Settings")
@@ -147,6 +156,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         view.findViewById<MaterialButton>(R.id.btnLogOut).setOnClickListener {
             auth.signOut()
             startActivity(Intent(view.context, MainActivity::class.java))
+            SellerHome.myContext.finish()
         }
 
         tvSetCompanyName_edit.setOnClickListener {
@@ -206,6 +216,8 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
 
         tvSetOrderingTime_edit.setOnClickListener {
             timeDelOrOrder = "order"
+            btnChooseFromTime.contentDescription = "Select starting time for ordering"
+            btnChooseToTime.contentDescription = "Select ending time for ordering"
             dTimeChangeDialog.findViewById<TextView>(R.id.textView73).text =
                 "Set time for customers to order from your shop"
             dTimeChangeDialog.show()
@@ -233,30 +245,30 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
 
         timePickerDialog.findViewById<MaterialButton>(R.id.btnPickTime).setOnClickListener {
             val timePicker = timePickerDialog.findViewById<TimePicker>(R.id.timePicker)
-            var mHour : Int = 0
-            val xm : String
-            if (timePicker.currentHour > 12){
+            var mHour: Int = 0
+            val xm: String
+            if (timePicker.currentHour > 12) {
                 mHour = timePicker.currentHour - 12
                 xm = "pm"
-            }else{
+            } else {
                 mHour = timePicker.currentHour
                 xm = "am"
             }
 
             val mMin = timePicker.currentMinute
-            Log.d("time", "onViewCreated: $mHour : $mMin $xm" )
+            Log.d("time", "onViewCreated: $mHour : $mMin $xm")
 
-            val time : String
+            val time: String
 
-            if(mMin.toString().length < 2){
+            if (mMin.toString().length < 2) {
                 time = "$mHour:0$mMin $xm"
-            }else{
+            } else {
                 time = "$mHour:$mMin $xm"
             }
 
             if (timeFromOrTo.equals("from")) {
                 btnChooseFromTime.text = time
-            }else{
+            } else {
                 btnChooseToTime.text = time
             }
             timePickerDialog.dismiss()
@@ -267,29 +279,31 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
             val newTime = "${btnChooseFromTime.text} - ${btnChooseToTime.text}"
             if (timeDelOrOrder == "order") {
                 Log.d("newTime", "new Ordering time: $newTime")
-                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("Settings").get()
+                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
+                    .collection("Settings").get()
                     .addOnCompleteListener {
-                        if (it.isSuccessful){
+                        if (it.isSuccessful) {
                             var docId: String
-                                for (doc in it.result!!) {
-                                    docId = doc.id
-                                    firestore.collection("Seller")
-                                        .document(SellerHome.auth.currentUser?.email!!)
-                                        .collection("Settings").document(docId)
-                                        .update("orderingTime", newTime).addOnCompleteListener {
-                                            loadingDialog.dismiss()
-                                            dDelChargeDialog.dismiss()
-                                            fetchSettingsData()
-                                        }
-                                }
+                            for (doc in it.result!!) {
+                                docId = doc.id
+                                firestore.collection("Seller")
+                                    .document(SellerHome.auth.currentUser?.email!!)
+                                    .collection("Settings").document(docId)
+                                    .update("orderingTime", newTime).addOnCompleteListener {
+                                        loadingDialog.dismiss()
+                                        dDelChargeDialog.dismiss()
+                                        fetchSettingsData()
+                                    }
+                            }
 
                         }
                     }
-            }else{
+            } else {
                 Log.d("newTime", "new Delivery time: $newTime")
-                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).collection("Settings").get()
+                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
+                    .collection("Settings").get()
                     .addOnCompleteListener {
-                        if (it.isSuccessful){
+                        if (it.isSuccessful) {
                             var docId: String
                             for (doc in it.result!!) {
                                 docId = doc.id
@@ -320,23 +334,25 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
                 val newName = AESCrypt.encrypt(SellerHome.eSellerDataKey, etNewName.text.toString())
                 firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!)
                     .update("companyName", newName).addOnCompleteListener {
-                    loadingDialog.dismiss()
-                    if (it.isSuccessful) {
-                        Toast.makeText(
-                            myView.context,
-                            "Company name changed to ${etNewName.text}",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        cNameChangeDialog.dismiss()
-                        val i = Intent(myView.context, SellerHome::class.java)
-                        myView.context.startActivity(i)
+                        loadingDialog.dismiss()
+                        if (it.isSuccessful) {
+                            Toast.makeText(
+                                myView.context,
+                                "Company name changed to ${etNewName.text}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            cNameChangeDialog.dismiss()
+                            val i = Intent(myView.context, SellerHome::class.java)
+                            myView.context.startActivity(i)
+                        }
                     }
-                }
             }
         }
 
         tvSetDeliveryTime_edit.setOnClickListener {
             dTimeChangeDialog.show()
+            btnChooseFromTime.contentDescription = "Select starting time for delivery"
+            btnChooseToTime.contentDescription = "Select ending time for delivery"
         }
 
         fetchSettingsData()
@@ -349,72 +365,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         }
 
 
-    }
-
-    private fun onSubscribe() {
-        if (billingClient!!.isReady) {
-            initiatePurchase()
-        } else {
-            billingClient!!.startConnection(object : BillingClientStateListener {
-                override fun onBillingSetupFinished(billingResult: BillingResult) {
-                    if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                        // The BillingClient is ready. You can query purchases here.
-                        initiatePurchase()
-                    }
-                }
-
-                override fun onBillingServiceDisconnected() {
-                    // Try to restart the connection on the next request to
-                    // Google Play by calling the startConnection() method.
-                }
-            })
-        }
-    }
-
-    private fun initiatePurchase() {
-        Log.d("TAG", "initiatePurchase: 1")
-        val skuList = ArrayList<String>()
-        skuList.add("seller_subscription_1_month")
-        val params = SkuDetailsParams.newBuilder()
-        params.setSkusList(skuList).setType(BillingClient.SkuType.SUBS)
-        val billingResult =
-            billingClient!!.isFeatureSupported(BillingClient.FeatureType.SUBSCRIPTIONS)
-        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            Log.d("TAG", "initiatePurchase: 2")
-            billingClient!!.querySkuDetailsAsync(params.build()) { billingResult, skuDetailsList ->
-                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    Log.d("TAG", "initiatePurchase: 3")
-                    Log.d("TAG", "initiatePurchase: ${skuDetailsList!!.size}")
-                    if (skuDetailsList != null && skuDetailsList.size > 0) {
-                        Log.d("TAG", "initiatePurchase: 4")
-                        val flowParams = BillingFlowParams.newBuilder()
-                            .setSkuDetails(skuDetailsList[0])
-                            .build()
-                        billingClient!!.launchBillingFlow(SellerHome.myContext, flowParams)
-                    } else {
-                        Toast.makeText(
-                            myView.context,
-                            "Subscription not available",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                } else {
-                    Toast.makeText(
-                        myView.context,
-                        "Error " + billingResult.debugMessage,
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-            }
-        } else {
-            Toast.makeText(
-                myView.context,
-                "Sorry, subscription not supported. Please update Play Store",
-                Toast.LENGTH_LONG
-            ).show()
-        }
-
-        // Process the result.
     }
 
     private fun fetchSettingsData() {
@@ -472,33 +422,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
             true -> btnActivateOrdering.isChecked = true
             false -> btnActivateOrdering.isChecked = false
         }
-    }
-
-    override fun onPurchasesUpdated(
-        billingResult: BillingResult,
-        purchases: MutableList<Purchase>?
-    ) {
-        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && purchases != null) {
-            handlePurchases(purchases)
-        } else if (billingResult.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
-            val queryAlreadyPurchasesResult =
-                billingClient!!.queryPurchases(BillingClient.SkuType.SUBS)
-            val alreadyPurchases = queryAlreadyPurchasesResult.purchasesList
-            alreadyPurchases?.let { handlePurchases(it) }
-        } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
-            Toast.makeText(myView.context, "Purchase Canceled", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(
-                myView.context,
-                "Error " + billingResult.debugMessage,
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-    }
-
-    private fun handlePurchases(purchases: List<Purchase>) {
-        fetchSettingsData()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -575,6 +498,72 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), PurchasesUpdatedL
         val storage = FirebaseStorage.getInstance()
         val ref = storage.getReference().child("${SellerHome.shopId}/shop graphics/${s}.jpg")
         ref.putFile(prImageUri)
+    }
+
+    override fun onProductPurchased(productId: String, details: PurchaseInfo?) {
+        Toast.makeText(myView.context, "Subscription successful", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onPurchaseHistoryRestored() {
+
+    }
+
+    override fun onBillingError(errorCode: Int, error: Throwable?) {
+
+    }
+
+    override fun onBillingInitialized() {
+
+        val tvSubStatus = myView.findViewById<TextView>(R.id.subscriptionStatus)
+
+        bp.loadOwnedPurchasesFromGoogleAsync(object : BillingProcessor.IPurchasesResponseListener {
+            override fun onPurchasesSuccess() {
+
+            }
+
+            override fun onPurchasesError() {
+
+            }
+
+        })
+
+        val purchaseInfo = bp.getSubscriptionPurchaseInfo("seller_subscription_1_month")
+        btnActivateOrdering = myView.findViewById(R.id.btnActivateOrdering)
+        val tvAct = myView.findViewById<TextView>(R.id.textView47)
+
+        try {
+
+            if (purchaseInfo != null) {
+                if (purchaseInfo.purchaseData.autoRenewing) {
+                    tvSubStatus.text = "Subscribed"
+                    btnSubscribe.visibility = View.INVISIBLE
+
+                } else {
+                    tvSubStatus.text = "Not subscribed"
+                    btnSubscribe.visibility = View.VISIBLE
+                    btnActivateOrdering.isChecked = false
+                    btnActivateOrdering.isEnabled = false
+                    btnActivateOrdering.setTrackResource(R.drawable.switch_disabled)
+                    tvAct.setTextColor(resources.getColor(R.color.black_vary))
+
+                }
+            } else {
+                tvSubStatus.text = "Expired"
+                btnSubscribe.visibility = View.VISIBLE
+                btnActivateOrdering.isChecked = false
+                btnActivateOrdering.isEnabled = false
+                btnActivateOrdering.setTrackResource(R.drawable.switch_disabled)
+                tvAct.setTextColor(resources.getColor(R.color.black_vary))
+
+            }
+        }catch (e: Exception){
+            Toast.makeText(myView.context, "Something went wrong. Try re-installing BenMart from Google play store", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onDestroy() {
+        bp.release()
+        super.onDestroy()
     }
 }
 

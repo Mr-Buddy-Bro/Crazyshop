@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/teal_700"
+        android:backgroundTint="#00854B"
         android:text="@string/add_category"
         android:textStyle="bold"
         android:textAllCaps="false"

@@ -42,6 +42,7 @@ class CategoryAdapter(context: Context, list: ArrayList<CategoryModel>) : Recycl
         firestore = FirebaseFirestore.getInstance()
 
         holder.catName.text = cat.name
+        holder.btnDelete.contentDescription = "Delete category ${cat.name}"
         holder.btnDelete.setOnClickListener {
             dialog.show()
             catName = cat.name!!

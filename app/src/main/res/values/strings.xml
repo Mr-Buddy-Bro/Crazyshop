@@ -42,9 +42,9 @@
     <string name="pay_on_delivery">* Pay on delivery</string>
     <string name="place_order">Place order</string>
     <string name="audience_size">Audience size</string>
-    <string name="small_nless_than_500_monthly_customers">Small\nless than 500 monthly customers</string>
-    <string name="standard_n500_to_5000_monthly_customers">Standard\n500 to 5000 monthly customers</string>
-    <string name="large_ngreater_than_5000_monthly_customers">Large\ngreater than 5000 monthly customers</string>
+    <string name="small_nless_than_500_monthly_customers">Small less than 500 monthly customers</string>
+    <string name="standard_n500_to_5000_monthly_customers">Standard 500 to 5000 monthly customers</string>
+    <string name="large_ngreater_than_5000_monthly_customers">Large greater than 5000 monthly customers</string>
     <string name="next">Next</string>
     <string name="choose_user_audience_customers_size_per_month">Choose user Audience/Customers size per month</string>
     <string name="enter_delivery_address">Enter delivery address</string>
@@ -84,7 +84,7 @@
     <string name="search">search</string>
     <string name="apply">Apply</string>
     <string name="seller_mode">Seller mode</string>
-    <string name="start_continue_selling_your_products_through_yugoo">Start/Continue selling your products through Yugoo</string>
+    <string name="start_continue_selling_your_products_through_yugoo">Start/Continue selling your products through BenMart</string>
     <string name="existing_seller">Existing Seller</string>
     <string name="verify_your_email">Verify your Email</string>
     <string name="a_verification_link_is_send_to_your_email_address">A verification link is send to your email address</string>
@@ -156,6 +156,20 @@
     <string name="item_name">Item name</string>
     <string name="mark_as_un_delivered">Mark as Un-delivered</string>
     <string name="address">Address</string>
+    <string name="price_details">Price details</string>
+    <string name="buyer">Buyer</string>
+    <string name="seller">Seller</string>
+    <string name="continue_as">Continue as</string>
+    <string name="please_subscribe_to_enable_this_feature">Please subscribe to enable this feature</string>
+    <string name="activate_ordering">Activate ordering</string>
+    <string name="reset_password">Reset password</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="delete_category">delete category</string>
+    <string name="edit">edit</string>
+    <string name="button_to_select_time">button to select time</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="all_products_under_this_category_will_be_deleted">All products under this category will be deleted</string>
 
     <string-array name="allOrdersDurationList">
         <item>Today</item>

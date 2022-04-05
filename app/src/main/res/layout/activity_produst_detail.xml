@@ -8,7 +8,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"
@@ -33,7 +33,7 @@
                 android:id="@+id/imageView6"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView11">
@@ -42,7 +42,7 @@
                     android:id="@+id/ivDetailedProduct"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
+                    android:background="@color/grey"
                     android:scaleType="centerCrop"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:layout_editor_absoluteY="96dp" />
@@ -52,8 +52,9 @@
 
             <TextView
                 android:id="@+id/tvDetailedProductName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="48dp"
                 android:text="@string/flower"
                 android:textColor="@color/black"
@@ -68,6 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/price"
                 android:textColor="@color/black"
                 android:textSize="22sp"
@@ -79,6 +81,7 @@
                 android:id="@+id/tvDetailedProductPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
                 android:text=""
                 android:textColor="@color/red"
@@ -92,7 +95,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
-                android:text=""
+                android:layout_marginTop="10dp"
+                android:text="@string/change_company_name_dec"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -36,7 +36,7 @@
         android:textStyle="bold"
         android:text="itemName"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/cardView2"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -47,7 +47,7 @@
         android:layout_marginStart="16dp"
         android:text="Category"
         android:textColor="@color/black_vary"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/cardView2"
         app:layout_constraintTop_toBottomOf="@+id/textView30" />
@@ -64,19 +64,19 @@
         app:layout_constraintStart_toEndOf="@+id/cardView2"
         app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
-    <ImageView
+    <ImageButton
+        android:backgroundTint="@color/white"
         android:id="@+id/btnEditProduct"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="28dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:focusable="true"
+        android:padding="15dp"
         android:src="@drawable/ic_baseline_edit_24"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:clickable="true"
-        android:foreground="?android:selectableItemBackground"
         app:layout_constraintHorizontal_bias="0.87"
         app:layout_constraintStart_toEndOf="@+id/textView31"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/blue"
-        android:focusable="true" />
+        app:tint="@color/blue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

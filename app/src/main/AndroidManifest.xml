@@ -12,6 +12,7 @@
         android:required="false" />
 
     <application
+        android:name=".ApplicationClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,47 +20,10 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
         <activity
-            android:name=".VerifyEmailActivity"
+            android:name=".ForgotPassword"
             android:exported="false" />
         <activity
-            android:name=".CreateAddressActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CheckOutActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProdustDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ShopDetailedActivity"
-            android:exported="false" />
-        <activity
-            android:name=".BuyerRegistration"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".BuyerHome"
-            android:exported="false" />
-        <activity
-            android:name=".SellerHome"
-            android:exported="true"
-            android:label="@string/title_activity_seller_home" />
-        <activity
-            android:name=".GraphicsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ChooseAudience"
-            android:exported="false" />
-        <activity
-            android:name=".SellerRegistration"
-            android:exported="false" />
-        <activity
-            android:name=".UserType"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,6 +31,63 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".VerifyEmailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CreateAddressActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CheckOutActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ProdustDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ShopDetailedActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BuyerRegistration"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BuyerHome"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SellerHome"
+            android:exported="true"
+            android:label="@string/title_activity_seller_home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".GraphicsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ChooseAudience"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SellerRegistration"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserType"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

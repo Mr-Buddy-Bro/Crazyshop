@@ -25,6 +25,8 @@ import com.tech2develop.crazyshop.Models.SellerModel
 import com.tech2develop.crazyshop.Models.VerificationReqModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
+import org.imaginativeworld.whynotimagecarousel.ImageCarousel
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -53,10 +55,13 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
     lateinit var tvDashDelivered : TextView
     lateinit var tvDashUnDelivered : TextView
     lateinit var refreshLay : SwipeRefreshLayout
+    lateinit var myView : View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         SellerHome.isDashboard = true
+
+        myView = view
 
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
@@ -69,11 +74,13 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         refreshLay = view.findViewById(R.id.refreshLay)
         refreshLay.setOnRefreshListener {
             getDashboardData(view)
+            loadBanner()
 //            checkVerified(view)
         }
 //        refreshLay.setOn
 
         getDashboardData(view)
+        loadBanner()
 
         dialog = Dialog(view.context)
         dialog.setContentView(R.layout.varify_popup)
@@ -159,6 +166,39 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             }
     }
 
+    fun loadBanner(){
+
+        val bannerImageUrlList = ArrayList<String>()
+        var bannerUrl=""
+        firestore.collection("Seller Banner Urls").get().addOnCompleteListener {
+            if ( it.isSuccessful) {
+                for (document in it.result!!) {
+                    val url = document.data.getValue("bannerUrl")
+                    bannerImageUrlList.add(url.toString())
+                }
+                setBanner(bannerImageUrlList)
+            }
+        }
+    }
+
+    private fun setBanner(bannerImageUrlList: ArrayList<String>) {
+        val ivBanner = myView.findViewById<ImageCarousel>(R.id.bannerImg)
+        ivBanner.registerLifecycle(lifecycle)
+
+        val list = mutableListOf<CarouselItem>()
+
+        for (position in 0..bannerImageUrlList.size-1){
+            list.add(
+                CarouselItem(
+                    imageUrl = bannerImageUrlList[position]
+
+                )
+            )
+        }
+        ivBanner.setData(list)
+
+    }
+
     private fun setStatus(view: View) {
         val tvStatus = view.findViewById<TextView>(R.id.textView76)
         if (active){
@@ -184,7 +224,6 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
             }
         }
         con1(list, deliveredList)
-
     }
 
     private fun con1(list: ArrayList<OrderModel>, deliveredList: ArrayList<String>) {
@@ -202,11 +241,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         tvDashDelivered.text = size1.toString()
         tvDashUnDelivered.text = size.toString()
         val DCR = (((size1.toDouble() / size2)*100).toString()).substringBefore(".")+"%"
-        if (size > 0) {
             tvDCR.text = DCR
-        }else{
-            tvDCR.text = "0%"
-        }
     }
 
     @SuppressLint("ResourceAsColor")

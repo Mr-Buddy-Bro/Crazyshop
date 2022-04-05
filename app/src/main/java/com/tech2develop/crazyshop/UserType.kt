@@ -60,12 +60,12 @@ class UserType : AppCompatActivity() {
     private fun setContent() {
         if (userType.equals("seller")){
             tvMode.text = "Seller mode"
-            tvDesc.text = "Start/Continue selling your products through Yugoo"
+            tvDesc.text = "Start/Continue selling your products through BenMart"
             btnExisting.text = "Existing seller"
             btnNew.text = "New seller"
         }else{
             tvMode.text = "Buyer mode"
-            tvDesc.text = "Start/Continue buying products through Yugoo"
+            tvDesc.text = "Start/Continue buying products through BenMart"
             btnExisting.text = "Existing buyer"
             btnNew.text = "New buyer"
         }

@@ -23,7 +23,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import com.android.billingclient.api.*
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -44,7 +43,7 @@ import java.io.File
 import java.util.*
 
 
-class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
+class SellerHome : AppCompatActivity(){
 
     lateinit var binding : ActivitySellerHomeBinding
     lateinit var firestore : FirebaseFirestore
@@ -58,7 +57,6 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
         var isDashboard = false
         var subscribed = false
         lateinit var shopName : String
-        var billingClient: BillingClient? = null
         lateinit var myContext : Activity
         var prImageUri : Uri? = null
     }
@@ -68,8 +66,6 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
         binding = ActivitySellerHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         myContext = this
-
-        billingClient = BillingClient.newBuilder(this).enablePendingPurchases().setListener(this).build()
 
         updateFragment(DashboardFragment())
         firestore = FirebaseFirestore.getInstance()
@@ -148,46 +144,8 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
                 }
             }
         }
-        checkSubscription()
     }
 
-    private fun checkSubscription() {
-        billingClient =
-            BillingClient.newBuilder(this).enablePendingPurchases().setListener(this).build()
-        billingClient!!.startConnection(object : BillingClientStateListener {
-            override fun onBillingSetupFinished(billingResult: BillingResult) {
-                val purchasesResult = billingClient!!.queryPurchases(BillingClient.SkuType.SUBS)
-                billingClient!!.queryPurchaseHistoryAsync(
-                    BillingClient.SkuType.SUBS
-                ) { billingResult1: BillingResult, list: List<PurchaseHistoryRecord?>? ->
-                    Log.d(
-                        "TAG",
-                        "purchasesResult.getPurchasesList():" + purchasesResult.purchasesList
-                    )
-                    if (billingResult1.responseCode == BillingClient.BillingResponseCode.OK &&
-                        !Objects.requireNonNull(purchasesResult.purchasesList).isEmpty()
-                    ) {
-
-                        //here you can pass the user to use the app because he has an active subscription
-                        updatetoSubscribed(purchasesResult.purchasesList)
-
-                    }
-                }
-            }
-
-            override fun onBillingServiceDisconnected() {
-                // Try to restart the connection on the next request to
-                // Google Play by calling the startConnection() method.
-                Log.d("TAG", "onBillingServiceDisconnected")
-            }
-        })
-    }
-
-    private fun updatetoSubscribed(purchasesList: MutableList<Purchase>?) {
-
-        subscribed = true
-
-    }
     fun setHeaderGraphics(){
         Log.d("TAG", "setHeaderGraphics: ${shopId}")
         val iconStorageRef = storage.getReference().child("${shopId}/shop graphics/icon.jpg")
@@ -219,10 +177,6 @@ class SellerHome : AppCompatActivity(), PurchasesUpdatedListener {
         }else{
             finishAffinity()
         }
-
-    }
-
-    override fun onPurchasesUpdated(p0: BillingResult, p1: MutableList<Purchase>?) {
 
     }
 

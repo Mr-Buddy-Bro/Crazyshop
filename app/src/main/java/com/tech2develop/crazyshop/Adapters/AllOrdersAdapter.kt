@@ -47,7 +47,7 @@ class AllOrdersAdapter(context: Context, list: ArrayList<OrderModel>) : Recycler
 
         val item = list[position]
         holder.itemName.text = item.itemName
-        holder.itemPrice.text = item.itemPrice
+        holder.itemPrice.text = "Rs. "+item.itemPrice
         holder.orderStatus.text = item.deliveryStatus
 
         getPrImages(holder, item)

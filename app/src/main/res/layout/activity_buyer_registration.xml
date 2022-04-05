@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:paddingHorizontal="30dp"
     android:layout_height="match_parent"
+    android:scrollbars="none"
+    android:background="@color/white"
     tools:context=".BuyerRegistration">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/benmart_logo2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView48"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="76dp"
         android:text="@string/new_buyer"
+        android:textAllCaps="true"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -24,108 +38,88 @@
         android:id="@+id/textView49"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="@string/new_buyer_sub"
-        android:textColor="@color/blue"
-        android:textSize="14sp"
+        android:textColor="@color/black_vary"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.557"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView48" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <EditText
+        android:id="@+id/etBuyerFirstName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/edit_text_bg"
         android:hint="@string/first_name"
-        android:textColorHint="@color/blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView49">
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black_vary"
+        app:layout_constraintTop_toBottomOf="@+id/textView49"
+        tools:layout_editor_absoluteX="30dp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:inputType="text"
-            android:id="@+id/etBuyerFirstName"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout13"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <EditText
+        android:id="@+id/etBuyerLastName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edit_text_bg"
         android:hint="@string/last_name"
-        android:textColorHint="@color/blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black_vary"
+        app:layout_constraintTop_toBottomOf="@+id/etBuyerFirstName"
+        tools:layout_editor_absoluteX="30dp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etBuyerLastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout14"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+     <EditText
+        android:id="@+id/etBuyerEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edit_text_bg"
         android:hint="@string/email_id"
-        android:textColorHint="@color/blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black_vary"
+        app:layout_constraintTop_toBottomOf="@+id/etBuyerLastName"
+        tools:layout_editor_absoluteX="30dp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etBuyerEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout15"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <EditText
+        android:id="@+id/etBuyerPass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edit_text_bg"
         android:hint="@string/password"
-        android:textColorHint="@color/blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout14">
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black_vary"
+        app:layout_constraintTop_toBottomOf="@+id/etBuyerEmail"
+        tools:layout_editor_absoluteX="30dp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etBuyerPass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout2"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+    <EditText
+        android:id="@+id/etBuyerRePass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edit_text_bg"
         android:hint="@string/re_password"
-        android:textColorHint="@color/blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout15">
+        android:paddingHorizontal="30dp"
+        android:paddingVertical="12dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black_vary"
+        app:layout_constraintTop_toBottomOf="@+id/etBuyerPass"
+        tools:layout_editor_absoluteX="30dp" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etBuyerRePass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword" />
-    </com.google.android.material.textfield.TextInputLayout>
+<!--    etBuyerRePass-->
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
@@ -138,7 +132,14 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
+        app:cornerRadius="50dp"
+        android:paddingHorizontal="50dp"
+        android:paddingVertical="10dp"
+        android:textSize="16sp"
+        android:letterSpacing="0"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/etBuyerRePass" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

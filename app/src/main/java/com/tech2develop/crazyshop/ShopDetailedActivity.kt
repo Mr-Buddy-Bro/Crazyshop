@@ -133,6 +133,7 @@ class ShopDetailedActivity : AppCompatActivity() {
     private fun setAdapter(list: ArrayList<ProductModel>) {
         val adapter = ShopProductsAdapter(this,list)
         val rv = findViewById<RecyclerView>(R.id.rvShopProducts)
+        rv.isNestedScrollingEnabled = false
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(this)
 

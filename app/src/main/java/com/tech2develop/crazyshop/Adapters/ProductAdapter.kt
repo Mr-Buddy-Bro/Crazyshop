@@ -47,6 +47,8 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
         holder.itemPrice.text = "Rs."+product.price
         getPrImages(null, holder, product)
 
+        holder.editIcon.contentDescription="edit ${product.name}"
+        
         holder.editIcon.setOnClickListener {
             dialog = Dialog(context)
             dialog.setContentView(R.layout.edit_product_dialog_layout)
@@ -192,7 +194,7 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
         val itemName = itemView.findViewById<TextView>(R.id.textView30)
         val itemCat = itemView.findViewById<TextView>(R.id.textView31)
         val itemPrice = itemView.findViewById<TextView>(R.id.textView33)
-        val editIcon = itemView.findViewById<ImageView>(R.id.btnEditProduct)
+        val editIcon = itemView.findViewById<ImageButton>(R.id.btnEditProduct)
 
     }
 

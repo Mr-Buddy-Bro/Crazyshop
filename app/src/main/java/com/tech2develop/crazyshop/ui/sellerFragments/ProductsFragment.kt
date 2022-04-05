@@ -127,6 +127,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
     private fun setAdapter(view: View) {
         val adapter = ProductAdapter(view.context, productList)
         val rv = view.findViewById<RecyclerView>(R.id.rvProducts)
+        rv.isNestedScrollingEnabled = false
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(view.context)
         rv.visibility = View.VISIBLE
@@ -145,7 +146,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         val product = ProductModel(itemName,itemDesc,cat,itemPrice, null)
         if (prImageUri == null){
             Toast.makeText(view.context,"Please choose an image",Toast.LENGTH_LONG).show()
-        }else if (cat.equals(" -- Select -- ")) {
+        }else if (cat == " -- Select category -- ") {
             Toast.makeText(view.context,"Please select a category",Toast.LENGTH_LONG).show()
         }else if(itemName.isEmpty() || itemDesc.isEmpty() || itemPrice.isEmpty()){
                 Toast.makeText(view.context,"Please fill all the details",Toast.LENGTH_LONG).show()

@@ -5,11 +5,9 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
-import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingResult
-import com.android.billingclient.api.Purchase
-import com.android.billingclient.api.PurchasesUpdatedListener
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.tech2develop.crazyshop.Models.SellerModel
 
@@ -35,6 +33,8 @@ class MainActivity : AppCompatActivity(){
             startActivity(Intent(this, SellerHome::class.java))
         }else if (lastLoginAs.equals("Buyer") && auth.currentUser != null){
             startActivity(Intent(this, BuyerHome::class.java))
+        }else{
+            findViewById<ConstraintLayout>(R.id.main_layout).visibility = View.VISIBLE
         }
     }
 

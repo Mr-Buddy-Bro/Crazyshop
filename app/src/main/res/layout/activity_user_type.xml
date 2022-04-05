@@ -1,19 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="none"
     android:background="@color/white"
-    android:paddingHorizontal="40dp"
     tools:context=".UserType">
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="40dp">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="32dp"
+            android:src="@drawable/benmart_logo2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="180dp"
         android:text="@string/seller_mode"
+        android:textAllCaps="true"
         android:textColor="@color/black"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -26,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:text="@string/start_continue_selling_your_products_through_yugoo"
-        android:textColor="@color/blue"
+        android:textColor="@color/black_vary"
         android:textStyle="bold"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,26 +48,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/materialButton3"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="240dp"
-        android:backgroundTint="@color/grey"
-        android:letterSpacing="0"
-        android:paddingHorizontal="60dp"
-        android:paddingVertical="20dp"
-        android:text="@string/existing_seller"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:cornerRadius="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/materialButton3"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="180dp"
+            android:backgroundTint="@color/grey"
+            android:letterSpacing="0"
+            android:paddingHorizontal="60dp"
+            android:paddingVertical="20dp"
+            android:text="@string/existing_seller"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:cornerRadius="50dp"
+            app:icon="@drawable/user"
+            app:iconGravity="textStart"
+            app:iconSize="30dp"
+            app:iconTintMode="multiply"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <com.google.android.material.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
         android:id="@+id/btnNewUser"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -65,12 +84,17 @@
         android:text="@string/new_seller"
         android:textAllCaps="false"
         android:textStyle="bold"
+            app:iconGravity="textStart"
+        app:icon="@drawable/new_user"
+        app:iconTintMode="multiply"
+        app:iconSize="30dp"
         android:textColor="@color/white"
-        android:textSize="16sp"
-        app:cornerRadius="5dp"
+        android:textSize="18sp"
+        app:cornerRadius="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialButton3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

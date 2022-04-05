@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:text="@string/settings"
+            android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -34,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="Activate ordering"
+            android:text="@string/activate_ordering"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,15 +43,27 @@
 
         <Switch
             android:id="@+id/btnActivateOrdering"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
             android:checked="true"
             android:thumbTint="@color/white"
             android:track="@drawable/switch_track_selector"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView46"
             tools:ignore="UseSwitchCompatOrMaterialXml" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/please_subscribe_to_enable_this_feature"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black_vary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView47" />
 
         <com.google.android.material.divider.MaterialDivider
             android:id="@+id/materialDivider2"
@@ -64,7 +77,7 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -72,7 +85,7 @@
             tools:layout_editor_absoluteX="31dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/company_name_"
                 android:textColor="@color/black"
@@ -94,9 +107,10 @@
 
             <ImageView
                 android:id="@+id/tvSetCompanyName_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="edit company name"
+                android:padding="12dp"
                 android:src="@drawable/ic_baseline_edit_24"
                 app:tint="#002944" />
 
@@ -106,7 +120,7 @@
         <LinearLayout
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -114,7 +128,7 @@
             tools:layout_editor_absoluteX="31dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/daily_delivery_time"
                 android:textColor="@color/black"
@@ -135,9 +149,10 @@
 
             <ImageView
                 android:id="@+id/tvSetDeliveryTime_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:contentDescription="edit daily delivery time"
+                android:padding="12dp"
                 android:src="@drawable/ic_baseline_edit_24"
                 app:tint="#002944" />
 
@@ -147,7 +162,7 @@
         <LinearLayout
             android:id="@+id/linearLayout3"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -155,7 +170,7 @@
             tools:layout_editor_absoluteX="30dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:text="@string/delivery_charge_per_item"
                 android:textColor="@color/black"
@@ -177,9 +192,10 @@
 
             <ImageView
                 android:id="@+id/tvSetDeliveryCharge_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="12dp"
+                android:contentDescription="edit delivery charge"
                 android:src="@drawable/ic_baseline_edit_24"
                 app:tint="#002944" />
 
@@ -189,7 +205,7 @@
         <LinearLayout
             android:id="@+id/lay2"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -197,7 +213,7 @@
             tools:layout_editor_absoluteX="31dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/ordering_time"
                 android:textColor="@color/black"
@@ -218,9 +234,10 @@
 
             <ImageView
                 android:id="@+id/tvSetOrderingTime_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="12dp"
+                android:contentDescription="edit ordering time"
                 android:src="@drawable/ic_baseline_edit_24"
                 app:tint="#002944" />
 
@@ -259,9 +276,10 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="36dp"
-                android:background="@color/grey"
+                android:background="@color/dark_vary"
                 android:scaleType="centerCrop"
                 app:circularflow_defaultRadius="20dp"
+                android:contentDescription="@string/shop_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -294,8 +312,9 @@
                 android:layout_width="90dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="36dp"
-                android:background="@color/grey"
+                android:background="@color/dark_vary"
                 android:scaleType="centerCrop"
+                android:contentDescription="@string/shop_banner"
                 app:circularflow_defaultRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -334,8 +353,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Expired"
-            android:textColor="@color/black_vary"
+            android:text="......."
+            android:textColor="@color/dark_vary"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView61" />
@@ -346,7 +365,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            android:backgroundTint="#0078EF"
+            android:backgroundTint="@color/blue"
             android:text="Subscribe"
             android:textAllCaps="false"
             android:textStyle="bold"
@@ -361,7 +380,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="60dp"
-            android:backgroundTint="#0078EF"
+            android:backgroundTint="@color/blue"
             android:text="@string/log_out"
             android:textAllCaps="false"
             android:textColor="@color/white"

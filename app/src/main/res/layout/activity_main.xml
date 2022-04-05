@@ -4,39 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:scrollbars="none"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:id="@+id/main_layout"
+        android:background="@color/white"
+        android:visibility="visible">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="300dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="232dp"
-        android:src="@drawable/benmart_logo2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="180dp"
+            android:src="@drawable/benmart_logo2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/continue_as"
+            android:textAlignment="center"
+            android:textColor="@color/black_vary"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/materialButton"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintVertical_bias="0.882"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <com.google.android.material.button.MaterialButton
         android:id="@+id/materialButton"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="92dp"
-        android:backgroundTint="@color/blue"
+        android:backgroundTint="@color/grey"
         android:letterSpacing="0"
         android:onClick="btnSeller"
         android:paddingHorizontal="40dp"
         android:paddingVertical="15dp"
-        android:text="@string/continue_as_seller"
+        android:text="@string/seller"
         android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:cornerRadius="10dp"
+        android:textColor="@color/black"
+        app:cornerRadius="50dp"
         android:textStyle="bold"
-        app:icon="@drawable/ic_baseline_shop_24"
+        android:textSize="18sp"
+        app:icon="@drawable/seller"
+            app:iconSize="30dp"
+            app:iconTintMode="multiply"
+            app:iconGravity="textStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,19 +65,23 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/materialButton2"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/red"
+        android:backgroundTint="#B71C1C"
         android:letterSpacing="0"
         android:onClick="btnBuyer"
         android:paddingHorizontal="40dp"
         android:paddingVertical="15dp"
-        android:text="@string/continue_as_buyer"
+        android:text="@string/buyer"
         android:textAllCaps="false"
+        app:iconGravity="textStart"
         android:textStyle="bold"
         android:textColor="@color/white"
-        app:cornerRadius="10dp"
-        app:icon="@drawable/ic_baseline_shopping_basket_24"
+        app:cornerRadius="50dp"
+        android:textSize="18sp"
+        app:icon="@drawable/buyer"
+        app:iconTintMode="multiply"
+        app:iconSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/materialButton" />
