@@ -75,7 +75,7 @@ class GraphicsActivity : AppCompatActivity() {
                 // upload data and register
 
                 seller = SellerModel(mySeller.companyName,mySeller.companyDescription,mySeller.fullName,mySeller.email,mySeller.phoneNo,
-                    mySeller.password,mySeller.audienceSize,mySeller.isVerified, mySeller.companyName+mySeller.phoneNo.substring(1,5))
+                    mySeller.password,mySeller.audienceSize,mySeller.isVerified, mySeller.companyName+mySeller.phoneNo.substring(1,5),null,null)
                 shopGraphics = ShopGrphics(iconUri,bannerUri)
 
                 regUser()
@@ -127,22 +127,38 @@ class GraphicsActivity : AppCompatActivity() {
 
             val storageRef1 = storage.getReference(seller.sellerKey+"/shop graphics/icon.jpg")
             val storageRef2 = storage.getReference(seller.sellerKey+"/shop graphics/banner.jpg")
+
             storageRef1.putFile(iconUri).addOnCompleteListener{
                 if (it.isSuccessful){
-                    //code
+                    Log.d("seller123", "uploadData: p")
+                    storageRef1.downloadUrl.addOnSuccessListener {task1->
+                        Log.d("seller123", "uploadData: pp")
+                        val iconUrl = task1.toString()
+                        storageRef2.putFile(bannerUri).addOnCompleteListener{task2->
+                            Log.d("seller123", "uploadData: ppp")
+                            if (task2.isSuccessful){
+                                storageRef1.downloadUrl.addOnSuccessListener {task->
+                                    Log.d("seller123", "uploadData: pppp")
+                                    val bannerUrl = task.toString()
+                                    Log.d("seller123", "uploadData: ppppp")
+                                    seller = SellerModel(mySeller.companyName,mySeller.companyDescription,mySeller.fullName,mySeller.email,mySeller.phoneNo,
+                                        mySeller.password,mySeller.audienceSize,mySeller.isVerified, mySeller.companyName+mySeller.phoneNo.substring(1,5),iconUrl,bannerUrl)
+                                    firestore.collection("Seller").document(email).set(seller).addOnCompleteListener {
+
+                                    }
+                                }
+                            }else{
+                                progressDialog.dismiss()
+                                Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
                 }else{
                     progressDialog.dismiss()
                     Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
                 }
             }
-            storageRef2.putFile(bannerUri).addOnCompleteListener{
-                if (it.isSuccessful){
-                    //code
-                }else{
-                    progressDialog.dismiss()
-                    Toast.makeText(this,it.exception.toString(),Toast.LENGTH_SHORT).show()
-                }
-            }
+
 
         }catch (e: Exception){
             progressDialog.dismiss()

@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:paddingHorizontal="30dp"
     android:layout_height="match_parent"
-    android:scrollbars="none"
     android:background="@color/white"
+    android:paddingHorizontal="30dp"
+    android:scrollbars="none"
     tools:context=".BuyerRegistration">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,125 +21,129 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView48"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:text="@string/new_buyer"
-        android:textAllCaps="true"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView48"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="76dp"
+            android:text="@string/new_buyer"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView49"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/new_buyer_sub"
-        android:textColor="@color/black_vary"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.557"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView48" />
+        <TextView
+            android:id="@+id/textView49"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/new_buyer_sub"
+            android:textColor="@color/black_vary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.557"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView48" />
 
-    <EditText
-        android:id="@+id/etBuyerFirstName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="@string/first_name"
-        android:paddingHorizontal="30dp"
-        android:paddingVertical="12dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black_vary"
-        app:layout_constraintTop_toBottomOf="@+id/textView49"
-        tools:layout_editor_absoluteX="30dp" />
+        <EditText
+            android:id="@+id/etBuyerFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/edit_text_bg"
+            android:hint="@string/first_name"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="12dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black_vary"
+            app:layout_constraintTop_toBottomOf="@+id/textView49"
+            tools:layout_editor_absoluteX="30dp" />
 
-    <EditText
-        android:id="@+id/etBuyerLastName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="@string/last_name"
-        android:paddingHorizontal="30dp"
-        android:paddingVertical="12dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black_vary"
-        app:layout_constraintTop_toBottomOf="@+id/etBuyerFirstName"
-        tools:layout_editor_absoluteX="30dp" />
+        <EditText
+            android:id="@+id/etBuyerLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_bg"
+            android:hint="@string/last_name"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="12dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black_vary"
+            app:layout_constraintTop_toBottomOf="@+id/etBuyerFirstName"
+            tools:layout_editor_absoluteX="30dp" />
 
-     <EditText
-        android:id="@+id/etBuyerEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="@string/email_id"
-        android:paddingHorizontal="30dp"
-        android:paddingVertical="12dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black_vary"
-        app:layout_constraintTop_toBottomOf="@+id/etBuyerLastName"
-        tools:layout_editor_absoluteX="30dp" />
+        <EditText
+            android:id="@+id/etBuyerEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_bg"
+            android:hint="@string/email_id"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="12dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black_vary"
+            app:layout_constraintTop_toBottomOf="@+id/etBuyerLastName"
+            tools:layout_editor_absoluteX="30dp" />
 
-    <EditText
-        android:id="@+id/etBuyerPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="@string/password"
-        android:paddingHorizontal="30dp"
-        android:paddingVertical="12dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black_vary"
-        app:layout_constraintTop_toBottomOf="@+id/etBuyerEmail"
-        tools:layout_editor_absoluteX="30dp" />
+        <EditText
+            android:id="@+id/etBuyerPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_bg"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="12dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black_vary"
+            app:layout_constraintTop_toBottomOf="@+id/etBuyerEmail"
+            tools:layout_editor_absoluteX="30dp" />
 
+        <EditText
+            android:id="@+id/etBuyerRePass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/edit_text_bg"
+            android:hint="@string/re_password"
+            android:inputType="textPassword"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="12dp"
+            android:singleLine="true"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black_vary"
+            app:layout_constraintTop_toBottomOf="@+id/etBuyerPass"
+            tools:layout_editor_absoluteX="30dp" />
 
-    <EditText
-        android:id="@+id/etBuyerRePass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/edit_text_bg"
-        android:hint="@string/re_password"
-        android:paddingHorizontal="30dp"
-        android:paddingVertical="12dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black_vary"
-        app:layout_constraintTop_toBottomOf="@+id/etBuyerPass"
-        tools:layout_editor_absoluteX="30dp" />
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/blue"
+            android:letterSpacing="0"
+            android:onClick="btnBuyerReg"
+            android:paddingHorizontal="50dp"
+            android:paddingVertical="10dp"
+            android:text="@string/sign_up"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etBuyerRePass" />
 
-<!--    etBuyerRePass-->
-
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:backgroundTint="@color/blue"
-        android:text="@string/sign_up"
-        android:onClick="btnBuyerReg"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:cornerRadius="50dp"
-        android:paddingHorizontal="50dp"
-        android:paddingVertical="10dp"
-        android:textSize="16sp"
-        android:letterSpacing="0"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/etBuyerRePass" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

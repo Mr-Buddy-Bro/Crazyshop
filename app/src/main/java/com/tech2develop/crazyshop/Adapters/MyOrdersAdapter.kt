@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import com.tech2develop.crazyshop.BuyerHome
 import com.tech2develop.crazyshop.Models.AddressModel
 import com.tech2develop.crazyshop.Models.OrderModel
@@ -55,7 +56,7 @@ class MyOrdersAdapter(context : Context, arrayList: ArrayList<OrderModel>) : Rec
         holder.tvMyOrderName.text = item.itemName
         holder.tvMyOrderDate.text = item.date
         holder.tvMyOrderPrice.text = "Rs. "+item.itemPrice
-        getPrImages(holder, item)
+        Picasso.get().load(item.imageUrl).into(holder.ivMyOrders)
         if (item.deliveryStatus.equals("Delivered")){
             holder.btnRemoveMyOrder.visibility = View.INVISIBLE
             holder.tvDelivered.visibility = View.VISIBLE

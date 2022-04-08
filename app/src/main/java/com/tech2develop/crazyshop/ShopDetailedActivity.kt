@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.makeramen.roundedimageview.RoundedImageView
+import com.squareup.picasso.Picasso
 import com.tech2develop.crazyshop.Adapters.ShopProductsAdapter
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.Models.ShopModel
@@ -27,7 +28,6 @@ class ShopDetailedActivity : AppCompatActivity() {
     lateinit var tvShopName : TextView
     lateinit var tvFullName : TextView
     lateinit var tvDesc : TextView
-    lateinit var storage : FirebaseStorage
     lateinit var sp_cat : Spinner
     lateinit var catList : ArrayList<String>
     lateinit var firestore : FirebaseFirestore
@@ -75,26 +75,11 @@ class ShopDetailedActivity : AppCompatActivity() {
         catList = ArrayList()
         prodList = ArrayList()
 
-        storage = FirebaseStorage.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        val storageRef = storage.getReference().child("${shop.sellerKey}/shop graphics/icon.jpg")
-        val localImage = File.createTempFile("shopIcon","jpg")
+        Picasso.get().load(shop.iconUrl).into(ivIcon)
+        Picasso.get().load(shop.bannerUrl).into(ivBanner)
 
-        storageRef.getFile(localImage).addOnSuccessListener {
-            val bitmapImage1 = BitmapFactory.decodeFile(localImage.absolutePath)
-            loadingDialog.dismiss()
-            ivIcon.setImageBitmap(bitmapImage1)
-        }
-
-        val storageRef1 = storage.getReference().child("${shop.sellerKey}/shop graphics/banner.jpg")
-        val localImage1 = File.createTempFile("shopIcon","jpg")
-
-        storageRef1.getFile(localImage1).addOnSuccessListener {
-            val bitmapImage = BitmapFactory.decodeFile(localImage1.absolutePath)
-            loadingDialog.dismiss()
-            ivBanner.setImageBitmap(bitmapImage)
-        }
         tvShopName.text = shop.companyName
         tvFullName.text = shop.fullName
         tvDesc.text = shop.companyDescription
@@ -112,7 +97,8 @@ class ShopDetailedActivity : AppCompatActivity() {
                                 doc.data.getValue("name").toString(),
                                 doc.data.getValue("description").toString(),
                                 doc.data.getValue("category").toString(),
-                                doc.data.getValue("price").toString(), null
+                                doc.data.getValue("price").toString(), null,
+                                doc.data.getValue("imageUrl").toString()
                             )
                             prodList.add(prodItem)
                         }else if (doc.data.getValue("category").toString().equals(selectedCat)) {
@@ -120,7 +106,8 @@ class ShopDetailedActivity : AppCompatActivity() {
                                 doc.data.getValue("name").toString(),
                                 doc.data.getValue("description").toString(),
                                 doc.data.getValue("category").toString(),
-                                doc.data.getValue("price").toString(), null
+                                doc.data.getValue("price").toString(), null,
+                                doc.data.getValue("imageUrl").toString()
                             )
                             prodList.add(prodItem)
                         }
@@ -131,6 +118,7 @@ class ShopDetailedActivity : AppCompatActivity() {
     }
 
     private fun setAdapter(list: ArrayList<ProductModel>) {
+        loadingDialog.dismiss()
         val adapter = ShopProductsAdapter(this,list)
         val rv = findViewById<RecyclerView>(R.id.rvShopProducts)
         rv.isNestedScrollingEnabled = false

@@ -104,7 +104,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                                     doc.data.getValue("itemPrice").toString(),
                                     doc.data.getValue("deliveryStatus").toString(),
                                     doc.data.getValue("shopName").toString(),
-                                    doc.data.getValue("date").toString(), null, null)
+                                    doc.data.getValue("date").toString(), null, null, doc.data.getValue("imageUrl").toString())
 
                                 Log.d("ADdress", "getOrders: "+address.name)
 
@@ -137,7 +137,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                                     doc.data.getValue("itemPrice").toString(),
                                     doc.data.getValue("deliveryStatus").toString(),
                                     doc.data.getValue("shopName").toString(),
-                                    doc.data.getValue("date").toString(), null, null)
+                                    doc.data.getValue("date").toString(), null, null, doc.data.getValue("imageUrl").toString())
                                 ordersList.add(order)
                             }
                         }
@@ -174,7 +174,7 @@ class AllOrdersFragment : Fragment(R.layout.fragment_all_orders) {
                                     doc.data.getValue("itemPrice").toString(),
                                     doc.data.getValue("deliveryStatus").toString(),
                                     doc.data.getValue("shopName").toString(),
-                                    doc.data.getValue("date").toString(), null, null)
+                                    doc.data.getValue("date").toString(), null, null, doc.data.getValue("imageUrl").toString())
                                 ordersList.add(order)
                             }
                         }

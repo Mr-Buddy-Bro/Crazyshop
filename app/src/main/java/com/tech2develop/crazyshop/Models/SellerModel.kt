@@ -11,6 +11,8 @@ data class SellerModel(
     var password : String,
     var audienceSize : String?,
     var isVerified : String?,
-    var sellerKey : String?
+    var sellerKey : String?,
+    var iconUrl : String?,
+    var bannerUrl : String?
 
 )

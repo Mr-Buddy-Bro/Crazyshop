@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
@@ -45,7 +46,7 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
         holder.itemName.text = product.name
         holder.itemCat.text = product.description
         holder.itemPrice.text = "Rs."+product.price
-        getPrImages(null, holder, product)
+        Picasso.get().load(product.imageUrl).into(holder.itemImage)
 
         holder.editIcon.contentDescription="edit ${product.name}"
         
@@ -59,7 +60,7 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
             dialog.findViewById<EditText>(R.id.etPrName).setText(product.name)
             dialog.findViewById<EditText>(R.id.etPrDesc).setText(product.description)
             dialog.findViewById<EditText>(R.id.etPrPrice).setText(product.price)
-            getPrImages(diImage, holder, product)
+            Picasso.get().load(product.imageUrl).into(diImage)
             dialog.show()
 
             dialog.findViewById<MaterialButton>(R.id.btnChoosePrImage).setOnClickListener {
@@ -137,11 +138,30 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
         val storageRef =
             storage.getReference().child("${SellerHome.shopId}/product images/${name}.jpg")
         storageRef.putFile(SellerHome.prImageUri!!).addOnCompleteListener{
+
+            storageRef.downloadUrl.addOnSuccessListener {
+                val imageUrl = it.toString()
+                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email.toString())
+                    .collection("Products").document(list[position].id!!).update( "imageUrl",imageUrl)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful){
+                            dialog.dismiss()
+                        }else {
+                            dialog.dismiss()
+                            Toast.makeText(
+                                context,
+                                "Something went wrong! please try again later.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+            }
             Toast.makeText(context,"product updated",Toast.LENGTH_LONG).show()
             loadingDialog.dismiss()
         }
 
-    }else if (!name.equals(product.name)){
+    }
+        if (!name.equals(product.name)){
 
         val storageRef =
             storage.getReference().child("${SellerHome.shopId}/product images/${product.name}.jpg")
@@ -153,6 +173,26 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
 
             val newRef = storage.getReference().child("${SellerHome.shopId}/product images/${name}.jpg")
             newRef.putFile(localImage.toUri()).addOnCompleteListener{
+
+                newRef.downloadUrl.addOnSuccessListener {
+                    val imageUrl = it.toString()
+                    firestore.collection("Seller")
+                        .document(SellerHome.auth.currentUser?.email.toString())
+                        .collection("Products").document(list[position].id!!)
+                        .update("imageUrl", imageUrl)
+                        .addOnCompleteListener {task->
+                            if (task.isSuccessful) {
+                                dialog.dismiss()
+                            } else {
+                                dialog.dismiss()
+                                Toast.makeText(
+                                    context,
+                                    "Something went wrong! please try again later.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                }
                 Toast.makeText(context,"product updated",Toast.LENGTH_LONG).show()
                 loadingDialog.dismiss()
             }
@@ -163,27 +203,6 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
     }
 
     }
-
-    private fun getPrImages(diImage: ImageView?, holder: ViewHolder, product: ProductModel) {
-
-        val storage: FirebaseStorage
-        storage = FirebaseStorage.getInstance()
-
-        val storageRef =
-            storage.getReference().child("${SellerHome.shopId}/product images/${product.name}.jpg")
-        val localImage = File.createTempFile(product.name!!, "jpg")
-        Log.d("prUpdate", "updateProduct:  "+localImage.toUri())
-        storageRef.getFile(localImage).addOnSuccessListener {
-            imagBitmap = BitmapFactory.decodeFile(localImage.absolutePath)
-
-            if (diImage == null) {
-                holder.itemImage.setImageBitmap(imagBitmap)
-            }else {
-                diImage.setImageBitmap(imagBitmap)
-            }
-        }
-    }
-
     override fun getItemCount(): Int {
         return list.size
     }

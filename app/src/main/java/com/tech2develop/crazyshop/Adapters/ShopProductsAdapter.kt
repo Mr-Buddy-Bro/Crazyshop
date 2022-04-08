@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.ProdustDetailActivity
 import com.tech2develop.crazyshop.R
@@ -35,29 +36,13 @@ class ShopProductsAdapter(context: Context, list: ArrayList<ProductModel>) : Rec
         holder.itemName.text = product.name
         holder.itemDesc.text = product.description
         holder.itemPrice.text = "Rs."+product.price
-        getPrImages(holder, product)
-
+        Picasso.get().load(product.imageUrl).into(holder.itemImage)
 
         holder.itemLay.setOnClickListener {
 
             val i = Intent(context, ProdustDetailActivity::class.java)
             i.putExtra("index", position)
             context.startActivity(i)
-        }
-    }
-
-    private fun getPrImages(holder: ViewHolder, product: ProductModel) {
-
-        val storage : FirebaseStorage
-        storage = FirebaseStorage.getInstance()
-
-        val storageRef = storage.getReference().child("${ShopDetailedActivity.sellerKey}/product images/${product.name}.jpg")
-        val localImage = File.createTempFile(product.name,"jpg")
-
-        storageRef.getFile(localImage).addOnSuccessListener {
-            val bitmapImage = BitmapFactory.decodeFile(localImage.absolutePath)
-
-            holder.itemImage.setImageBitmap(bitmapImage)
         }
     }
 

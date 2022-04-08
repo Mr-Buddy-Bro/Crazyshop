@@ -21,6 +21,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.StorageTask
 import com.tech2develop.crazyshop.Adapters.ProductAdapter
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.R
@@ -114,7 +116,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
             if (it.isSuccessful){
                 for (doc in it.result!!){
                     val product = ProductModel(doc.data.getValue("name").toString(),doc.data.getValue("description").toString(),
-                        doc.data.getValue("category").toString(),doc.data.getValue("price").toString(), doc.id)
+                        doc.data.getValue("category").toString(),doc.data.getValue("price").toString(), doc.id, doc.data.getValue("imageUrl").toString())
                     productList.add(product)
                 }
               setAdapter(myView)
@@ -143,7 +145,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
         val itemPrice = dialog.findViewById<EditText>(R.id.etPrPrice).text.toString()
         val cat = dialog.findViewById<Spinner>(R.id.prSpinner).selectedItem.toString()
         Log.d("TAG", "uploadProduct: ${cat}")
-        val product = ProductModel(itemName,itemDesc,cat,itemPrice, null)
+
         if (prImageUri == null){
             Toast.makeText(view.context,"Please choose an image",Toast.LENGTH_LONG).show()
         }else if (cat == " -- Select category -- ") {
@@ -152,20 +154,33 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
                 Toast.makeText(view.context,"Please fill all the details",Toast.LENGTH_LONG).show()
         }else{
             progress.show()
-            firestore.collection("Seller").document(auth.currentUser?.email.toString()).collection("Products").add(product).addOnSuccessListener {
-                progress.dismiss()
-                Toast.makeText(view.context,"New product added",Toast.LENGTH_LONG).show()
-                dialog.dismiss()
-                getProducts()
-            }.addOnFailureListener {
-                progress.dismiss()
-                dialog.dismiss()
-                Toast.makeText(view.context,"Something went wrong! please try again later.",Toast.LENGTH_LONG).show()
+            val storageRef = storage.getReference().child("${SellerHome.shopId}/product images/${itemName}.jpg")
+           storageRef.putFile(prImageUri!!).addOnSuccessListener{
+                storageRef.downloadUrl.addOnSuccessListener {
+
+                    val downloadUri : Uri = it
+                    val imageUrl = downloadUri.toString()
+                    Log.d("imageUrl", "uploadProduct: ${imageUrl}")
+
+                        val product = ProductModel(itemName,itemDesc,cat,itemPrice, null, imageUrl)
+                        firestore.collection("Seller").document(auth.currentUser?.email.toString()).collection("Products").add(product).addOnSuccessListener {
+                            progress.dismiss()
+                            Toast.makeText(view.context,"New product added",Toast.LENGTH_LONG).show()
+                            dialog.dismiss()
+                            getProducts()
+                        }.addOnFailureListener {
+                            progress.dismiss()
+                            dialog.dismiss()
+                            Toast.makeText(view.context,"Something went wrong! please try again later.",Toast.LENGTH_LONG).show()
+                        }
+                }
+
             }
+
         }
 
-        val storageRef = storage.getReference().child("${SellerHome.shopId}/product images/${itemName}.jpg")
-        storageRef.putFile(prImageUri!!)
+
+
 
     }
 

@@ -198,7 +198,9 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
                                         val fullName = AESCrypt.decrypt(BuyerHome.eSellerDataKey, myDoc.data.getValue("fullName").toString())
                                         val phoneNo = AESCrypt.decrypt(BuyerHome.eSellerDataKey, myDoc.data.getValue("phoneNo").toString())
                                         val sellerKey = myDoc.data.getValue("sellerKey").toString()
-                                        val shopItem = ShopModel(companyName,companyDescription,email,fullName,phoneNo,sellerKey,null,null)
+                                        val iconUrl = myDoc.data.getValue("iconUrl").toString()
+                                        val bannerUrl = myDoc.data.getValue("bannerUrl").toString()
+                                        val shopItem = ShopModel(companyName,companyDescription,email,fullName,phoneNo,sellerKey,null,null, iconUrl, bannerUrl)
                                         shopsList.add(shopItem)
                                     }
                                 }

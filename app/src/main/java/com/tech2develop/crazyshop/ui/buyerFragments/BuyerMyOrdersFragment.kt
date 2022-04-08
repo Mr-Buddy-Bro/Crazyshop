@@ -64,7 +64,7 @@ class BuyerMyOrdersFragment : Fragment(R.layout.fragment_buyer_my_orders) {
 
                         val item = OrderModel(doc.data.getValue("itemName").toString(), address, doc.data.getValue("itemPrice").toString(),
                             doc.data.getValue("deliveryStatus").toString(),doc.data.getValue("shopName").toString(),doc.data.getValue("date").toString(),
-                            doc.data.getValue("shopKey").toString(), doc.id)
+                            doc.data.getValue("shopKey").toString(), doc.id, doc.data.getValue("imageUrl").toString())
                         list.add(item)
                     }
                     setAdapter()

@@ -44,7 +44,7 @@ class SellerRegistration : AppCompatActivity() {
             val phone = AESCrypt.encrypt(eSellerDataKey,binding.etPhone.text.toString())
             val password = AESCrypt.encrypt(eSellerDataKey,binding.etPass.text.toString())
 
-            seller = SellerModel(companyName,companyDesc,fullName,email,phone,password,null,"false",null)
+            seller = SellerModel(companyName,companyDesc,fullName,email,phone,password,null,"false",null, null, null)
             nextAct()
         }
     }

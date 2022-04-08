@@ -109,11 +109,12 @@
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddToCart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/btnContinue"
         android:layout_marginHorizontal="30dp"
-        android:backgroundTint="@color/teal_700"
+        android:backgroundTint="@color/green"
         android:onClick="btnAddToWishList"
         android:paddingVertical="10dp"
         android:text="@string/add_to_wish_list"
@@ -151,9 +152,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:visibility="invisible"
         android:layout_marginBottom="20dp"
         android:text="@string/shop_temporarily_disable_receiving_new_orders"
-        android:textColor="@color/black" />
+        android:textColor="@color/black"
+        android:visibility="invisible" />
 
 </RelativeLayout>

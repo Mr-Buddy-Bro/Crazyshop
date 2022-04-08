@@ -25,17 +25,17 @@ class ChooseAudience : AppCompatActivity() {
         binding.btnNextAudience.setOnClickListener {
             if (binding.radio1.isChecked) {
                 seller = SellerModel(mySeller.companyName,mySeller.companyDescription,mySeller.fullName,mySeller.email,mySeller.phoneNo,
-                    mySeller.password,"small",mySeller.isVerified,null)
+                    mySeller.password,"small",mySeller.isVerified,null, null, null)
                 nextAct()
             }
             else if (binding.radio2.isChecked){
                 seller = SellerModel(mySeller.companyName,mySeller.companyDescription,mySeller.fullName,mySeller.email,mySeller.phoneNo,
-                    mySeller.password,"standard",mySeller.isVerified,null)
+                    mySeller.password,"standard",mySeller.isVerified,null, null, null)
                 nextAct()
             }
             else if(binding.radio3.isChecked){
                 seller = SellerModel(mySeller.companyName,mySeller.companyDescription,mySeller.fullName,mySeller.email,mySeller.phoneNo,
-                    mySeller.password,"large",mySeller.isVerified,null)
+                    mySeller.password,"large",mySeller.isVerified,null, null, null)
                 nextAct()
             }
             else{

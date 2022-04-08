@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import com.tech2develop.crazyshop.Models.ShopModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.ShopDetailedActivity
@@ -46,31 +47,12 @@ class ShopAdapter(context: Context, list: ArrayList<ShopModel>) : RecyclerView.A
         holder.name.text = shop.companyName
         holder.desc.text = shop.companyDescription
         holder.name.text = shop.companyName
+        Picasso.get().load(shop.bannerUrl).into(holder.shopBanner)
 
-        getShopImages(holder, shop)
         holder.itemLayout.setOnClickListener {
             val i = Intent(context, ShopDetailedActivity::class.java)
             i.putExtra("shopIndex", position)
             context.startActivity(i)
-        }
-
-    }
-
-    private fun getShopImages(holder: ViewHolder, shop: ShopModel) {
-
-        val storage : FirebaseStorage
-        storage = FirebaseStorage.getInstance()
-
-        val storageRef = storage.getReference().child("${shop.sellerKey}/shop graphics/icon.jpg")
-        val localImage = File.createTempFile("shopIcon","jpg")
-
-        storageRef.getFile(localImage).addOnSuccessListener {
-            val bitmapImage = BitmapFactory.decodeFile(localImage.absolutePath)
-
-            holder.shopBanner.setImageBitmap(bitmapImage)
-        }.addOnFailureListener{
-            Toast.makeText(context, shop.sellerKey, Toast.LENGTH_LONG).show()
-            Toast.makeText(context, it.message, Toast.LENGTH_LONG).show()
         }
     }
 

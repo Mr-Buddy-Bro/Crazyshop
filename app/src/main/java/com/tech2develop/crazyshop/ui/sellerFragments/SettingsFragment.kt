@@ -28,6 +28,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.rpc.context.AttributeContext
 import com.makeramen.roundedimageview.RoundedImageView
 import com.scottyab.aescrypt.AESCrypt
+import com.squareup.picasso.Picasso
 import com.tech2develop.crazyshop.MainActivity
 import com.tech2develop.crazyshop.Models.SettingsModel
 import com.tech2develop.crazyshop.R
@@ -389,24 +390,19 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), BillingProcessor.
                 }
             }
 
-        val storage: FirebaseStorage
-        storage = FirebaseStorage.getInstance()
+        firestore.collection("Seller").get().addOnCompleteListener {
+            if (it.isSuccessful){
+                for (doc in it.result!!){
+                    if (doc.id == SellerHome.auth.currentUser?.email!!){
+                        val iconUrl = doc.data.getValue("iconUrl").toString()
+                        val bannerUrl = doc.data.getValue("bannerUrl").toString()
 
-        val storageRef = storage.getReference().child("${SellerHome.shopId}/shop graphics/icon.jpg")
-        val storageRef1 =
-            storage.getReference().child("${SellerHome.shopId}/shop graphics/banner.jpg")
-        val localImage = File.createTempFile("icon", "jpg")
-        val localImage1 = File.createTempFile("icon", "jpg")
-
-        storageRef.getFile(localImage).addOnSuccessListener {
-            val bitmapImage = BitmapFactory.decodeFile(localImage.absolutePath)
-
-            ivSetIcon.setImageBitmap(bitmapImage)
-        }
-        storageRef1.getFile(localImage1).addOnSuccessListener {
-            val bitmapImage = BitmapFactory.decodeFile(localImage1.absolutePath)
-
-            ivSetBanner.setImageBitmap(bitmapImage)
+                        Picasso.get().load(iconUrl).into(ivSetIcon)
+                        Picasso.get().load(bannerUrl).into(ivSetBanner)
+                        break
+                    }
+                }
+            }
         }
     }
 
@@ -498,6 +494,15 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), BillingProcessor.
         val storage = FirebaseStorage.getInstance()
         val ref = storage.getReference().child("${SellerHome.shopId}/shop graphics/${s}.jpg")
         ref.putFile(prImageUri)
+        ref.downloadUrl.addOnSuccessListener {
+            val url = it.toString()
+            if(s == "icon"){
+                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).update("iconUrl",url)
+            }
+            else{
+                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).update("bannerUrl",url)
+            }
+        }
     }
 
     override fun onProductPurchased(productId: String, details: PurchaseInfo?) {

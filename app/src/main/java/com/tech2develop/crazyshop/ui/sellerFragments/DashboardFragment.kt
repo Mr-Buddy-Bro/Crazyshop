@@ -148,7 +148,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                                 doc.data.getValue("itemPrice").toString(),
                                 doc.data.getValue("deliveryStatus").toString(),
                                 doc.data.getValue("shopName").toString(),
-                                doc.data.getValue("date").toString(), null, null)
+                                doc.data.getValue("date").toString(), null, null, doc.data.getValue("imageUrl").toString())
                             list.add(order)
                         }
                     }
@@ -267,7 +267,8 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
                         seller = SellerModel(doc.data.getValue("companyName").toString(),doc.data.getValue("companyDescription").toString(),
                             doc.data.getValue("fullName").toString(),
                             doc.data.getValue("email").toString(),doc.data.getValue("phoneNo").toString(),doc.data.getValue("password").toString(),
-                            doc.data.getValue("audienceSize").toString(),"progress",doc.data.getValue("sellerKey").toString())
+                            doc.data.getValue("audienceSize").toString(),"progress",doc.data.getValue("sellerKey").toString(),
+                            doc.data.getValue("iconUrl").toString(), doc.data.getValue("bannerUrl").toString() )
                         firestore.collection("Seller").document(user.email!!).set(seller).addOnCompleteListener { it1 ->
                             if (it1.isSuccessful){
                                 val storageRef = storage.getReference("${seller.sellerKey}/govId")
@@ -320,7 +321,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
         firestore.collection("Seller").get().addOnCompleteListener {
             if (it.isSuccessful){
                 for (document in it.result!!){
-                    if (document.id == user?.email){
+                    if (document.id == user.email){
                         isVerified = document.data.getValue("verified").toString()
                         if (isVerified.equals("false")){
                             showVerify(view)
@@ -339,7 +340,7 @@ class DashboardFragment : Fragment(R.layout.fragment_dashboard) {
 
     private fun continueProcess(view: View) {
         progress.dismiss()
-        view.findViewById<LinearLayout>(R.id.dashboardView).visibility = View.VISIBLE
+        view.findViewById<LinearLayout>(R.id.verifyCard).visibility = View.GONE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -13,343 +13,353 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
-        android:background="@color/white">
-
-        <ImageView
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="24dp"
-            android:src="@drawable/benmart_logo2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
-            android:text="@string/dashboard"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView20"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/overview_of_your_shop_in_a_single_tab"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
         <LinearLayout
-            android:id="@+id/verifyCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_marginTop="30dp"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="20dp">
-
-            <include
-                android:id="@+id/verifyLay"
-                layout="@layout/varify_identity_lay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/textView11"
-                tools:layout_editor_absoluteX="20dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/dashboardView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@+id/textView20"
-            tools:layout_editor_absoluteX="20dp">
-
-            <TextView
-                android:id="@+id/textView23"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/today"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView20" />
-
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView23"
-                tools:layout_editor_absoluteX="20dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#F3C6FF"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:id="@+id/textView25"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="0%"
-                        android:textColor="@color/black"
-                        android:textSize="50sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:id="@+id/textView35"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="DCR"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.428"
-                        app:layout_constraintStart_toEndOf="@+id/textView25"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Delivery completion rate"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.467"
-                        app:layout_constraintStart_toEndOf="@+id/textView25"
-                        app:layout_constraintTop_toBottomOf="@+id/textView35"
-                        app:layout_constraintVertical_bias="0.0" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
+            android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/verifyCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_margin="5dp"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:layout_editor_absoluteX="20dp">
 
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    app:cardCornerRadius="20dp"
-                    android:layout_weight="1"
-                    app:cardElevation="0dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:padding="20dp"
-                        android:background="#D1FBFF"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvDashTodayAllOrders"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="todays all orders"
-                            android:text="0"
-                            android:layout_gravity="center_horizontal"
-                            android:textColor="@color/black"
-                            android:textSize="40sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/orders"
-                            android:singleLine="true"
-                            android:layout_gravity="center_horizontal"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            />
-
-                    </LinearLayout>
-
-
-
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:padding="20dp"
-                        android:background="#D1FBFF"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvDashDelivered"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0"
-                            android:contentDescription="delivered orders count"
-                            android:layout_gravity="center_horizontal"
-                            android:textColor="@color/black"
-                            android:textSize="40sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/delivered"
-                            android:singleLine="true"
-                            android:layout_gravity="center_horizontal"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            />
-
-                    </LinearLayout>
-
-
-
-                </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    app:cardCornerRadius="20dp"
-                    android:layout_weight="1"
-                    app:cardElevation="0dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:padding="20dp"
-                        android:background="#D1FBFF"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/tvDashUnDelivered"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0"
-                            android:contentDescription="undelivered orders count"
-                            android:layout_gravity="center_horizontal"
-                            android:textColor="@color/black"
-                            android:textSize="40sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/un_delivered"
-                            android:singleLine="true"
-                            android:layout_gravity="center_horizontal"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            />
-
-                    </LinearLayout>
-
-
-
-                </androidx.cardview.widget.CardView>
+                <include
+                    android:id="@+id/verifyLay"
+                    layout="@layout/varify_identity_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/textView11"
+                    tools:layout_editor_absoluteX="20dp" />
 
             </LinearLayout>
 
-
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/shop_status"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginTop="40dp"/>
+                android:paddingHorizontal="20dp"
+                android:background="@color/white">
 
-            <TextView
-                android:id="@+id/textView77"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/you_can_change_your_shop_status_in_settings"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="24dp"
+                    android:src="@drawable/benmart_logo2"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView76"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="......."
-                android:textStyle="bold"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="56dp"
+                    android:text="@string/dashboard"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/bannerCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/textView51">
-
-                <org.imaginativeworld.whynotimagecarousel.ImageCarousel
-                    android:id="@+id/bannerImg"
+                <TextView
+                    android:id="@+id/textView20"
                     android:layout_width="match_parent"
-                    android:layout_height="170dp"
-                    app:autoPlay="true"
-                    app:autoPlayDelay="3000"
-                    app:imageScaleType="centerCrop"
-                    app:showBottomShadow="false"
-                    app:showNavigationButtons="false"
-                    app:showTopShadow="false" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/overview_of_your_shop_in_a_single_tab"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-            </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:id="@+id/dashboardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="visible"
+                    app:layout_constraintTop_toBottomOf="@+id/textView20"
+                    tools:layout_editor_absoluteX="20dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/powered_by_tech2develop"
-                android:textColor="@color/black_vary"
-                android:textSize="16sp"
-                android:textAlignment="center"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="50dp"/>
+                    <TextView
+                        android:id="@+id/textView23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/today"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:cardCornerRadius="20dp"
+                        app:layout_constraintTop_toBottomOf="@+id/textView23"
+                        tools:layout_editor_absoluteX="20dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="#E91E63"
+                            android:padding="20dp">
+
+                            <TextView
+                                android:id="@+id/textView25"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="0%"
+                                android:textColor="@color/white"
+                                android:textSize="50sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/textView35"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:text="DCR"
+                                android:textColor="@color/white"
+                                android:textSize="20sp"
+                                android:textStyle="bold"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.428"
+                                app:layout_constraintStart_toEndOf="@+id/textView25"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Delivery completion rate"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.467"
+                                app:layout_constraintStart_toEndOf="@+id/textView25"
+                                app:layout_constraintTop_toBottomOf="@+id/textView35"
+                                app:layout_constraintVertical_bias="0.0" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintTop_toBottomOf="parent"
+                        tools:layout_editor_absoluteX="20dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            app:cardCornerRadius="20dp"
+                            android:layout_weight="1"
+                            app:cardElevation="0dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="vertical"
+                                android:padding="20dp"
+                                android:background="#2196F3"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tvDashTodayAllOrders"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="todays all orders"
+                                    android:text="0"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textColor="@color/white"
+                                    android:textSize="40sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/orders"
+                                    android:singleLine="true"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textColor="@color/white"
+                                    android:textSize="16sp"
+                                    android:textStyle="bold"
+                                    />
+
+                            </LinearLayout>
+
+
+
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="0dp"
+                            android:layout_weight="1"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="vertical"
+                                android:padding="20dp"
+                                android:background="#2196F3"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tvDashDelivered"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0"
+                                    android:contentDescription="delivered orders count"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textColor="@color/white"
+                                    android:textSize="40sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/delivered"
+                                    android:singleLine="true"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold"
+                                    android:textSize="16sp"
+                                    />
+
+                            </LinearLayout>
+
+
+
+                        </androidx.cardview.widget.CardView>
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            app:cardCornerRadius="20dp"
+                            android:layout_weight="1"
+                            app:cardElevation="0dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_height="wrap_content">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:orientation="vertical"
+                                android:padding="20dp"
+                                android:background="#2196F3"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/tvDashUnDelivered"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="0"
+                                    android:contentDescription="undelivered orders count"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textColor="@color/white"
+                                    android:textSize="40sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/un_delivered"
+                                    android:singleLine="true"
+                                    android:maxWidth="75dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:textColor="@color/white"
+                                    android:textSize="16sp"
+                                    />
+
+                            </LinearLayout>
+
+
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shop_status"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="40dp"/>
+
+                    <TextView
+                        android:id="@+id/textView77"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/you_can_change_your_shop_status_in_settings"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/textView76"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="......."
+                        android:textStyle="bold"
+                        android:textSize="18sp" />
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/bannerCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="10dp"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintTop_toBottomOf="@+id/textView51">
+
+                        <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                            android:id="@+id/bannerImg"
+                            android:layout_width="match_parent"
+                            android:layout_height="170dp"
+                            app:autoPlay="true"
+                            app:autoPlayDelay="3000"
+                            app:imageScaleType="centerCrop"
+                            app:showBottomShadow="false"
+                            app:showNavigationButtons="false"
+                            app:showTopShadow="false" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/powered_by_tech2develop"
+                        android:textColor="@color/black_vary"
+                        android:textSize="16sp"
+                        android:textAlignment="center"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginBottom="50dp"/>
+
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

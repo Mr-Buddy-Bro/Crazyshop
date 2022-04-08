@@ -198,7 +198,7 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/teal_700"
+        android:backgroundTint="@color/green"
         android:onClick="btnPlaceOrder"
         android:paddingHorizontal="20dp"
         android:paddingVertical="10dp"

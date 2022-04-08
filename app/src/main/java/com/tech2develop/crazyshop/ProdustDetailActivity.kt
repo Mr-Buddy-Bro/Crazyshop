@@ -15,6 +15,7 @@ import android.widget.Toast
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.squareup.picasso.Picasso
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.Models.WishListModel
 import java.io.File
@@ -23,7 +24,6 @@ class ProdustDetailActivity : AppCompatActivity() {
 
     lateinit var product : ProductModel
     var index = 0
-    lateinit var prImage : Bitmap
     lateinit var loadingDialog  : Dialog
     lateinit var firestore : FirebaseFirestore
     lateinit var btnContinue : MaterialButton
@@ -54,9 +54,6 @@ class ProdustDetailActivity : AppCompatActivity() {
         tvDesc.text = product.description
         tvPrice.text = "Rs. ${product.price}"
 
-        val storage : FirebaseStorage
-        storage = FirebaseStorage.getInstance()
-        loadingDialog.show()
         firestore.collection("Seller").document(ShopDetailedActivity.shop.email!!).collection("Settings").get()
             .addOnCompleteListener {
                 if (it.isSuccessful){
@@ -71,19 +68,7 @@ class ProdustDetailActivity : AppCompatActivity() {
                     }
                 }
             }
-
-
-        val storageRef = storage.getReference().child("${ShopDetailedActivity.sellerKey}/product images/${product.name}.jpg")
-        val localImage = File.createTempFile(product.name,"jpg")
-
-        storageRef.getFile(localImage).addOnCompleteListener {
-        loadingDialog.dismiss()
-            if (it.isSuccessful){
-                prImage = BitmapFactory.decodeFile(localImage.absolutePath)
-
-                productImg.setImageBitmap(prImage)
-            }
-        }
+        Picasso.get().load(product.imageUrl).into(productImg)
     }
 
     fun continueBtn() {

@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/shop_overlay"
             android:scaleType="fitXY"
-            android:backgroundTint="#B6D3FD"
+            android:backgroundTint="#1565C0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -39,7 +39,7 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="10dp"
             android:text="Shop name"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:text="shop description will show here"
-            android:textColor="@color/black_vary"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvShopItemName" />
