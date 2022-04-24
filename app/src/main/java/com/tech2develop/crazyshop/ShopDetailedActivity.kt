@@ -39,6 +39,7 @@ class ShopDetailedActivity : AppCompatActivity() {
         lateinit var sellerKey: String
         lateinit var prodList : ArrayList<ProductModel>
         lateinit var searchProdList : ArrayList<ProductModel>
+        var deliveryCharge = 0
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,7 +99,8 @@ class ShopDetailedActivity : AppCompatActivity() {
                                 doc.data.getValue("description").toString(),
                                 doc.data.getValue("category").toString(),
                                 doc.data.getValue("price").toString(), null,
-                                doc.data.getValue("imageUrl").toString()
+                                doc.data.getValue("imageUrl").toString(),
+                                doc.data.getValue("inStock") as Boolean
                             )
                             prodList.add(prodItem)
                         }else if (doc.data.getValue("category").toString().equals(selectedCat)) {
@@ -107,7 +109,8 @@ class ShopDetailedActivity : AppCompatActivity() {
                                 doc.data.getValue("description").toString(),
                                 doc.data.getValue("category").toString(),
                                 doc.data.getValue("price").toString(), null,
-                                doc.data.getValue("imageUrl").toString()
+                                doc.data.getValue("imageUrl").toString(),
+                                doc.data.getValue("inStock") as Boolean
                             )
                             prodList.add(prodItem)
                         }
@@ -121,7 +124,7 @@ class ShopDetailedActivity : AppCompatActivity() {
         loadingDialog.dismiss()
         val adapter = ShopProductsAdapter(this,list)
         val rv = findViewById<RecyclerView>(R.id.rvShopProducts)
-        rv.isNestedScrollingEnabled = false
+        rv.isNestedScrollingEnabled = true
         rv.adapter = adapter
         rv.layoutManager = LinearLayoutManager(this)
 
@@ -139,6 +142,17 @@ class ShopDetailedActivity : AppCompatActivity() {
                     catList.add(catItem)
                 }
                 setCategory()
+            }
+        }
+
+        // getting delivery charge per item
+        firestore.collection("Seller").document(
+            shop.email!!
+        ).collection("Settings").get().addOnCompleteListener {
+            if (it.isSuccessful){
+                for (doc in it.result!!){
+                    deliveryCharge = doc.data.getValue("deliveryCharge").toString().toInt()
+                }
             }
         }
     }

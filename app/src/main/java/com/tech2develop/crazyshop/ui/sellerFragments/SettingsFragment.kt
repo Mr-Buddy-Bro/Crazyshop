@@ -451,7 +451,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), BillingProcessor.
 
                     val prImageUri = result.toUri()
 
-                    updateGraphics("icon", prImageUri)
+                    updateGraphics("iconUrl", prImageUri)
                 }
 
             }
@@ -484,24 +484,27 @@ class SettingsFragment : Fragment(R.layout.fragment_settings), BillingProcessor.
 
                     val prImageUri = result.toUri()
 
-                    updateGraphics("banner", prImageUri)
+                    updateGraphics("bannerUrl", prImageUri)
                 }
             }
         }
     }
 
     private fun updateGraphics(s: String, prImageUri: Uri) {
+        loadingDialog.show()
         val storage = FirebaseStorage.getInstance()
         val ref = storage.getReference().child("${SellerHome.shopId}/shop graphics/${s}.jpg")
         ref.putFile(prImageUri)
         ref.downloadUrl.addOnSuccessListener {
+
             val url = it.toString()
-            if(s == "icon"){
-                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).update("iconUrl",url)
-            }
-            else{
-                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).update("bannerUrl",url)
-            }
+                firestore.collection("Seller").document(SellerHome.auth.currentUser?.email!!).update(s,url).addOnSuccessListener {
+                    loadingDialog.dismiss()
+                    val i = Intent(myView.context, SellerHome::class.java)
+                    myView.context.startActivity(i)
+                }.addOnFailureListener {
+                    loadingDialog.dismiss()
+                }
         }
     }
 

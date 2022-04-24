@@ -10,10 +10,13 @@ import com.google.firebase.auth.FirebaseAuth
 class VerifyEmailActivity : AppCompatActivity() {
 
     lateinit var auth : FirebaseAuth
+    lateinit var userType : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verify_buyer_email)
+
+        userType = intent.getStringExtra("userType").toString()
 
         sendVerification()
         checkVerified()
@@ -33,7 +36,12 @@ class VerifyEmailActivity : AppCompatActivity() {
     private fun checkVerified() {
         auth.currentUser!!.reload().addOnCompleteListener {
             if (auth.currentUser!!.isEmailVerified){
-                val i = Intent(this, BuyerHome::class.java)
+                val i :Intent
+                if (userType == "seller") {
+                    i = Intent(this, SellerHome::class.java)
+                }else{
+                    i = Intent(this, BuyerHome::class.java)
+                }
                 startActivity(i)
             }
         }

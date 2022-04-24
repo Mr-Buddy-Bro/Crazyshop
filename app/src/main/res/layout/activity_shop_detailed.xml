@@ -7,7 +7,7 @@
     tools:context=".ShopDetailedActivity">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
 
@@ -149,7 +149,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-        tools:listitem="@layout/seller_product_item_layout" />
+        tools:listitem="@layout/buyer_product_item_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

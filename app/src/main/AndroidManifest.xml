@@ -38,6 +38,7 @@
         <activity
             android:name=".CreateAddressActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".CheckOutActivity"
@@ -46,6 +47,7 @@
         <activity
             android:name=".ProdustDetailActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ShopDetailedActivity"
@@ -54,10 +56,12 @@
         <activity
             android:name=".BuyerRegistration"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".BuyerHome"
@@ -79,6 +83,7 @@
         <activity
             android:name=".SellerRegistration"
             android:exported="false"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait" />
         <activity
             android:name=".UserType"
@@ -87,7 +92,9 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

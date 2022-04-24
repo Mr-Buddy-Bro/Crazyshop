@@ -3,8 +3,6 @@ package com.tech2develop.crazyshop.Adapters
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,15 +18,15 @@ import com.squareup.picasso.Picasso
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.R
 import com.tech2develop.crazyshop.SellerHome
-import com.tech2develop.crazyshop.ui.sellerFragments.ProductsFragment
+import pl.droidsonroids.gif.GifImageView
 import java.io.File
 import java.util.ArrayList
 
-class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter(context: Context, list: ArrayList<ProductModel>, categories: ArrayList<String>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
     val context = context
     val list = list
-    lateinit var imagBitmap : Bitmap
+    var categories = categories
 
     companion object{
         lateinit var dialog: Dialog
@@ -60,7 +58,21 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
             dialog.findViewById<EditText>(R.id.etPrName).setText(product.name)
             dialog.findViewById<EditText>(R.id.etPrDesc).setText(product.description)
             dialog.findViewById<EditText>(R.id.etPrPrice).setText(product.price)
+            val spCat = dialog.findViewById<Spinner>(R.id.prSpinner)
+
+            categories[0] = product.category.toString()
+
+            val adapter =
+                ArrayAdapter(context, android.R.layout.simple_spinner_item, categories)
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spCat.adapter = adapter
+
             Picasso.get().load(product.imageUrl).into(diImage)
+
+            val switchInStock = dialog.findViewById<Switch>(R.id.switchInStock)
+
+            switchInStock.isChecked = product.inStock
+
             dialog.show()
 
             dialog.findViewById<MaterialButton>(R.id.btnChoosePrImage).setOnClickListener {
@@ -69,14 +81,46 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
                 SellerHome.myContext.startActivityForResult(i, 201)
             }
             dialog.findViewById<MaterialButton>(R.id.btnSubmitPr).setOnClickListener {
-                updateProduct(product, position, diImage)
+                updateProduct(product, position, diImage, spCat, switchInStock)
+            }
+
+            dialog.findViewById<TextView>(R.id.btnDeletePrd).setOnClickListener {
+                dialog.dismiss()
+                val firestore = FirebaseFirestore.getInstance()
+                val storage = FirebaseStorage.getInstance()
+
+                val deleteDialog = Dialog(context)
+                deleteDialog.setTitle("Delete product")
+                deleteDialog.setContentView(R.layout.delete_prd_dialog)
+
+                deleteDialog.show()
+                val loadingDialog = Dialog(context)
+                loadingDialog.setContentView(R.layout.loading_layout)
+                loadingDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+
+                deleteDialog.findViewById<GifImageView>(R.id.btnTvDelPr).setOnClickListener {
+                    Log.d("newCat", "onBindViewHolder: Clicked to delete")
+                    loadingDialog.show()
+
+                    deleteDialog.dismiss()
+                    firestore.collection("Seller").document(SellerHome.auth.currentUser?.email.toString())
+                        .collection("Products").document(list[position].id!!).delete().addOnCompleteListener {
+                                storage.getReference().child("${SellerHome.shopId}/product images/${product.name}.jpg").delete().addOnCompleteListener {
+                                    loadingDialog.dismiss()
+                                }
+                        }
+                }
             }
         }
-
-
     }
 
-    private fun updateProduct(product: ProductModel, position: Int, diImage: ImageView) {
+    private fun updateProduct(
+        product: ProductModel,
+        position: Int,
+        diImage: ImageView,
+        spCat: Spinner,
+        switchInStock: Switch
+    ) {
 
         val firestore = FirebaseFirestore.getInstance()
         val storage = FirebaseStorage.getInstance()
@@ -131,7 +175,23 @@ class ProductAdapter(context: Context, list: ArrayList<ProductModel>) : Recycler
                 }
             }
 
+        if (switchInStock.isChecked != product.inStock){
+            firestore.collection("Seller").document(SellerHome.auth.currentUser?.email.toString())
+                .collection("Products").document(list[position].id!!).update( "inStock", switchInStock.isChecked)
+                .addOnCompleteListener {
+                    dialog.dismiss()
+                }
+        }
 
+    if (spCat.selectedItem.toString() != product.category){
+        Log.d("newCat", "updateProduct: Category changed")
+
+        firestore.collection("Seller").document(SellerHome.auth.currentUser?.email.toString())
+            .collection("Products").document(list[position].id!!).update( "category", spCat.selectedItem.toString())
+            .addOnCompleteListener {
+                dialog.dismiss()
+            }
+    }
 
     if (SellerHome.prImageUri != null) {
 

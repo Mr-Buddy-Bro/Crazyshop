@@ -2,6 +2,9 @@ package com.tech2develop.crazyshop
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -12,6 +15,7 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
@@ -96,6 +100,9 @@ class SellerHome : AppCompatActivity(){
                     shopIdDialog.window!!.setBackgroundDrawable(ColorDrawable(0))
                     shopIdDialog.window!!.setWindowAnimations(R.style.Animation_Design_BottomSheetDialog)
                     shopIdDialog.findViewById<TextView>(R.id.textView60).text = shopId
+                    shopIdDialog.findViewById<ImageView>(R.id.imageView3).setOnClickListener {
+                        copyTextToClipboard(shopId)
+                    }
                     val qrgEncoder =
                         QRGEncoder(shopId, null, QRGContents.Type.TEXT, 600 )
                     qrgEncoder.colorBlack = Color.BLACK
@@ -138,6 +145,13 @@ class SellerHome : AppCompatActivity(){
                 }
             }
         }
+    }
+
+    private fun copyTextToClipboard(textToCopy : String) {
+        val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText("text", textToCopy)
+        clipboardManager.setPrimaryClip(clipData)
+        Toast.makeText(this, "Shop ID copied", Toast.LENGTH_SHORT).show()
     }
 
     fun setHeaderGraphics(iconUrl: String, bannerUrl: String) {

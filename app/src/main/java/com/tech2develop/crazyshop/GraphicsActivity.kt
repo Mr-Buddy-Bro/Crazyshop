@@ -98,7 +98,6 @@ class GraphicsActivity : AppCompatActivity() {
                     Log.d("TAG", "createUserWithEmail:success")
                     val user = auth.currentUser
 //                    updateUI(user)
-                    startActivity(Intent(this,SellerHome::class.java))
                 } else {
                     progressDialog.dismiss()
                     // If sign in fails, display a message to the user.
@@ -137,14 +136,15 @@ class GraphicsActivity : AppCompatActivity() {
                         storageRef2.putFile(bannerUri).addOnCompleteListener{task2->
                             Log.d("seller123", "uploadData: ppp")
                             if (task2.isSuccessful){
-                                storageRef1.downloadUrl.addOnSuccessListener {task->
+                                storageRef2.downloadUrl.addOnSuccessListener {task->
                                     Log.d("seller123", "uploadData: pppp")
                                     val bannerUrl = task.toString()
                                     Log.d("seller123", "uploadData: ppppp")
                                     seller = SellerModel(mySeller.companyName,mySeller.companyDescription,mySeller.fullName,mySeller.email,mySeller.phoneNo,
                                         mySeller.password,mySeller.audienceSize,mySeller.isVerified, mySeller.companyName+mySeller.phoneNo.substring(1,5),iconUrl,bannerUrl)
-                                    firestore.collection("Seller").document(email).set(seller).addOnCompleteListener {
-
+                                    firestore.collection("Seller").document(email).set(seller).addOnSuccessListener {
+                                        startActivity(Intent(this,SellerHome::class.java))
+                                        Log.d("seller123", "uploadData: ppppp pos")
                                     }
                                 }
                             }else{

@@ -81,6 +81,8 @@ class BuyerHome : AppCompatActivity() {
             searchDialog.show()
         }
 
+        navView.getHeaderView(0).findViewById<TextView>(R.id.textView).text = auth.currentUser!!.email
+
         firestore.collection("Buyer").get().addOnCompleteListener {
             if (it.isSuccessful){
                 for (doc in it.result!!){
@@ -88,8 +90,6 @@ class BuyerHome : AppCompatActivity() {
                         buyerName = AESCrypt.decrypt(BuyerDataKey,doc.data.getValue("fullName").toString())
                         navView.getHeaderView(0).findViewById<TextView>(R.id.navName).text =
                             buyerName
-                        navView.getHeaderView(0).findViewById<TextView>(R.id.textView).text =
-                            auth.currentUser!!.email
                         break
                     }
                 }

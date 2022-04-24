@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.CalendarView
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -19,6 +20,7 @@ import com.squareup.picasso.Picasso
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.Models.WishListModel
 import java.io.File
+import java.util.*
 
 class ProdustDetailActivity : AppCompatActivity() {
 
@@ -27,6 +29,8 @@ class ProdustDetailActivity : AppCompatActivity() {
     lateinit var loadingDialog  : Dialog
     lateinit var firestore : FirebaseFirestore
     lateinit var btnContinue : MaterialButton
+    lateinit var orderingFrom : String
+    lateinit var orderingTo : String
     val shopActive : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +63,71 @@ class ProdustDetailActivity : AppCompatActivity() {
                 if (it.isSuccessful){
                     for (doc in it.result!!){
                         val isActive = doc.data.getValue("active") as Boolean
-                        btnContinue.isEnabled = isActive
-                        if (!isActive) {
-                            findViewById<TextView>(R.id.tvDisabled).visibility = View.VISIBLE
+
+                        val orderingTime = doc.data.getValue("orderingTime").toString()
+                        orderingFrom = orderingTime.substringBefore("-")
+                        orderingTo = orderingTime.substringAfter("-")
+                        var fHour = orderingFrom.substringBefore(":")
+                        var fmin = orderingFrom.substringAfter(":")
+                        fmin = fmin.substringBefore(" ")
+                        var tmin = orderingTo.substringAfter(":")
+                        tmin = tmin.substringBefore(" ")
+                        var tHour = orderingTo.substringBefore(":")
+                        tHour = tHour.substringAfter(" ")
+                        val fxm = orderingFrom.substringAfter(" ")
+                        var txm = orderingTo.substringAfter(":")
+                        txm = txm.substringAfter(" ")
+
+                        if (fxm == "pm "){
+                            fHour = (fHour.toInt() + 12).toString()
+                        }
+                        if (txm == "pm"){
+                            tHour = (tHour.toInt() + 12).toString()
+                        }
+
+                        val calendar = Calendar.getInstance()
+                        val chour = calendar.get(Calendar.HOUR_OF_DAY)
+                        val cmin = calendar.get(Calendar.MINUTE)
+
+                        var validFTime = false
+                        var validTTime = false
+
+                        validFTime = if (fHour.toInt() <= chour) {
+                            if (fHour.toInt() == chour) {
+                                fmin.toInt() < cmin
+                            } else {
+                                true
+                            }
                         }else{
-                            findViewById<TextView>(R.id.tvDisabled).visibility = View.INVISIBLE
+                             false
+                        }
+
+                        validTTime = if (tHour.toInt() >= chour){
+                            if (tHour.toInt() == chour){
+                                tmin.toInt() > cmin
+                            }else{
+                                true
+                            }
+                        }else{
+                            false
+                        }
+
+                        Log.d("timehere", "onCreate: $orderingFrom , $orderingTo , $chour, $cmin, $fmin, $tmin, $tHour")
+
+                        val tvAbletoContinue = findViewById<TextView>(R.id.tvDisabled)
+
+                        if (isActive && validFTime && validTTime) {
+                            btnContinue.isEnabled = true
+                            tvAbletoContinue.visibility = View.INVISIBLE
+                        }else{
+                            btnContinue.isEnabled = false
+                            tvAbletoContinue.visibility = View.VISIBLE
+                        }
+
+                        if (!product.inStock){
+                            btnContinue.isEnabled = false
+                            tvAbletoContinue.text = "Product is out of stock"
+                            tvAbletoContinue.visibility = View.VISIBLE
                         }
                     }
                 }

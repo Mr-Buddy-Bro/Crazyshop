@@ -1,8 +1,11 @@
 package com.tech2develop.crazyshop.Adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.provider.CalendarContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +32,7 @@ class ShopProductsAdapter(context: Context, list: ArrayList<ProductModel>) : Rec
         return ViewHolder(view)
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val product = list[position]
@@ -37,6 +41,15 @@ class ShopProductsAdapter(context: Context, list: ArrayList<ProductModel>) : Rec
         holder.itemDesc.text = product.description
         holder.itemPrice.text = "Rs."+product.price
         Picasso.get().load(product.imageUrl).into(holder.itemImage)
+
+        if(product.inStock) {
+            holder.stockStatus.text = "In stock"
+            holder.stockStatus.setTextColor(Color.parseColor("#00854B"))
+            holder.stockStatus
+        }else{
+            holder.stockStatus.text = "Out of stock"
+            holder.stockStatus.setTextColor(Color.parseColor("#FF0000"))
+        }
 
         holder.itemLay.setOnClickListener {
 
@@ -57,6 +70,7 @@ class ShopProductsAdapter(context: Context, list: ArrayList<ProductModel>) : Rec
         val itemDesc = itemView.findViewById<TextView>(R.id.textView31)
         val itemPrice = itemView.findViewById<TextView>(R.id.textView33)
         val itemLay = itemView.findViewById<ConstraintLayout>(R.id.prodItemLayout)
+        val stockStatus = itemView.findViewById<TextView>(R.id.tvStockStatus)
 
     }
 

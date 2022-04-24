@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.google.firebase.firestore.FirebaseFirestore
 import com.scottyab.aescrypt.AESCrypt
@@ -37,6 +38,7 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
     lateinit var firestore : FirebaseFirestore
     lateinit var dialog: Dialog
     var mySellerDocId : String? = null
+    lateinit var refreshLay : SwipeRefreshLayout
     companion object {
         lateinit var shopsList: ArrayList<ShopModel>
     }
@@ -61,6 +63,12 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
         prodList = ArrayList()
         shopDocList = ArrayList()
         shopsList = ArrayList()
+
+        refreshLay = view.findViewById<SwipeRefreshLayout>(R.id.refreshHome)
+        refreshLay.setOnRefreshListener {
+            loadBanner()
+            getAllShops(view)
+        }
 
         loadingDialog = Dialog(view.context)
         loadingDialog.setContentView(R.layout.loading_layout)
@@ -189,6 +197,7 @@ class BuyerHomeFragment : Fragment(R.layout.fragment_buyer_home) {
         for (i in 0..shopDocList.size-1){
             val shopDocItem = shopDocList[i]
             firestore.collection("Seller").get().addOnCompleteListener {
+                refreshLay.isRefreshing = false
                             if (it.isSuccessful) {
                                 for (myDoc in it.result!!) {
                                     if (myDoc.id.equals(shopDocItem)) {

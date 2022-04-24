@@ -27,7 +27,6 @@ class CheckOutActivity : AppCompatActivity() {
     lateinit var tvItemPrice : TextView
     lateinit var tvDeliveryCharge : TextView
     lateinit var tvTotalPrice : TextView
-    var deliveryCharge = 10
     lateinit var firestore : FirebaseFirestore
     lateinit var orderPlacedDialog : Dialog
     lateinit var loadingDialog  : Dialog
@@ -59,8 +58,8 @@ class CheckOutActivity : AppCompatActivity() {
         tvName.text = product.name
         tvDesc.text = product.description
         tvItemPrice.text = "Rs. ${product.price}"
-        tvDeliveryCharge.text = "Rs. $deliveryCharge"
-        val tPrice = "Rs. ${(product.price!!.toInt() + deliveryCharge)}"
+        tvDeliveryCharge.text = "Rs. ${ShopDetailedActivity.deliveryCharge}"
+        val tPrice = "Rs. ${(product.price!!.toInt() + ShopDetailedActivity.deliveryCharge)}"
         tvTotalPrice.text = tPrice
 
         val storage : FirebaseStorage
@@ -104,7 +103,7 @@ class CheckOutActivity : AppCompatActivity() {
 
         val calendar = Calendar.getInstance()
         val date = calendar.get(Calendar.DAY_OF_MONTH).toString() +"/"+((calendar.get(Calendar.MONTH))+1).toString()+"/"+calendar.get(Calendar.YEAR).toString()
-        val orderItem = OrderModel(product.name, address, (product.price!!.toInt() + deliveryCharge).toString(), "Un-delivered", ShopDetailedActivity.shop.companyName,date, ShopDetailedActivity.sellerKey, null, product.imageUrl)
+        val orderItem = OrderModel(product.name, address, (product.price!!.toInt() + ShopDetailedActivity.deliveryCharge).toString(), "Un-delivered", ShopDetailedActivity.shop.companyName,date, ShopDetailedActivity.sellerKey, null, product.imageUrl)
 
         firestore.collection("Buyer").document(BuyerHome.auth.currentUser?.email!!).collection("All orders")
             .add(orderItem).addOnCompleteListener {

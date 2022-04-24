@@ -8,57 +8,87 @@
     android:id="@+id/shopItemLay"
     android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/ivStatus"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:elevation="20dp"
+            android:layout_below="@id/tvShopItemName"
+            android:layout_marginStart="10dp"
+            android:layout_toRightOf="@id/tvShopStatus"
+            android:src="@drawable/ic_baseline_swap_vertical_circle_24"
+            app:tint="@color/grey" />
 
         <ImageView
             android:id="@+id/ivShopItemImage"
             android:layout_width="200dp"
-            android:layout_height="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentEnd="true"
             android:background="@color/grey"
             android:scaleType="centerCrop"
-            android:src="@drawable/benmart_logo2"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:src="@drawable/benmart_logo2" />
 
         <ImageView
             android:id="@+id/overLay"
             android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentStart="true"
             android:layout_marginEnd="80dp"
-            android:layout_height="match_parent"
             android:background="@drawable/shop_overlay"
-            android:scaleType="fitXY"
-            android:backgroundTint="#1565C0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:backgroundTint="#0D47A1"
+            android:scaleType="fitXY" />
 
         <TextView
             android:id="@+id/tvShopItemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="10dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
             android:text="Shop name"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvShopStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@id/tvShopItemName"
+            android:layout_marginStart="20dp"
+            android:text="---"
+            android:textColor="@color/yellow"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvShopItemDescription"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_below="@id/tvShopStatus"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
             android:text="shop description will show here"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvShopItemName" />
+            android:textStyle="bold" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tvDeliveryTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvShopItemDescription"
+            android:layout_marginStart="20dp"
+            android:text="---"
+            android:textColor="@color/yellow"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
 
+    </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

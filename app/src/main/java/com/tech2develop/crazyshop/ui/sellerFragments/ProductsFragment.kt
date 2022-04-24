@@ -2,7 +2,6 @@ package com.tech2develop.crazyshop.ui.sellerFragments
 
 import android.app.Dialog
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -21,8 +20,6 @@ import com.google.android.material.button.MaterialButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.StorageTask
 import com.tech2develop.crazyshop.Adapters.ProductAdapter
 import com.tech2develop.crazyshop.Models.ProductModel
 import com.tech2develop.crazyshop.R
@@ -116,7 +113,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
             if (it.isSuccessful){
                 for (doc in it.result!!){
                     val product = ProductModel(doc.data.getValue("name").toString(),doc.data.getValue("description").toString(),
-                        doc.data.getValue("category").toString(),doc.data.getValue("price").toString(), doc.id, doc.data.getValue("imageUrl").toString())
+                        doc.data.getValue("category").toString(),doc.data.getValue("price").toString(), doc.id, doc.data.getValue("imageUrl").toString(), doc.data.getValue("inStock") as Boolean)
                     productList.add(product)
                 }
               setAdapter(myView)
@@ -127,7 +124,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
     }
 
     private fun setAdapter(view: View) {
-        val adapter = ProductAdapter(view.context, productList)
+        val adapter = ProductAdapter(view.context, productList, categories)
         val rv = view.findViewById<RecyclerView>(R.id.rvProducts)
         rv.isNestedScrollingEnabled = false
         rv.adapter = adapter
@@ -162,7 +159,7 @@ class ProductsFragment : Fragment(R.layout.fragment_products) {
                     val imageUrl = downloadUri.toString()
                     Log.d("imageUrl", "uploadProduct: ${imageUrl}")
 
-                        val product = ProductModel(itemName,itemDesc,cat,itemPrice, null, imageUrl)
+                        val product = ProductModel(itemName,itemDesc,cat,itemPrice, null, imageUrl, true)
                         firestore.collection("Seller").document(auth.currentUser?.email.toString()).collection("Products").add(product).addOnSuccessListener {
                             progress.dismiss()
                             Toast.makeText(view.context,"New product added",Toast.LENGTH_LONG).show()

@@ -121,7 +121,9 @@ class LoginActivity : AppCompatActivity() {
                             val i = Intent(this, SellerHome::class.java)
                             startActivity(i)
                         }else{
-                            startActivity(Intent(this, VerifyEmailActivity::class.java))
+                            val i = Intent(this, VerifyEmailActivity::class.java)
+                            i.putExtra("userType", userType)
+                            startActivity(i)
                             finish()
                         }
                     }

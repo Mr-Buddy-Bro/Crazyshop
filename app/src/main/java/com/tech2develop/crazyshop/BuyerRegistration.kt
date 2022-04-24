@@ -9,6 +9,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.scottyab.aescrypt.AESCrypt
 import com.tech2develop.crazyshop.Models.BuyerModel
+import com.tech2develop.crazyshop.Models.ShopModel
+import com.tech2develop.crazyshop.Models.ShopsDocIdModel
 
 class BuyerRegistration : AppCompatActivity() {
 
@@ -47,7 +49,6 @@ class BuyerRegistration : AppCompatActivity() {
         }else if(!etPass.text.toString().equals(etRePass.text.toString())){
             Toast.makeText(this, "Password do not match", Toast.LENGTH_LONG).show()
         }else{
-            uploadData()
             regBuyer()
         }
     }
@@ -62,6 +63,10 @@ class BuyerRegistration : AppCompatActivity() {
         val buyer = BuyerModel(fullName, email, password)
 
         firestore.collection("Buyer").document(etEmail.text.toString()).set(buyer).addOnCompleteListener {
+            val defaultShop = ShopsDocIdModel("caketohomechully@gmail.com")
+            firestore.collection("Buyer").document(etEmail.text.toString()).collection("ShopsDocId").add(defaultShop).addOnCompleteListener {
+                updateUI()
+            }
 
         }
     }
@@ -70,7 +75,7 @@ class BuyerRegistration : AppCompatActivity() {
         auth.createUserWithEmailAndPassword(etEmail.text.toString(), etPass.text.toString()).addOnCompleteListener {
             if (it.isSuccessful){
                 Toast.makeText(this, "Account created", Toast.LENGTH_LONG).show()
-                updateUI()
+                uploadData()
             }else{
                 Toast.makeText(this, "Something went wrong! please try again", Toast.LENGTH_LONG).show()
             }
